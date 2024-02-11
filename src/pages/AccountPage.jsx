@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import UserNavbar from '../components/UserNavbar';
 
 const AccountPage = () => {
     const [editMode, setEditMode] = useState(false);
@@ -25,8 +26,9 @@ const AccountPage = () => {
 
     return (
         <>
-            <div className="h-full p-2">
-                <div className="block md:flex shadow">
+            <div className="h-full p-2 bg-violet-100 min-h-screen">
+            <UserNavbar />
+                <div className="block md:flex shadow bg-white p-2 rounded-md">
                     <div className="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white rounded-md">
                         <div className="flex justify-between">
                             <span className="text-xl text-center font-semibold block">Account</span>
@@ -39,13 +41,13 @@ const AccountPage = () => {
                         </div> */}
                     </div>
 
-                    <div className="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
+                    <div className="w-full md:w-3/5 p-8 rounded-md bg-white lg:ml-4 shadow-md">
                         {!editMode && (
                             <div>
                                 <button type="button" className="float-right bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-300" onClick={() => setEditMode(true)}>Edit</button>
                             </div>
                         )}
-                        <div className="rounded p-6">
+                        <div className="rounded p-10 h-full my-auto">
                             <div className="pb-6">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                                 <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300"
