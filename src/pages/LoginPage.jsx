@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-
+import actions from "../dispatch/actions";
+import dispatch from "../dispatch/dispatch";
 const LoginPage = () => {
     const [formData, setFormData] = useState({
         email: "",
@@ -14,10 +15,13 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
-        try {
-        } catch (error) {
-        }
+        console.log(formData);
+
+        const response = await dispatch(actions.login, {
+            email:formData.email,
+            password:formData.password
+        });
+        console.log(response);
     };
     return (
         <>

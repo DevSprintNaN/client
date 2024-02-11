@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import actions from '../dispatch/actions';
+import dispatch from '../dispatch/dispatch';
 
 export const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -14,10 +16,13 @@ export const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
-        try {
-        } catch (error) {
-        }
+        console.log(formData);
+        
+        const response = await dispatch(actions.login, {
+            email:formData.email,
+            password:formData.password
+        });
+        console.log(response);
       };
     
 
