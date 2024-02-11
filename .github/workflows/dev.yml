@@ -1,4 +1,4 @@
-name: Continuous Deployment Test
+name: Continuous Deployment Development
 
 on:
   push:

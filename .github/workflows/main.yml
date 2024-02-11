@@ -1,4 +1,4 @@
-name: Continuous Deployment Test
+name: Continuous Deployment Production
 
 on:
   pull_request:
