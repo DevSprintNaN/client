@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import account from "../assets/account.png";
 
 const AccountPage = () => {
     const [editMode, setEditMode] = useState(false);
@@ -32,7 +31,7 @@ const AccountPage = () => {
                         <div className="flex justify-between">
                             <span className="text-xl text-center font-semibold block">Account</span>
                         </div>
-                        <img src={account} className='p-2' />
+                        <img src={'account.png'} className='p-2' />
 
                         {/* <span className="text-gray-600">View Your Profile Details</span> */}
                         {/* <div className="w-full p-8 mx-2 flex justify-center">
