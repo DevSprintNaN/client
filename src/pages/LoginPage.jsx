@@ -1,5 +1,7 @@
 
 import { useState } from "react";
+import actions from "../dispatch/actions";
+import dispatch from "../dispatch/dispatch";
 const LoginPage = () => {
     const [formData, setFormData] = useState({
         email: "",
@@ -13,10 +15,13 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
-        try {
-        } catch (error) {
-        }
+        console.log(formData);
+
+        const response = await dispatch(actions.login, {
+            email:formData.email,
+            password:formData.password
+        });
+        console.log(response);
     };
     return (
         <>
@@ -25,6 +30,7 @@ const LoginPage = () => {
                     <div className="max-w-md w-full p-6">
                         <h1 className="text-3xl font-semibold mb-6 text-black text-center">Sign In </h1>
                         <h1 className="text-sm font-semibold mb-6 text-gray-500 text-center">Dive Back to the Hub of Effortless Project Collaboration and Version Control</h1>
+                        
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
