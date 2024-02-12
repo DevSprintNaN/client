@@ -9,7 +9,6 @@ import AccountPage from './pages/AccountPage';
 import LandingPage from './pages/LandingPage';
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
@@ -18,6 +17,10 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/health" element={<div>
+            <h1>Health</h1>
+            <p>Server: {import.meta.env.VITE_BASE_URL}</p>
+          </div>} />
         </Routes>
       </BrowserRouter>
     </>

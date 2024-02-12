@@ -1,6 +1,6 @@
 import axios from 'axios';
 import actions from './actions';
-export const baseUrl = import.meta.env.VITE_SERVER;
+export const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const dispatch = async (action, body={}) => {
     try{
@@ -16,8 +16,7 @@ const dispatch = async (action, body={}) => {
                 return response.data;
         }
     }catch(error){
-        console.log(error);
-        return error.response.data;
+        return error;
     }
 };
 
