@@ -3,13 +3,17 @@ import { useState } from "react";
 import actions from "../dispatch/actions";
 import dispatch from "../dispatch/dispatch";
 import Loading from "../components/Loading";
+import formDispatch, { formStates } from "../dispatch/formStatus";
+import FormMessage from "../components/FormMessage";
+
 const LoginPage = () => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
-    const [loading, setLoading] = useState(false)
-    const [success, setSuccess] = useState(false)
+    const [formState, setFormState] = useState("");
+    const [message, setMessage] = useState("")
+    const [payload, setPayload] = useState(null)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -18,8 +22,8 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
-        setSuccess(false)
+        formDispatch(formStates.loading, setFormState, setPayload);
+        setMessage("")
         console.log(formData);
 
         const response = await dispatch(actions.login, {
@@ -27,15 +31,22 @@ const LoginPage = () => {
             password: formData.password
         });
         console.log(response);
-        setLoading(false);
-        // setSuccess(true) //set to true if success
+
+        //handle success and error
+        if (response) {
+            formDispatch(formStates.success, setFormState, setPayload);
+            setMessage("Login successful!")
+        } else {
+            formDispatch(formStates.failed, setFormState, setPayload);
+            setMessage("Login failed!")
+        }
     };
     return (
         <>
             <div className="flex h-screen">
                 <div className="w-full bg-violet-100 lg:w-1/2 flex items-center justify-center">
                     <div className="max-w-md w-full p-6">
-                        {loading? (<Loading message={'Please wait while we process your request...'}/>): (<>
+                        {formState===formStates.loading ? (<Loading message={'Please wait while we process your request...'} />) : (<>
                             <h1 className="text-3xl font-semibold mb-6 text-black text-center">Sign In </h1>
                             <h1 className="text-sm font-semibold mb-6 text-gray-500 text-center">Dive Back to the Hub of Effortless Project Collaboration and Version Control</h1>
 
@@ -53,7 +64,7 @@ const LoginPage = () => {
                                         onChange={handleInputChange} />
                                 </div>
 
-                                {success && (<FormMessage bg_class={'bg-green-300'} message={'Registration successful!'} />)}
+                                {payload && (<FormMessage bg_class={payload.bg_color} message={message}/>)}
 
                                 <div>
                                     <button type="submit" className="w-full bg-purple-700 text-white p-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Login</button>
@@ -63,7 +74,7 @@ const LoginPage = () => {
                                 <p>Don't Have An Account? <a href="/register" className="text-black hover:underline">Register here</a>
                                 </p>
                             </div>
-                            </>)}
+                        </>)}
                     </div>
                 </div>
 
