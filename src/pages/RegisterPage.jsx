@@ -18,7 +18,7 @@ export const RegisterPage = () => {
         e.preventDefault();
         console.log(formData);
         
-        const response = await dispatch(actions.login, {
+        const response = await dispatch(actions.register, {
             email:formData.email,
             password:formData.password
         });
