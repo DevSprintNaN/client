@@ -16,7 +16,7 @@ const LandingPage = () => {
                 <nav className="container mx-auto p-3 lg:flex lg:items-center lg:justify-between sticky top-0 z-10 bg-violet-100/80 ">
                     <div className="flex items-center justify-between">
                         <div>
-                            <a className="text-2xl font-bold text-gray-800 hover:text-gray-700 lg:text-3xl" href="#">Brand</a>
+                            <a className="text-2xl font-bold text-gray-800 hover:text-gray-700 lg:text-3xl" href="/">ProjectHub</a>
                         </div>
 
                         <div className="flex lg:hidden">
