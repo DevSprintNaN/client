@@ -54,7 +54,7 @@ const LoginPage = () => {
                             <form className="space-y-4" onSubmit={handleSubmit}>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                                    <input type="email" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                                         value={formData.email}
                                         onChange={handleInputChange} />
                                 </div>
