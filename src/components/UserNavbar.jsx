@@ -39,7 +39,7 @@ const UserNavbar = () => {
                         <a className="text-gray-700 hover:text-blue-500  lg:mx-6" href="#">FAQ</a>
                     </div>
 
-                    <a className="mt-4 block h-10 transform rounded-md border px-5 py-2 text-center text-sm capitalize text-gray-700 transition-colors duration-300 hover:bg-gray-100  lg:mt-0 lg:w-auto" href="#"> Contact Us </a>
+                    <a className="mt-4 block h-10 transform rounded-md border px-5 py-2 text-center text-sm capitalize text-gray-700 transition-colors duration-300 hover:bg-gray-100  lg:mt-0 lg:w-auto" href="#"> Log Out </a>
                 </div>
             </nav>
         </>

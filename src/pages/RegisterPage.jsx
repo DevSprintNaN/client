@@ -4,8 +4,10 @@ import dispatch from '../dispatch/dispatch';
 import Loading from '../components/Loading';
 import FormMessage from '../components/FormMessage';
 import formDispatch, { formStates } from '../dispatch/formStatus';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
+    const navigate=useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -25,14 +27,12 @@ export const RegisterPage = () => {
             const password = document.getElementById('password').value
             const confirmPassword = document.getElementById('confirmPassword').value
 
-            //password length check
             if (password.length < 8 || password.length > 20) {
                 formDispatch(formStates.invalid, setFormState, setPayload);
                 setMessage('Password must be between 8 and 20 characters long.');
                 return
             }
 
-            //password complexity check
             if (!/[A-Z]/.test(password) || !/\d/.test(password)) {
                 formDispatch(formStates.invalid, setFormState, setPayload);
                 setMessage('Password must contain at least one uppercase letter and one numeric character.');
@@ -40,7 +40,6 @@ export const RegisterPage = () => {
                 return
             }
 
-            //password and confirm password matching
             if (password === confirmPassword) {
                 setDisabled(false)
                 setMessage('')
@@ -65,10 +64,10 @@ export const RegisterPage = () => {
         });
         console.log(response);
 
-        //handle success and error
-        if (response) {
+        if (response?.message==="User created successfully") {
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Login successful!")
+            navigate("/account");
         } else {
             formDispatch(formStates.failed, setFormState, setPayload);
             setMessage("Login failed!")

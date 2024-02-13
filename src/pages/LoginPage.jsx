@@ -5,8 +5,10 @@ import dispatch from "../dispatch/dispatch";
 import Loading from "../components/Loading";
 import formDispatch, { formStates } from "../dispatch/formStatus";
 import FormMessage from "../components/FormMessage";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+    const navigate=useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -31,11 +33,10 @@ const LoginPage = () => {
             password: formData.password
         });
         console.log(response);
-
-        //handle success and error
-        if (response) {
+        if (response?.status==="success") {
             formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Login successful!")
+            setMessage("Login successful!");
+            navigate("/account");
         } else {
             formDispatch(formStates.failed, setFormState, setPayload);
             setMessage("Login failed!")
