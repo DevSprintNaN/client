@@ -6,6 +6,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
 import LandingPage from './pages/LandingPage';
 import Project from './features/project/pages/project';
+import ViewProject from './features/view-project/pages/view-project';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/projects" element={<Project/>}/>
+          <Route path="/view-project/:id" element={<ViewProject/>}/>
           <Route path="/health" element={<div>
             <h1>Health</h1>
             <p>Server: {import.meta.env.VITE_BASE_URL}</p>
