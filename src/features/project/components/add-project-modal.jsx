@@ -14,15 +14,15 @@ const AddProjectModal = ({ open, setShow }) => {
     };
 
     return (
-        <Dialog open={open} size="md" handler={() => setShow(false)} className="rounded-bl-3xl mx-auto mt-5 w-1/2">
-            <DialogHeader className="bg-purple-900 text-white border-b">
+        <Dialog open={open} size="xl" handler={() => setShow(false)} className="ms-96 mt-24">
+            <DialogHeader className="bg-purple-900 text-white rounded-lg">
                 Add Project
             </DialogHeader>
             <DialogBody className="bg-gray-100">
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="project" className="block text-sm font-medium text-gray-700">Project Name</label>
-                        <input type="text" id="project" name="project" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                        <input type="text" id="project" name="project" className="mt-1 p-2 w-4/5 border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                             value={project}
                             onChange={(e) => setProject(e.target.value)} />
                     </div>

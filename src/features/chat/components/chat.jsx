@@ -17,13 +17,13 @@ const Chat = () => {
     };
 
     return (
-        <div className="fixed bottom-0 right-0 mb-6 mr-6 z-50">
-            <div className="flex flex-col bg-white border rounded-lg shadow-lg w-full max-h-96 max-w-96 ">
+        <div className="fixed bottom-0 right-0 mb-2 mr-2 z-50">
+            <div className="flex flex-col bg-transparent rounded-lg shadow-lg w-full max-h-96 max-w-96 ">
                 <div className={`${isOpen ? "" : "rounded-full"} flex justify-between items-center bg-violet-900 px-4 py-2 text-white`} onClick={toggleChat}>
                     <h2 className="text-lg font-semibold">Chat</h2>
                 </div>
                 {isOpen && (
-                    <div className="px-4 py-2 flex flex-col grow-0 overflow-y-scroll">
+                    <div className="px-4 py-2 flex flex-col grow-0 overflow-y-scroll bg-white">
                         {messages.map((message, index) => (
                             <div className="message">
                                 <div className={`text-xs text-gray-500 ${message.sender === 'user' ? 'text-left' : 'text-right'}`}>
@@ -42,7 +42,7 @@ const Chat = () => {
                     </div>
                 )}
                 {isOpen && (
-                    <div className="flex items-center justify-between bg-whitesmoke-200 px-4 py-2">
+                    <div className="flex items-center justify-between bg-gray-200 px-4 py-2">
                         <input
                             type="text"
                             value={inputValue}
