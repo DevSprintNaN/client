@@ -7,7 +7,7 @@ const ProjectCards = ({ navigate, projects }) => {
     if (projects) {
         return (
             <div className="w-100">
-                {projects.map((project, index) => (
+                {projects && projects.map((project, index) => (
                     <Card key={index} className="bg-violet-50 hover:shadow-lg mb-4">
                         <Card.Header onClick={() => navigate('/view-project/'+project._id)} className="bg-violet-100 cursor-pointer text-lg font-bold">{project.name}</Card.Header>
                         <Card.Body>

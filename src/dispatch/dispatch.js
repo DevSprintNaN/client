@@ -1,5 +1,6 @@
 import axios from 'axios';
 import actions from './actions';
+import { useNavigate } from 'react-router-dom';
 export const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const dispatch = async (action, body={}) => {
@@ -19,11 +20,26 @@ const dispatch = async (action, body={}) => {
                 return response;
             case actions.getProjects:
                 response = await axios.get(`${baseUrl}/project/get-all`, body);
-                console.log(response);
                 return response.data;
         }
     }catch(error){
-        return error;
+        if(error.code==="ERR_NETWORK"){
+            console.log("comes here");
+            window.location.href="/error500";
+        }
+        else if(error.code==="ECONNREFUSED"){
+            window.location.href="/error500";
+        }
+        else if(error.response.status===401 || error.response.status===403){
+            window.location.href="/error401";
+        }
+        else if(error.response.status===500){
+            window.location.href="/error500";
+        }
+        else if(error.response.status===404){
+            window.location.href="/error404";
+        }
+        return error.response;
     }
 };
 

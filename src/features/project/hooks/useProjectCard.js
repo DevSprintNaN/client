@@ -5,12 +5,18 @@ import actions from "../../../dispatch/actions";
 
 export const useProjectCard=()=>{
     const navigate=useNavigate();
-    const [projects,setProjects] = useState([]);
+    const [projects,setProjects] = useState();
+    const [error,setError]=useState("");
 
     const fetchProjects=async()=>{
         const response=await dispatch(actions.getProjects);
         if(response?.status==="success"){
+            setError("");
             setProjects(response.projects);
+        }
+        else{
+            setError("Sorry, we couldn't fetch your projects. Please try again later...")
+            setProjects([]);
         }
     }
 
@@ -18,5 +24,5 @@ export const useProjectCard=()=>{
         fetchProjects();
     },[])
 
-    return {navigate,projects,setProjects}
+    return {navigate,projects,setProjects,error}
 }

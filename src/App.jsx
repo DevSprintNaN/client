@@ -7,6 +7,9 @@ import AccountPage from './pages/AccountPage';
 import LandingPage from './pages/LandingPage';
 import Project from './features/project/pages/project';
 import ViewProject from './features/view-project/pages/view-project';
+import Error404 from './pages/error404';
+import Error500 from './pages/error500';
+import Error401 from './pages/error401403';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
             <h1>Health</h1>
             <p>Server: {import.meta.env.VITE_BASE_URL}</p>
           </div>} />
+          <Route path="/error500" element={<Error500/>}/>
+          <Route path="/error401" element={<Error401/>}/>
+          <Route path="*" element={<Error404/>} />
         </Routes>
       </BrowserRouter>
     </>
