@@ -72,7 +72,7 @@ const LoginPage = () => {
                                 {payload && (<FormMessage bg_class={payload.bg_color} message={message}/>)}
 
                                 <div>
-                                    <button type="submit" className={`w-full bg-purple-700 text-white p-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}>Login</button>
+                                    <button type="submit" className={`w-full bg-purple-700 text-white p-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={disabled}>Login</button>
                                 </div>
                             </form>
                             <div className="mt-4 text-sm text-gray-600 text-center">
