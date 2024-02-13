@@ -1,110 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dispatch from "../../../dispatch/dispatch";
+import actions from "../../../dispatch/actions";
 
 export const useProjectCard=()=>{
     const navigate=useNavigate();
-    const [projects] = useState([
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        }
-    ]);
+    const [projects,setProjects] = useState([]);
 
-    return {navigate,projects}
+    const fetchProjects=async()=>{
+        const response=await dispatch(actions.getProjects);
+        if(response?.status==="success"){
+            setProjects(response.projects);
+        }
+    }
+
+    useEffect(()=>{
+        fetchProjects();
+    },[])
+
+    return {navigate,projects,setProjects}
 }

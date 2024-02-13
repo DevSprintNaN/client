@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export const RegisterPage = () => {
     const navigate=useNavigate();
     const [formData, setFormData] = useState({
+        username:"",
         email: "",
         password: "",
         confirmPassword: "",
@@ -49,6 +50,12 @@ export const RegisterPage = () => {
                 formDispatch(formStates.invalid, setFormState, setPayload);
                 setMessage("Password and confirm password values don't match!")
             }
+
+            if(username==="" || email=="" || password==="" || confirmPassword===""){
+                setDisabled(true)
+                formDispatch(formStates.invalid, setFormState, setPayload);
+                setMessage("All fields are required")
+            }
         }
     };
 
@@ -59,6 +66,7 @@ export const RegisterPage = () => {
         console.log(formData);
 
         const response = await dispatch(actions.register, {
+            username: formData.username,
             email: formData.email,
             password: formData.password
         });
@@ -88,6 +96,12 @@ export const RegisterPage = () => {
                             <h1 className="text-sm font-semibold mb-6 text-gray-500 text-center">Join the Hub for Seamless Project Management and Version Control </h1>
 
                             <form className="space-y-4" onSubmit={handleSubmit}>
+                            <div>
+                                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="username" id="username" name="username" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300"
+                                        value={formData.username}
+                                        onChange={handleInputChange} required />
+                                </div>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                                     <input type="email" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300"
