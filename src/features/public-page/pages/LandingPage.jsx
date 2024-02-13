@@ -11,7 +11,7 @@ const LandingPage = () => {
 
     return (
         <>
-            <header class="bg-violet-100 h-full pb-10">
+            <header className="bg-violet-100 h-full pb-10">
                 <nav className="container mx-auto p-3 lg:flex lg:items-center lg:justify-between sticky top-0 z-10 bg-violet-100/80 ">
                     <div className="flex items-center justify-between">
                         <div>
@@ -42,12 +42,12 @@ const LandingPage = () => {
                     </div>
                 </nav>
 
-                <div class="container mx-auto px-6 py-10 text-center bg-white rounded-md">
-                    <div class="mx-auto max-w-lg">
-                        <h1 class="text-3xl font-bold text-gray-800  md:text-4xl">DevSprint 2024</h1>
+                <div className="container mx-auto px-6 py-10 text-center bg-white rounded-md">
+                    <div className="mx-auto max-w-lg">
+                        <h1 className="text-3xl font-bold text-gray-800  md:text-4xl">DevSprint 2024</h1>
                         <img src={'landing_page.png'} />
 
-                        <p class="mt-6 text-gray-500">Dive Back to the Hub of Effortless Project Collaboration and Version Control</p>
+                        <p className="mt-6 text-gray-500">Dive Back to the Hub of Effortless Project Collaboration and Version Control</p>
                     </div>
                 </div>
             </header>
