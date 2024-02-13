@@ -1,10 +1,10 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //components import
-import LoginPage from "./pages/LoginPage";
-import { RegisterPage } from './pages/RegisterPage';
-import AccountPage from './pages/AccountPage';
-import LandingPage from './pages/LandingPage';
+import LoginPage from "./features/login/pages/LoginPage";
+import { RegisterPage } from './features/register/pages/RegisterPage';
+import AccountPage from './features/profile/pages/AccountPage';
+import LandingPage from './features/public-page/pages/LandingPage';
 import Project from './features/project/pages/project';
 import ViewProject from './features/view-project/pages/view-project';
 
