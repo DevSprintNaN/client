@@ -10,8 +10,8 @@ const ProjectCards = () => {
         return (
             <div className="w-100">
                 {projects.map((project, index) => (
-                    <Card key={index} onClick={() => navigate('/view-project/123')} className="bg-violet-50 cursor-pointer hover:shadow-lg mb-4">
-                        <Card.Header className="bg-violet-100 text-lg font-bold">{project.projectName}</Card.Header>
+                    <Card key={index} className="bg-violet-50 hover:shadow-lg mb-4">
+                        <Card.Header onClick={() => navigate('/view-project/123')} className="bg-violet-100 cursor-pointer text-lg font-bold">{project.projectName}</Card.Header>
                         <Card.Body>
                             <div className="md:flex mb-5">
                             <div className="ms-4 me-5">
