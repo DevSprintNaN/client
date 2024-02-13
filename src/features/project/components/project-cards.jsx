@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import Loading from "../../../components/Loading";
+import { useProjectCard } from "../hooks/useProjectCard";
 
 
 const ProjectCards = () => {
-    const [projects] = useState([
-        {
-            projectName: "DevOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        },
-        {
-            projectName: "GitOps",
-            projectContributors: ["Mirza Mohammad Azwad", "Nibir Kabir", "Nafisa Maliyat"],
-            projectContent: ["C++", "Python", "JS"]
-        }
-    ]);
-
-    useEffect(() => {
-
-    }, [projects])
+    const {navigate,projects}=useProjectCard();
 
     if (projects) {
         return (
             <>
                 {projects.map((project, index) => (
-                    <Card key={index}> 
+                    <Card key={index} onClick={()=>navigate('/view-project/123')}> 
                         <Card.Header>{project.projectName}</Card.Header>
                         <Card.Body>
                             <div className="contributors">Project Contributors</div>
@@ -43,7 +28,6 @@ const ProjectCards = () => {
                         </Card.Body>
                         <Card.Footer>
                             <button className="btn" style={{marginRight:"20px"}}>Share</button>
-                            <button className="btn">Show</button>
                         </Card.Footer>
                     </Card>
                 ))}
