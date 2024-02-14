@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react"
-import dispatch from "../../../dispatch/dispatch";
-import actions from "../../../dispatch/actions";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrentDirectoryContext, setCurrentFileURL, setCurrentProjectFileMap, setProjectID } from "../../../context/file/actions";
 
 export const useViewProject = (id) => {
     const [directories, setDirectories] = useState();
     const [currentDirectory, setCurrentDirectory] = useState("/");
+    const currentDirectoryContext=useSelector((state)=>state.file.currentDirectory);
+    const currentProjectFileMap=useSelector((state)=>state.file.currentProjectFileMap);
+    const [fileDetailed,setFileDetailed]=useState();
+    const fileDispatch=useDispatch();
     console.log(id);
     const [fileMap, setMap] = useState(new Map());
     const fetchFiles = async () => {
+        if(currentDirectoryContext){
+            setCurrentDirectory(currentDirectoryContext);
+            setDirectories(currentProjectFileMap.get(currentDirectoryContext));
+            setMap(currentProjectFileMap);
+            return;
+        }
         const res = await dispatch(actions.getFiles, id);
         setDirectories(res.files.map((file) => file.name.split(id+"/")[1]));
         generateMap(res.files.map((file) => file.name.split(id+"/")[1]));
+        setFileDetailed(res.files);
     }
 
     const generateMap=(dirs)=>{
@@ -50,6 +63,15 @@ export const useViewProject = (id) => {
                 }
                 setCurrentDirectory(currentDirectory + temp + "/");
             }
+        }
+        else{
+            fileDispatch(setCurrentDirectoryContext(currentDirectory + directory))
+            fileDispatch(setCurrentProjectFileMap(fileMap));
+            fileDispatch(setProjectID(id));
+            console.log(id+currentDirectory+directory);
+            const urls=fileDetailed.find((file)=>file.name===id+currentDirectory+directory).files;
+            console.log(urls);
+            fileDispatch(setCurrentFileURL(urls[urls.length-1]));
         }
     }
 

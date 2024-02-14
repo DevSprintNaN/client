@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import dispatch from "../../../dispatch/dispatch";
-import actions from "../../../dispatch/actions";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
 
 export const useProjectCard=()=>{
     const navigate=useNavigate();

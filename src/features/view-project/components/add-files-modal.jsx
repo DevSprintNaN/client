@@ -60,12 +60,9 @@ const FileUploadModal = ({ currentDirectory, _id, setShow, handleFile }) => {
           </section>
 
           <footer className="flex justify-end px-8 pb-8 pt-4">
-            <button id="submit" className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none" onClick={handleUpload}>
-              Upload now
-            </button>
-            <button id="cancel" className="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none" onClick={handleCancel}>
-              Cancel
-            </button>
+            <div className={`md:w-1/2 text-red-500 text-center  transition-colors duration-300 bg-gray-100 hover:bg-red-500 hover:text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 md:mb-0 md:mr-5 hover:cursor-pointer ${uploading ? "opacity-50 cursor-not-allowed" : ""}`} onClick={handleCancel}>Cancel</div>
+
+            <button className={`md:w-1/2 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${uploading ? "opacity-50" : ""}`} disabled={uploading} onClick={() => handleUpload()}>Upload</button>
           </footer>
         </article>)}
         {uploading && (<article aria-label="File Upload Modal" className="relative h-full flex flex-col bg-white shadow-xl rounded-md">

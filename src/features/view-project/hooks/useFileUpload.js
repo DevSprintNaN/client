@@ -1,6 +1,6 @@
 import { useState } from "react";
-import dispatch from "../../../dispatch/dispatch";
-import actions from "../../../dispatch/actions";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
 
 export const useFileUpload = (currentDirectory,_id,setShow,handleFile) => {
     const [files, setFiles] = useState({});

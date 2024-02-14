@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import formDispatch, { formStates } from '../../../dispatch/formStatus';
-import dispatch from '../../../dispatch/dispatch';
-import actions from '../../../dispatch/actions';
+import formDispatch, { formStates } from '../../../context/dispatch/formStatus';
+import dispatch from '../../../context/dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
 import FormMessage from '../../../components/FormMessage';
 
 const AddProjectModal = ({ open, setShow, setProjects, projects }) => {

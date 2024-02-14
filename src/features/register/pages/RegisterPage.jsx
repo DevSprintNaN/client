@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import actions from '../../../dispatch/actions';
-import dispatch from '../../../dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
+import dispatch from '../../../context/dispatch/dispatch';
 import Loading from '../../../components/Loading';
 import FormMessage from '../../../components/FormMessage';
-import formDispatch, { formStates } from '../../../dispatch/formStatus';
+import formDispatch, { formStates } from '../../../context/dispatch/formStatus';
 import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {

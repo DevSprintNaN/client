@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import formDispatch, { formStates } from '../../../dispatch/formStatus'
+import formDispatch, { formStates } from '../../../context/dispatch/formStatus'
 import FormMessage from '../../../components/FormMessage';
 
 const FolderUploadModal = ({ show, setShow,handleFolder,currentDirectory }) => {
