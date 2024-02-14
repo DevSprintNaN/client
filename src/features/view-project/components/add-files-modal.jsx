@@ -1,19 +1,19 @@
 import { useFileUpload } from "../hooks/useFileUpload";
 
-const FileUploadModal = ({ currentDirectory,_id,setShow }) => {
-  const {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile}=useFileUpload(currentDirectory,_id,setShow);
+const FileUploadModal = ({ currentDirectory, _id, setShow, handleFile }) => {
+  const { files, error, handleDrop, handleCancel, handleFileInput, handleUpload, deleteFile, uploading, progress } = useFileUpload(currentDirectory, _id, setShow, handleFile);
 
   return (
     <div className="fixed inset-0 bg-violet-100/75 rounded-md h-screen w-screen sm:px-8 md:px-16 sm:py-8">
       <main className="container mx-auto max-w-screen-lg h-full">
-        <article aria-label="File Upload Modal" className="relative h-full flex flex-col bg-white shadow-xl rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()} onDragLeave={(e) => e.preventDefault()}>
+        {!uploading && (<article aria-label="File Upload Modal" className="relative h-full flex flex-col bg-white shadow-xl rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()} onDragLeave={(e) => e.preventDefault()}>
 
           <section className="h-full overflow-auto p-8 w-full flex flex-col">
             <header className="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
               <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
                 <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
               </p>
-              <input id="hidden-input" type="file" multiple className="hidden" onChange={handleFileInput} />
+              <input id="hidden-input" type="file" multiple className="hidden" webkitdirectory mozdirectory directory onChange={handleFileInput} />
               <button id="button" className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none" onClick={() => document.getElementById('hidden-input').click()}>
                 Upload a file
               </button>
@@ -67,7 +67,20 @@ const FileUploadModal = ({ currentDirectory,_id,setShow }) => {
               Cancel
             </button>
           </footer>
-        </article>
+        </article>)}
+        {uploading && (<article aria-label="File Upload Modal" className="relative h-full flex flex-col bg-white shadow-xl rounded-md">
+          <section className="h-full overflow-auto p-8 w-full flex flex-col">
+            <header className="border-b-2 border-gray-100 pb-5">
+              <h1 className="text-2xl font-semibold text-gray-900">Uploading...</h1>
+            </header>
+            <div className="flex flex-col items-center justify-center">
+              <div className="w-full h-1 bg-gray-200 rounded-full">
+                <div id="progress" className="h-1 bg-purple-700 rounded-full" style={{ width: progress.toPrecision(3) + '%' }}></div>
+              </div>
+              <span className="text-xs text-gray-600 mt-2">{progress}%</span>
+            </div>
+          </section>
+        </article>)}
       </main>
     </div>
   );

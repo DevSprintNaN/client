@@ -9,19 +9,14 @@ export const useViewProject = (id) => {
     const [fileMap, setMap] = useState(new Map());
     const fetchFiles = async () => {
         const res = await dispatch(actions.getFiles, id);
-        console.log(res);
         setDirectories(res.files.map((file) => file.name.split(id+"/")[1]));
+        generateMap(res.files.map((file) => file.name.split(id+"/")[1]));
     }
-    useEffect(() => {
-        fetchFiles();
-    }, [])
 
-    useEffect(() => {
-        if (directories) {
-            console.log(directories);   
-            let fileMap = new Map();
-            fileMap.set("/", directories);
-            directories.forEach((directory) => {
+    const generateMap=(dirs)=>{
+        let fileMap = new Map();
+            fileMap.set("/", dirs);
+            dirs.forEach((directory) => {
                 let temp = directory;
                 let currentDir = "/";
                 while (temp.includes("/")) {
@@ -31,13 +26,20 @@ export const useViewProject = (id) => {
                         fileMap.set(currentDir, [temp]);
                     }
                     else {
-                        fileMap.set(currentDir, fileMap.get(currentDir).push(temp));
+                        let files=fileMap.get(currentDir);
+                        files.push(temp);
+                        fileMap.set(currentDir, files);
                     }
                 }
             })
             setMap(fileMap);
-        }
-    }, [directories])
+    }
+
+    useEffect(() => {
+        fetchFiles();
+    }, [])
+
+
 
     const handleDirectories = (directory) => {
         if (directory.includes("/")) {
@@ -54,25 +56,41 @@ export const useViewProject = (id) => {
     const reverse = () => {
         if (currentDirectory !== "/") {
             let temp = currentDirectory.split("/").slice(0, -2).join("/") + "/";
+            console.log(temp);
             setDirectories(fileMap.get(temp));
+            console.log(fileMap.get(temp));
             setCurrentDirectory(temp);
         }
     }
 
     const handleFolder = (folder) => {
-        setDirectories([...directories, folder + "/"]);
+        setDirectories([...directories, folder + "/"])
         let map = fileMap;
-        const currentDir = currentDirectory === "/" ? currentDirectory : currentDirectory + "/";
-        if (!map.has(currentDir)) {
-            map.set(currentDir, [folder + "/"]);
+        if (!map.has(currentDirectory)) {
+            map.set(currentDirectory, [folder + "/"]);
         }
         else {
-            let files = map.get(currentDir)
+            let files = map.get(currentDirectory)
             files.push(folder + "/")
-            map.set(currentDir, files);
+            map.set(currentDirectory, files);
         }
-        map.set(currentDir + folder + "/", [""])
+        map.set(currentDirectory + folder + "/", [""])
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder }
+    const handleFile =(file)=>{
+        let files = directories;
+        files.push(file);
+        setDirectories(files);
+        let map = fileMap;
+        if (!map.has(currentDirectory)) {
+            map.set(currentDirectory, [file]);
+        }
+        else {
+            let files = map.get(currentDirectory)
+            files.push(file)
+            map.set(currentDirectory, files);
+        }
+    }
+
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder,handleFile }
 }

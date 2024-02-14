@@ -12,14 +12,14 @@ import Loading from '../../../components/Loading';
 
 const ViewProject = () => {
     const { id } = useParams();
-    const { directories, handleDirectories, currentDirectory, reverse,handleFolder } = useViewProject(id);
+    const { directories, handleDirectories, currentDirectory, reverse,handleFolder,handleFile } = useViewProject(id);
     const [showFileUpload, setShowFileUpload]=useState(false)
     const [showFolderUpload, setShowFolderUpload]=useState(false)
     if(directories){
         return (
             <div className="h-full p-2 bg-violet-100 min-h-screen">
                 <UserNavbar />
-                {showFileUpload && (<FileUploadModal _id={id} setShow={setShowFileUpload} currentDirectory={currentDirectory} />)}
+                {showFileUpload && (<FileUploadModal _id={id} setShow={setShowFileUpload} currentDirectory={currentDirectory} handleFile={handleFile} />)}
                 {showFolderUpload && (<FolderUploadModal show={showFolderUpload} setShow={setShowFolderUpload} handleFolder={handleFolder} currentDirectory={currentDirectory} />)}
                 <div className="w-full p-2 flex bg-violet-200 text-white">
                     <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => reverse()}><IonIcon name="return-up-back-outline" className="me-2" /></button>

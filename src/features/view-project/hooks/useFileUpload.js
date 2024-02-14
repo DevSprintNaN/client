@@ -2,9 +2,11 @@ import { useState } from "react";
 import dispatch from "../../../dispatch/dispatch";
 import actions from "../../../dispatch/actions";
 
-export const useFileUpload = (currentDirectory,_id,setShow) => {
+export const useFileUpload = (currentDirectory,_id,setShow,handleFile) => {
     const [files, setFiles] = useState({});
     const [fileUploads, setFileUploads] = useState([]);
+    const [progress,setProgress]=useState(0);
+    const [uploading,setUploading]=useState(false);
     const [error, setError] = useState("");
     const addFile = (file) => {
         if(file.size>=10485760){
@@ -48,16 +50,37 @@ export const useFileUpload = (currentDirectory,_id,setShow) => {
     };
 
     const handleUpload = async () => {
-        await fileUploads.forEach(async (file) => {
+        if(fileUploads.length>5){
+            setError("You can upload only 5 files at a time");
+            return;
+        }
+        let size=0;
+        fileUploads.forEach((file)=>{
+            size+=file.size;
+        });
+        if(size>=52428800){
+            setError("Total size of files should be less than 50MB");
+            return;
+        }
+        setUploading(true);
+        let count=0;
+        fileUploads.forEach(async (file) => {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('projectID',_id);
             formData.append('currentDirectory',currentDirectory);
-            const res=await dispatch(actions.fileUpload,formData);
-            console.log(res);
+            await dispatch(actions.fileUpload,formData);
+            setProgress((count/fileUploads.length)*100);
+            handleFile(file.name);
+            count++;
+            if(count===fileUploads.length){
+                setUploading(false);
+                setProgress(0);
+                setFiles({});
+                setShow(false);
+            }
         })
-        setShow(false);
     };
 
-    return {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile}
+    return {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile,uploading,progress};
 }
