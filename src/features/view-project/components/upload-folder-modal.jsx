@@ -69,7 +69,7 @@ const FolderUploadModal = ({ show, setShow }) => {
               {payload && (<FormMessage bg_class={payload.bg_color} message={message} />)}
 
               <div className='flex items-center justify-between px-2'>
-                <div className={`md:w-1/2 text-red-500  transition-colors duration-300 bg-gray-100 hover:bg-red-500 hover:text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 md:mb-0 md:mr-5 hover:cursor-pointer ${disabled ? "opacity-50 cursor-not-allowed" : ""}`} onClick={handleCancel}>Cancel</div>
+                <div className={`md:w-1/2 text-red-500  transition-colors duration-300 bg-gray-100 hover:bg-red-500 hover:text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 md:mb-0 md:mr-5 text-center hover:cursor-pointer ${disabled ? "opacity-50 cursor-not-allowed" : ""}`} onClick={handleCancel}>Cancel</div>
 
                 <button type="submit" className={`md:w-1/2 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${disabled ? "opacity-50" : ""}` } disabled={disabled}>Confirm</button>
               </div>
