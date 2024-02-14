@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import hljs from 'highlight.js';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -10,8 +9,11 @@ const CodeViewer = ({ src }) => {
 
     const fetchFileContent = async () => {
         try {
-            const response = await axios.get(src);
-            const text = response.data;
+            const response = fetch(src,{
+                method:"GET"
+            });
+            const text = await response.text();
+            console.log(text);
             setContent(text);
             const detectedLanguage = hljs.highlightAuto(text).language;
             setLanguage(detectedLanguage);
