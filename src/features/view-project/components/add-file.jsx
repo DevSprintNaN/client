@@ -4,13 +4,13 @@ import "../../../utils/prismImports"
 import 'prismjs/themes/prism.css';
 import Editor from 'react-simple-code-editor';
 import UserNavbar from '../../../components/UserNavbar';
-import { useViewProject } from '../hooks/useViewProject';
-import { useParams } from 'react-router-dom';
 import prismLanguages from '../../../utils/prismLanguages';
 import IonIcon from '@reacticons/ionicons';
+import { useSelector } from 'react-redux';
+import Chat from '../../chat/components/chat';
 
 const AddFilePage = () => {
-    // const includedLanguages = ['javascript', 'python', 'css', 'clike', 'bash'];
+    const currentDirectory=useSelector((state)=>state.file.currentDirectory);   
     const filteredLanguages = Object.keys(languages)
         .filter(lang => prismLanguages.includes(lang))
         .reduce((obj, key) => {
@@ -21,9 +21,7 @@ const AddFilePage = () => {
     const [input, setInput] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [language, setLanguage] = useState(languages.javascript);
-
-    const { id } = useParams()
-    const { directories, handleDirectories, currentDirectory, reverse } = useViewProject(id);
+    
 
     const handleCancel = () => {
         if (!disabled) {
@@ -77,7 +75,7 @@ const AddFilePage = () => {
                                         ))}
                                     </select>
                                 </div>
-                                <div className='bg-violet-100 text-black min-h-[50vh] text-lg'>
+                                <div className='bg-gray-100 text-black min-h-[50vh] text-lg'>
                                     <Editor
                                         value={input}
                                         onValueChange={setInput}
@@ -97,6 +95,7 @@ const AddFilePage = () => {
 
                 </form>
             </div>
+            <Chat/>
         </>
     );
 };

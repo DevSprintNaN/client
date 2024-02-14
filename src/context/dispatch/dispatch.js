@@ -10,7 +10,9 @@ const dispatch = async (action, body={}) => {
             case actions.register:
                 response = await axios.post(`${baseUrl}/auth/register`, body);
                 return response.data;
-
+            case actions.logout:
+                response = await axios.post(`${baseUrl}/auth/logout`);
+                return response.data;
             case actions.login:
                 response = await axios.post(`${baseUrl}/auth/login`,body);
                 return response.data;

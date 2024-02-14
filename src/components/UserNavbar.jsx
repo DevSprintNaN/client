@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import dispatch from '../context/dispatch/dispatch';
+import actions from '../context/dispatch/actions';
 
 const UserNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,9 +12,12 @@ const UserNavbar = () => {
     };
 
     const handleLogOut=async()=>{
-        console.log("logout");
-        navigate("/");
-
+        const response=await dispatch(actions.logout);
+        console.log(response);
+        if(response.status==="success"){
+            localStorage.clear();
+            navigate("/");
+        }
     }
 
     return (
@@ -42,7 +47,7 @@ const UserNavbar = () => {
                         <a className="text-gray-700 hover:text-blue-500  lg:mx-6" href="/projects">Projects</a>
                     </div>
 
-                    <button className="mt-4 block h-10 transform rounded-md border px-5 py-2 text-center text-sm capitalize text-gray-700 transition-colors duration-300 hover:bg-gray-100  lg:mt-0 lg:w-auto" onClick={()=>handleLogOut}> Log Out </button>
+                    <button className="mt-4 block h-10 transform rounded-md border px-5 py-2 text-center text-sm capitalize text-gray-700 transition-colors duration-300 hover:bg-gray-100  lg:mt-0 lg:w-auto" onClick={handleLogOut}> Log Out </button>
                 </div>
             </nav>
         </>
