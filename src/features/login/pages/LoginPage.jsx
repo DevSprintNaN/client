@@ -1,10 +1,10 @@
 
 import { useState } from "react";
-import actions from "../dispatch/actions";
-import dispatch from "../dispatch/dispatch";
-import Loading from "../components/Loading";
-import formDispatch, { formStates } from "../dispatch/formStatus";
-import FormMessage from "../components/FormMessage";
+import actions from "../../../dispatch/actions";
+import dispatch from "../../../dispatch/dispatch";
+import Loading from "../../../components/Loading";
+import formDispatch, { formStates } from "../../../dispatch/formStatus";
+import FormMessage from "../../../components/FormMessage";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -16,6 +16,7 @@ const LoginPage = () => {
     const [formState, setFormState] = useState("");
     const [message, setMessage] = useState("")
     const [payload, setPayload] = useState(null)
+    const [disabled, setDisabled] = useState(false)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +28,7 @@ const LoginPage = () => {
         formDispatch(formStates.loading, setFormState, setPayload);
         setMessage("")
         console.log(formData);
+        setDisabled(true)
 
         const response = await dispatch(actions.login, {
             email: formData.email,
@@ -34,10 +36,12 @@ const LoginPage = () => {
         });
         console.log(response);
         if (response?.status==="success") {
+            setDisabled(false)
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Login successful!");
             navigate("/account");
         } else {
+            setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
             setMessage("Login failed!")
         }
@@ -68,7 +72,7 @@ const LoginPage = () => {
                                 {payload && (<FormMessage bg_class={payload.bg_color} message={message}/>)}
 
                                 <div>
-                                    <button type="submit" className="w-full bg-purple-700 text-white p-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Login</button>
+                                    <button type="submit" className={`w-full bg-purple-700 text-white p-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`} disabled={disabled}>Login</button>
                                 </div>
                             </form>
                             <div className="mt-4 text-sm text-gray-600 text-center">

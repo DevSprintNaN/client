@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import UserNavbar from '../components/UserNavbar';
-import Loading from "../components/Loading";
-import formDispatch, { formStates } from '../dispatch/formStatus';
-import FormMessage from '../components/FormMessage';
+import UserNavbar from '../../../components/UserNavbar';
+import Loading from "../../../components/Loading";
+import formDispatch, { formStates } from '../../../dispatch/formStatus';
+import FormMessage from '../../../components/FormMessage';
 
 const AccountPage = () => {
     const [editMode, setEditMode] = useState(false);
@@ -55,14 +55,17 @@ const AccountPage = () => {
         formDispatch(formStates.loading, setFormState, setPayload);
         setMessage("");
         console.log(formData);
+        setDisabled(true)
 
         const response = 1;
         if (response) {
+            setDisabled(false)
             formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Login successful!");
+            setMessage("Changes saved successfully!");
         } else {
+            setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
-            setMessage("Login failed!");
+            setMessage("Could not make changes!");
         }
     };
 

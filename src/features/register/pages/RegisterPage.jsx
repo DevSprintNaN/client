@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import actions from '../dispatch/actions';
-import dispatch from '../dispatch/dispatch';
-import Loading from '../components/Loading';
-import FormMessage from '../components/FormMessage';
-import formDispatch, { formStates } from '../dispatch/formStatus';
+import actions from '../../../dispatch/actions';
+import dispatch from '../../../dispatch/dispatch';
+import Loading from '../../../components/Loading';
+import FormMessage from '../../../components/FormMessage';
+import formDispatch, { formStates } from '../../../dispatch/formStatus';
 import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
@@ -64,6 +64,7 @@ export const RegisterPage = () => {
         formDispatch(formStates.loading, setFormState, setPayload);
         setMessage("")
         console.log(formData);
+        setDisabled(true)
 
         const response = await dispatch(actions.register, {
             username: formData.username,
@@ -73,12 +74,14 @@ export const RegisterPage = () => {
         console.log(response);
 
         if (response?.message==="User created successfully") {
+            setDisabled(false)
             formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Login successful!")
+            setMessage("Registration successful!")
             navigate("/account");
         } else {
+            setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
-            setMessage("Login failed!")
+            setMessage("Registration failed!")
         }
     };
 
@@ -97,7 +100,7 @@ export const RegisterPage = () => {
 
                             <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
-                                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email</label>
+                                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
                                     <input type="username" id="username" name="username" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300"
                                         value={formData.username}
                                         onChange={handleInputChange} required />

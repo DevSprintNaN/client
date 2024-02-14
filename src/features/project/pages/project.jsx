@@ -10,7 +10,7 @@ const Project = () => {
     const [show, setShow] = useState(false);
     const { navigate, projects, setProjects, error } = useProjectCard();
     return (
-        <div className={`h-full p-2 bg-violet-100 w-full min-h-screen ${show ? "blur-sm" : "blur-none"}`} >
+        <div className={`h-full p-2 bg-violet-100 w-full min-h-screen`} >
             <UserNavbar />
             <ProjectHeader show={show} setShow={setShow} />
             <AddProjectModal open={show} setShow={setShow} projects={projects} setProjects={setProjects} />
