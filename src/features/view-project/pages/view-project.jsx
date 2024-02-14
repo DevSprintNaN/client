@@ -1,12 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import UserNavbar from '../../../components/UserNavbar';
 import Chat from '../../chat/components/chat';
 import Files from '../components/files';
 import { useViewProject } from '../hooks/useViewProject';
 import IonIcon from "@reacticons/ionicons";
 import { useState } from 'react';
-import FileUploadModal from '../components/add-files-modal';
-import FolderUploadModal from '../components/add-folder-modal';
+import FileUploadModal from '../components/upload-files-modal';
+import FolderUploadModal from '../components/upload-folder-modal';
 import Loading from '../../../components/Loading';
 
 

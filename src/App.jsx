@@ -9,6 +9,7 @@ import Error404 from './pages/error404';
 import Error500 from './pages/error500';
 import Error401 from './pages/error401403';
 import ViewProjectContext from './features/view-project/pages/view-project-with-context';
+import AddFilePage from './features/view-project/pages/add-file';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/projects" element={<Project/>}/>
           <Route path="/view-project/:id" element={<ViewProjectContext/>}/>
+          <Route path="/view-project/:id/add-file" element={<AddFilePage/>}/>
           <Route path="/health" element={<div>
             <h1>Health</h1>
             <p>Server: {import.meta.env.VITE_BASE_URL}</p>
