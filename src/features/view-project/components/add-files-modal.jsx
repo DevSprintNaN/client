@@ -1,44 +1,7 @@
-import React, { useState } from 'react';
+import { useFileUpload } from "../hooks/useFileUpload";
 
-const FileUploadModal = ({ show, setShow }) => {
-  const [files, setFiles] = useState({});
-
-  const addFile = (file) => {
-    const objectURL = URL.createObjectURL(file);
-
-    setFiles(prevFiles => ({
-      ...prevFiles,
-      [objectURL]: file
-    }));
-  };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    for (const file of event.dataTransfer.files) {
-      addFile(file);
-    }
-  };
-
-  const handleFileInput = (event) => {
-    for (const file of event.target.files) {
-      addFile(file);
-    }
-  };
-
-  const deleteFile = (target) => {
-    const filesCopy = { ...files };
-    delete filesCopy[target];
-    setFiles(filesCopy);
-  };
-
-  const handleCancel = () => {
-    setFiles({})
-    setShow(false)
-  };
-
-  const handleUpload = () => {
-    console.log(files)
-  };
+const FileUploadModal = ({ currentDirectory,_id,setShow }) => {
+  const {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile}=useFileUpload(currentDirectory,_id,setShow);
 
   return (
     <div className="fixed inset-0 bg-violet-100/75 rounded-md h-screen w-screen sm:px-8 md:px-16 sm:py-8">
@@ -59,12 +22,13 @@ const FileUploadModal = ({ show, setShow }) => {
             <h1 className="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">
               To Upload
             </h1>
-
+            <div className="w-full bg-red-100 text-red-500 border">
+              {error}
+            </div>
             {Object.keys(files).length > 0 ? (<ul id="gallery" className="flex flex-1 flex-wrap -m-1">
               {Object.entries(files).map(([objectURL, file]) => (
                 <li key={objectURL} className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
                   <article tabIndex="0" className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
-                    {/* {file.type.match('image.*') && <img alt="upload preview" className="img-preview hidden w-full h-full sticky object-cover rounded-md bg-fixed" src={objectURL} />} */}
                     <section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
                       <h1 className="flex-1 group-hover:text-blue-800">{file.name}</h1>
                       <div className="flex">
@@ -87,10 +51,10 @@ const FileUploadModal = ({ show, setShow }) => {
                 </li>
               ))}
             </ul>)
-              : (<><ul id="gallery" class="flex flex-1 flex-wrap -m-1">
-                <li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center">
-                  <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
-                  <span class="text-small text-gray-500">No files selected</span>
+              : (<><ul id="gallery" className="flex flex-1 flex-wrap -m-1">
+                <li id="empty" className="h-full w-full text-center flex flex-col items-center justify-center">
+                  <img className="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
+                  <span className="text-small text-gray-500">No files selected</span>
                 </li>
               </ul></>)}
           </section>

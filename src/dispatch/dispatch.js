@@ -20,6 +20,17 @@ const dispatch = async (action, body={}) => {
             case actions.getProjects:
                 response = await axios.get(`${baseUrl}/project/get-all`, body);
                 return response.data;
+            case actions.fileUpload:
+                response = await axios.post(`${baseUrl}/file/upload`, body,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    
+                    }
+                });
+                return response.data;
+            case actions.getFiles:
+                response = await axios.get(`${baseUrl}/file/get-all/${body}`);
+                return response.data;
         }
     }catch(error){
         if(error.code==="ERR_NETWORK"){
