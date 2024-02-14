@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import formDispatch, { formStates } from '../../../dispatch/formStatus'
-import dispatch from '../../../dispatch/dispatch';
-import actions from '../../../dispatch/actions';
 import FormMessage from '../../../components/FormMessage';
 
-const FolderUploadModal = ({ show, setShow }) => {
+const FolderUploadModal = ({ show, setShow,handleFolder,currentDirectory }) => {
   const [formState, setFormState] = useState("");
   const [message, setMessage] = useState("")
   const [payload, setPayload] = useState(null)
@@ -23,7 +21,6 @@ const FolderUploadModal = ({ show, setShow }) => {
     e.preventDefault();
     formDispatch(formStates.loading, setFormState, setPayload);
     setMessage("")
-    console.log(folder)
     setDisabled(true)
 
     if (folder === "") {
@@ -32,21 +29,9 @@ const FolderUploadModal = ({ show, setShow }) => {
       setDisabled(false);
       return;
     }
-
-    // const response = await dispatch(actions.addProject, {
-    //   name: folder
-    // });
-
-    // if (response.status === 400) {
-    //   formDispatch(formStates.invalid, setFormState, setPayload);
-    //   setMessage("Folder already exists!")
-    //   setDisabled(false);
-    //   return;
-    // }
-    // console.log(response?.data?.project);
-    // setProjects([...projects, response.data.project])
     setDisabled(false);
     setShow(false);
+    handleFolder(folder);
     formDispatch(formStates.default, setFormState, setPayload);
   };
   return (

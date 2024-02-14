@@ -7,40 +7,38 @@ import IonIcon from "@reacticons/ionicons";
 import { useState } from 'react';
 import FileUploadModal from '../components/upload-files-modal';
 import FolderUploadModal from '../components/upload-folder-modal';
+import Loading from '../../../components/Loading';
+
 
 const ViewProject = () => {
     const { id } = useParams();
-    const navigate=useNavigate();
-    const { directories, handleDirectories, currentDirectory, reverse } = useViewProject(id);
-    const [showFileUpload, setShowFileUpload] = useState(false);
-    const [showFolderUpload, setShowFolderUpload] = useState(false);
-
-    return (
-        <div className="h-full p-2 bg-violet-100 min-h-screen">
-            <UserNavbar />
-            {showFileUpload && (<FileUploadModal show={showFileUpload} setShow={setShowFileUpload} />)}
-            {showFolderUpload && (<FolderUploadModal show={showFolderUpload} setShow={setShowFolderUpload} />)}
-
-            <div className="w-full p-2 bg-violet-200 text-white flex justify-start items-stretch flex-wrap">
-                <div className="flex flex-wrap">
-                    <button className="w-14 bg-purple-700 text-white px-2 py-3 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-5" onClick={() => reverse()}><IonIcon className="text-md" name="return-up-back-outline"/></button>
-
-                    <button className="w-14 bg-purple-700 text-white px-2 py-3 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-5" onClick={() => navigate(`/view-project/${id}/add-file`)}><IonIcon className="text-lg" name="create-outline"/></button>
-
-
-                    <button className="w-14 bg-purple-700 text-white px-2 py-3 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-5" onClick={() => setShowFileUpload(true)}><IonIcon className="text-md" name="document-outline" /><IonIcon className="text-md" name="add-outline" /></button>
-
-                    
-                    <button className="w-14 bg-purple-700 text-white px-2 py-3 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-5" onClick={() => setShowFolderUpload(true)}><IonIcon className="text-md" name="folder-outline" /><IonIcon className="text-md" name="add-outline" /></button>
+    const { directories, handleDirectories, currentDirectory, reverse,handleFolder,handleFile } = useViewProject(id);
+    const [showFileUpload, setShowFileUpload]=useState(false)
+    const [showFolderUpload, setShowFolderUpload]=useState(false)
+    if(directories){
+        return (
+            <div className="h-full p-2 bg-violet-100 min-h-screen">
+                <UserNavbar />
+                {showFileUpload && (<FileUploadModal _id={id} setShow={setShowFileUpload} currentDirectory={currentDirectory} handleFile={handleFile} />)}
+                {showFolderUpload && (<FolderUploadModal show={showFolderUpload} setShow={setShowFolderUpload} handleFolder={handleFolder} currentDirectory={currentDirectory} />)}
+                <div className="w-full p-2 flex bg-violet-200 text-white">
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => reverse()}><IonIcon name="return-up-back-outline" className="me-2" /></button>
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFileUpload(true)}><IonIcon name="document-outline" /><IonIcon name="cloud-upload-outline" className="me-2" /></button>
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFileUpload(true)}><IonIcon name="document-outline" /><IonIcon name="add-outline" className="me-2" /></button>
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFolderUpload(true)}><IonIcon name="folder-outline" /><IonIcon name="cloud-upload-outline" className="me-2" /></button>
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-5" onClick={() => setShowFolderUpload(true)}><IonIcon name="folder-outline" /><IonIcon name="add-outline" className="me-2" /></button>
+                    <input type="text" className="w-7/12 text-black bg-white rounded-md ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
-                <div className='flex-grow mx-4 my-0.5'>
-                    <input type="text" className="h-full w-full text-black bg-white rounded-md ms-2 mt-2 md:mt-0" value={"\t" + currentDirectory} disabled={true}></input>
-                </div>
+                <Files directories={directories} handleDirectories={handleDirectories}/>
+                <Chat />
             </div>
-            <Files directories={directories} handleDirectories={handleDirectories} />
-            <Chat />
-        </div>
-    );
+        );
+    }
+    else{
+        return(
+            <Loading/>
+        )
+    }
 };
 
 export default ViewProject;
