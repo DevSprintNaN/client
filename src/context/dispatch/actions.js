@@ -5,5 +5,6 @@ export default {
     getProjects: "GET_PROJECTS",
     fileUpload:"FILE_UPLOAD",
     getFiles:"GET_FILES",
-    logout:"LOGOUT"
+    logout:"LOGOUT",
+    verified:"VERIFIED"
 }

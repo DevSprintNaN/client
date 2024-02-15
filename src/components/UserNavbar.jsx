@@ -16,7 +16,7 @@ const UserNavbar = () => {
         console.log(response);
         if(response.status==="success"){
             localStorage.clear();
-            navigate("/");
+            window.location.reload();
         }
     }
 

@@ -1,9 +1,9 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./features/login/pages/LoginPage";
-import { RegisterPage } from './features/register/pages/RegisterPage';
+import LoginPage from "./features/authentication/pages/LoginPage";
+import { RegisterPage } from './features/authentication/pages/RegisterPage';
 import AccountPage from './features/profile/pages/AccountPage';
-import LandingPage from './features/public-page/pages/LandingPage';
+import LandingPage from './pages/LandingPage';
 import Project from './features/project/pages/project';
 import Error404 from './pages/error404';
 import Error500 from './pages/error500';
@@ -11,20 +11,42 @@ import Error401 from './pages/error401403';
 import ViewProjectContext from './features/view-project/pages/view-project-with-context';
 import AddFileWithContext from './features/view-project/pages/add-file-with-context';
 import ViewerWithContext from './features/view-project/pages/viewer-with-context';
+import ProtectedRoute from './components/ProtectedRoute';
+import UnProtectedRoutes from './components/UnProtectedRoute';
+import { useProtection } from './hooks/useProtection';
 
 function App() {
+
+  const {authenticated}=useProtection();
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/projects" element={<Project/>}/>
-          <Route path="/view-project/:id" element={<ViewProjectContext/>}/>
-          <Route path="/view-project/:id/add-file" element={<AddFileWithContext/>}/>
-          <Route path="/view-project/:id/open-file/:type" element={<ViewerWithContext/>}/>
+          <Route path="/" element={<UnProtectedRoutes authentication={authenticated}>
+            <LandingPage />
+          </UnProtectedRoutes>} />
+          <Route path="/login" element={<UnProtectedRoutes  authentication={authenticated}>
+            <LoginPage />
+          </UnProtectedRoutes>} />
+          <Route path="/register" element={<UnProtectedRoutes  authentication={authenticated}>
+            <RegisterPage />
+          </UnProtectedRoutes>} />
+          <Route path="/account" element={<ProtectedRoute  authentication={authenticated}>
+            <AccountPage />
+          </ProtectedRoute>} />
+          <Route path="/projects" element={<ProtectedRoute  authentication={authenticated}>
+            <Project/>
+          </ProtectedRoute>}/>
+          <Route path="/view-project/:id" element={<ProtectedRoute  authentication={authenticated}>
+            <ViewProjectContext/>
+          </ProtectedRoute>}/>
+          <Route path="/view-project/:id/add-file" element={<ProtectedRoute  authentication={authenticated}>
+            <AddFileWithContext/>
+          </ProtectedRoute>}/>
+          <Route path="/view-project/:id/open-file/:type" element={<ProtectedRoute  authentication={authenticated}>
+            <ViewerWithContext/>
+          </ProtectedRoute>}/>
           <Route path="/health" element={<div>
             <h1>Health</h1>
             <p>Server: {import.meta.env.VITE_BASE_URL}</p>

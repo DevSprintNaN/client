@@ -95,7 +95,7 @@ export const RegisterPage = () => {
                     <img src={'register.png'} className="w-full" />
                 </div>
 
-                <div className="w-full bg-violet-100 lg:w-1/2 flex items-center justify-center">
+                <div className="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
                     <div className="max-w-md w-full p-6">
                         {formState===formStates.loading ? (<Loading message={'Please wait while we process your request...'} />) : (<><h1 className="text-3xl font-semibold mb-6 text-black text-center">Sign Up </h1>
                             <h1 className="text-sm font-semibold mb-6 text-gray-500 text-center">Join the Hub for Seamless Project Management and Version Control </h1>
