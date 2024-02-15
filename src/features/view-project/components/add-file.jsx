@@ -8,25 +8,28 @@ import prismLanguages from '../../../utils/prismLanguages';
 import IonIcon from '@reacticons/ionicons';
 import { useSelector } from 'react-redux';
 import Chat from '../../chat/components/chat';
+import hljs from 'highlight.js';
 
 const AddFilePage = () => {
-    const currentDirectory=useSelector((state)=>state.file.currentDirectory);   
+    const currentDirectory = useSelector((state) => state.file.currentDirectory);
     const filteredLanguages = Object.keys(languages)
         .filter(lang => prismLanguages.includes(lang))
         .reduce((obj, key) => {
             obj[key] = languages[key];
             return obj;
         }, {});
-    console.log(filteredLanguages)
+    // console.log(filteredLanguages)
     const [input, setInput] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [language, setLanguage] = useState(languages.javascript);
-    
 
-    const handleCancel = () => {
-        if (!disabled) {
-            setInput("");
-        }
+
+    const handleCodeChange = (newCode) => {
+        console.log(newCode)
+        const detectedLanguage = hljs.highlightAuto(newCode).language;
+        setLanguage(filteredLanguages[detectedLanguage] || languages.plain); // Set to plain if language is not supported
+        console.log(detectedLanguage)
+        setInput(newCode);
     };
 
     const handleSubmit = async (e) => {
@@ -49,7 +52,6 @@ const AddFilePage = () => {
                     <div className="w-full p-2 bg-violet-200 text-white flex justify-start items-stretch flex-wrap">
                         <div className='flex-grow mx-4 my-auto'>
                             <input type="text" className="py-2 w-full text-black bg-white rounded-md mt-2 md:mt-0" value={"\t" + currentDirectory} disabled={true}></input>
-
                         </div>
                         <div className='flex justify-end my-auto'>
                             <button className=" bg-purple-700 text-white px-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-1" onClick={() => { }}><IonIcon className="text-xl font-bold" name="clipboard-outline" /></button>
@@ -65,7 +67,7 @@ const AddFilePage = () => {
                                     <select
                                         id="languages"
                                         className="border border-gray-300 rounded-md p-2 w-full mb-4"
-                                        value={Object.keys(filteredLanguages).find(key => filteredLanguages[key] === language)} // Find the key of the current language
+                                        value={Object.keys(filteredLanguages).find(key => filteredLanguages[key] === language)}
                                         onChange={handleLanguageChange}
                                     >
                                         {Object.keys(filteredLanguages).map((lang, index) => (
@@ -78,7 +80,7 @@ const AddFilePage = () => {
                                 <div className='bg-gray-100 text-black min-h-[50vh] text-lg'>
                                     <Editor
                                         value={input}
-                                        onValueChange={setInput}
+                                        onValueChange={handleCodeChange} // Pass handleCodeChange directly
                                         highlight={(code) => highlight(code, language)}
                                         padding={10}
                                         style={{
@@ -87,6 +89,7 @@ const AddFilePage = () => {
                                         textareaClassName='min-h-[50vh] rounded-md border-0 focus:outline-none'
                                         preClassName='min-h-[50vh] rounded-md border-0 focus:outline-none'
                                     />
+
                                 </div>
 
                             </div>
@@ -95,7 +98,7 @@ const AddFilePage = () => {
 
                 </form>
             </div>
-            <Chat/>
+            <Chat />
         </>
     );
 };
