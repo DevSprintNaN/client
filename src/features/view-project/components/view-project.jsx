@@ -13,7 +13,7 @@ import { FaStar } from 'react-icons/fa';
 
 const ViewProject = () => {
     const { id } = useParams();
-    const { directories, handleDirectories, currentDirectory, reverse,handleFolder,handleFile,handleAddFile } = useViewProject(id);
+    const { directories, handleDirectories, currentDirectory, reverse,handleFolder,handleFile,handleAddFile,handleViewFiles, changes } = useViewProject(id);
     const [showFileUpload, setShowFileUpload]=useState(false)
     const [showFolderUpload, setShowFolderUpload]=useState(false)
     const [starred, setStarred] = useState(false)
@@ -41,7 +41,7 @@ const ViewProject = () => {
 
                     <input type="text" className="w-7/12 text-black bg-white rounded-md ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
-                <Files directories={directories} handleDirectories={handleDirectories}/>
+                <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes}/>
                 <Chat />
             </div>
         );
