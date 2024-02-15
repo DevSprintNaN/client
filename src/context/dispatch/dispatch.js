@@ -33,24 +33,30 @@ const dispatch = async (action, body={}) => {
             case actions.getFiles:
                 response = await axios.get(`${baseUrl}/file/get-all/${body}`);
                 return response.data;
+            case actions.getVersions:
+                response = await axios.get(`${baseUrl}/file/get-changes/${body}`);
+                return response.data;
+            case actions.getUserName:
+                response = await axios.get(`${baseUrl}/file/get-contributor/${body}`);
+                return response.data;
         }
     }catch(error){
-        if(error.code==="ERR_NETWORK"){
-            console.log("comes here");
-            window.location.href="/error500";
-        }
-        else if(error.code==="ECONNREFUSED"){
-            window.location.href="/error500";
-        }
-        else if(error.response.status===401 || error.response.status===403){
-            window.location.href="/error401";
-        }
-        else if(error.response.status===500){
-            window.location.href="/error500";
-        }
-        else if(error.response.status===404){
-            window.location.href="/error404";
-        }
+        // if(error.code==="ERR_NETWORK"){
+        //     console.log("comes here");
+        //     window.location.href="/error500";
+        // }
+        // else if(error.code==="ECONNREFUSED"){
+        //     window.location.href="/error500";
+        // }
+        // else if(error.response.status===401 || error.response.status===403){
+        //     window.location.href="/error401";
+        // }
+        // else if(error.response.status===500){
+        //     window.location.href="/error500";
+        // }
+        // else if(error.response.status===404){
+        //     window.location.href="/error404";
+        // }
         return error.response;
     }
 };
