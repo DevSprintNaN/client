@@ -13,6 +13,7 @@ const AccountPage = () => {
 
     const [formData, setFormData] = useState({
         email: "",
+        username:"",
         currentPassword: "",
         newPassword: "",
         confirmNewPassword: "",
@@ -29,12 +30,14 @@ const AccountPage = () => {
             if (password.length < 8 || password.length > 20) {
                 formDispatch(formStates.invalid, setFormState, setPayload);
                 setMessage('Password must be between 8 and 20 characters long.');
+                setDisabled(true)
                 return;
             }
 
             if (!/[A-Z]/.test(password) || !/\d/.test(password)) {
                 formDispatch(formStates.invalid, setFormState, setPayload);
                 setMessage('Password must contain at least one uppercase letter and one numeric character.');
+                setDisabled(true)
                 return;
             }
 
@@ -93,6 +96,11 @@ const AccountPage = () => {
                             <div className="pb-6">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                                 <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300" value={formData.email} disabled />
+                            </div>
+
+                            <div className="pb-6">
+                                <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                                <input type="text" id="username" name="username" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300" value={formData.username} disabled={!editMode} onChange={handleInputChange}/>
                             </div>
                             {editMode && (
                                 <form onSubmit={handleSubmit}>
