@@ -21,14 +21,14 @@ const AddFilePage = () => {
     // console.log(filteredLanguages)
     const [input, setInput] = useState("");
     const [disabled, setDisabled] = useState(false);
-    const [language, setLanguage] = useState(languages.javascript);
+    const [language, setLanguage] = useState(languages.plain);
 
 
     const handleCodeChange = (newCode) => {
         console.log(newCode)
         const detectedLanguage = hljs.highlightAuto(newCode).language;
-        setLanguage(filteredLanguages[detectedLanguage] || languages.plain); // Set to plain if language is not supported
-        console.log(detectedLanguage)
+        setLanguage(filteredLanguages[detectedLanguage] || languages.plain); 
+        console.log(language)
         setInput(newCode);
     };
 
@@ -62,12 +62,12 @@ const AddFilePage = () => {
                         <div className="relative bg-white text-left shadow-xl transition-all w-full h-full">
 
                             <div className='p-4'>
-                                <div className="flex flex-col md:w-1/4">
-                                    <label htmlFor="languages" className="block text-sm font-medium text-gray-700">Select A Language</label>
+                                <div className="flex flex-col">
+                                    <label htmlFor="languages" className="block text-sm font-medium text-gray-700">If your language is not highlighted automatically, select one manually from below:</label>
                                     <select
                                         id="languages"
-                                        className="border border-gray-300 rounded-md p-2 w-full mb-4"
-                                        value={Object.keys(filteredLanguages).find(key => filteredLanguages[key] === language)}
+                                        className="border border-gray-300 rounded-md p-2 w-full mb-4 md:w-1/4"
+                                        value={Object.keys(filteredLanguages).find(key => filteredLanguages[key] === language) || "Not Detected"}
                                         onChange={handleLanguageChange}
                                     >
                                         {Object.keys(filteredLanguages).map((lang, index) => (
