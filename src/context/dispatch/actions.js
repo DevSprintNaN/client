@@ -7,5 +7,6 @@ export default {
     getFiles:"GET_FILES",
     logout:"LOGOUT",
     getVersions:"GET_VERSIONS",
-    getUserName:"GET_USERNAME"
+    getUserName:"GET_USERNAME",
+    verified:"VERIFIED"
 }

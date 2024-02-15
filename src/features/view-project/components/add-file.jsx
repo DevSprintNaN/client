@@ -58,8 +58,8 @@ const AddFilePage = () => {
                             <button type="submit" className={`bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300  ${disabled ? "opacity-50" : ""}`} disabled={disabled}>Save Changes</button>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center bg-black bg-opacity-75 transition-opacity">
-                        <div className="relative bg-white text-left shadow-xl transition-all w-full h-full">
+                    <div className="flex items-center justify-center bg-transparent bg-opacity-75 transition-opacity ">
+                        <div className="relative bg-white text-left transition-all w-full">
 
                             <div className='p-4'>
                                 <div className="flex flex-col">
@@ -77,7 +77,7 @@ const AddFilePage = () => {
                                         ))}
                                     </select>
                                 </div>
-                                <div className='bg-gray-100 text-black min-h-[50vh] text-lg'>
+                                <div className='bg-violet-100 text-black min-h-[50vh] text-lg'>
                                     <Editor
                                         value={input}
                                         onValueChange={handleCodeChange} // Pass handleCodeChange directly
@@ -86,8 +86,8 @@ const AddFilePage = () => {
                                         style={{
                                             fontFamily: 'monospace',
                                         }}
-                                        textareaClassName='min-h-[50vh] rounded-md border-0 focus:outline-none'
-                                        preClassName='min-h-[50vh] rounded-md border-0 focus:outline-none'
+                                        textareaClassName='min-h-[60vh] rounded-md border-0 focus:outline-none'
+                                        preClassName='min-h-[60vh] rounded-md border-0 focus:outline-none'
                                     />
 
                                 </div>

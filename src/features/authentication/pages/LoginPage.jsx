@@ -1,53 +1,11 @@
-
-import { useState } from "react";
-import actions from "../../../context/dispatch/actions";
-import dispatch from "../../../context/dispatch/dispatch";
 import Loading from "../../../components/Loading";
-import formDispatch, { formStates } from "../../../context/dispatch/formStatus";
+import { formStates } from "../../../context/dispatch/formStatus";
 import FormMessage from "../../../components/FormMessage";
-import { useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 const LoginPage = () => {
-    const navigate=useNavigate();
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    });
-    const [formState, setFormState] = useState("");
-    const [message, setMessage] = useState("")
-    const [payload, setPayload] = useState(null)
-    const [disabled, setDisabled] = useState(false)
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        formDispatch(formStates.loading, setFormState, setPayload);
-        setMessage("")
-        console.log(formData);
-        setDisabled(true)
-
-        const response = await dispatch(actions.login, {
-            email: formData.email,
-            password: formData.password
-        });
-        console.log(response);
-        if (response?.status==="success") {
-            setDisabled(false)
-            formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Login successful!");
-            navigate("/account");
-        } else {
-            setDisabled(false)
-            formDispatch(formStates.failed, setFormState, setPayload);
-            setMessage("Login failed!")
-        }
-    };
+    const {handleInputChange,handleSubmit,formData,disabled,formState,message,payload}=useLogin();
     return (
-        <>
             <div className="flex h-screen">
                 <div className="w-full bg-violet-100 lg:w-1/2 flex items-center justify-center">
                     <div className="max-w-md w-full p-6">
@@ -87,7 +45,6 @@ const LoginPage = () => {
                     <img src={'login.png'} className="w-full" />
                 </div>
             </div>
-        </>
     )
 }
 
