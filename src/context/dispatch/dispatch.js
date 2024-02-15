@@ -7,6 +7,10 @@ const dispatch = async (action, body={}) => {
         let response = {};
         axios.defaults.withCredentials=true;
         switch(action){
+            case actions.verified:
+                response = await axios.post(`${baseUrl}/auth/verify`,body);
+                return response.data;
+
             case actions.register:
                 response = await axios.post(`${baseUrl}/auth/register`, body);
                 return response.data;
@@ -41,9 +45,6 @@ const dispatch = async (action, body={}) => {
         }
         else if(error.code==="ECONNREFUSED"){
             window.location.href="/error500";
-        }
-        else if(error.response.status===401 || error.response.status===403){
-            window.location.href="/error401";
         }
         else if(error.response.status===500){
             window.location.href="/error500";
