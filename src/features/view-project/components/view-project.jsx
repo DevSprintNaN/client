@@ -8,6 +8,7 @@ import { useState } from 'react';
 import FileUploadModal from './upload-files-modal';
 import FolderUploadModal from './upload-folder-modal';
 import Loading from '../../../components/Loading';
+import { FaStar } from 'react-icons/fa';
 
 
 const ViewProject = () => {
@@ -15,6 +16,11 @@ const ViewProject = () => {
     const { directories, handleDirectories, currentDirectory, reverse,handleFolder,handleFile,handleAddFile,handleViewFiles, changes } = useViewProject(id);
     const [showFileUpload, setShowFileUpload]=useState(false)
     const [showFolderUpload, setShowFolderUpload]=useState(false)
+    const [starred, setStarred] = useState(false)
+
+    const handleAddStar=()=>{
+        setStarred(!starred);
+    }
     if(directories){
         return (
             <div className="h-full p-2 bg-violet-100 min-h-screen">
@@ -23,10 +29,16 @@ const ViewProject = () => {
                 {showFolderUpload && (<FolderUploadModal show={showFolderUpload} setShow={setShowFolderUpload} handleFolder={handleFolder} currentDirectory={currentDirectory} />)}
                 <div className="w-full p-2 flex bg-violet-200 text-white">
                     <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={reverse}><IonIcon name="return-up-back-outline" className="me-2" /></button>
+                    
                     <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFileUpload(true)}><IonIcon name="document-outline" /><IonIcon name="cloud-upload-outline" className="me-2" /></button>
+
                     <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={()=>handleAddFile()}><IonIcon name="document-outline" /><IonIcon name="add-outline" className="me-2" /></button>
-                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFolderUpload(true)}><IonIcon name="folder-outline" /><IonIcon name="cloud-upload-outline" className="me-2" /></button>
-                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-5" onClick={() => setShowFolderUpload(true)}><IonIcon name="folder-outline" /><IonIcon name="add-outline" className="me-2" /></button>
+
+                    
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => setShowFolderUpload(true)}><IonIcon name="folder-outline" /><IonIcon name="add-outline" className="me-2" /></button>
+
+                    <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={handleAddStar}><FaStar className={`mx-1 text-xl text-center ${starred? 'text-yellow-400' :' '} `}/></button>
+
                     <input type="text" className="w-7/12 text-black bg-white rounded-md ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
                 <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes}/>

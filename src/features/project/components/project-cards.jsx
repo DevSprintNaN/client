@@ -1,6 +1,7 @@
 import { Card } from "react-bootstrap";
 import Loading from "../../../components/Loading";
 import IonIcon from '@reacticons/ionicons';
+import { FaStar } from "react-icons/fa";
 
 const ProjectCards = ({ navigate, projects }) => {
     
@@ -9,7 +10,9 @@ const ProjectCards = ({ navigate, projects }) => {
             <div className="w-100">
                 {projects && projects.map((project, index) => (
                     <Card key={index} className="bg-violet-50 hover:shadow-lg mb-4">
-                        <Card.Header onClick={() => navigate('/view-project/'+project._id)} className="bg-violet-100 cursor-pointer text-lg font-bold">{project.name}</Card.Header>
+                        <Card.Header onClick={() => navigate('/view-project/'+project._id)} className="bg-violet-100 cursor-pointer text-lg font-bold">
+                            {project.name}
+                        </Card.Header>
                         <Card.Body>
                             <div className="w-full mb-2 flex">
                                 <div className="me-4 font-bold">Project Owner:</div>
@@ -23,6 +26,11 @@ const ProjectCards = ({ navigate, projects }) => {
                                 <div className="me-4 font-bold">Last Modified:</div>
                                 <p>{project.lastModified}</p>
                             </div>
+                            <div className="w-full mb-2 flex">
+                                <div className="me-4 font-bold">Stars Received:</div>
+                                <p className="flex my-auto">27&nbsp;<FaStar className="text-yellow-400 text-2xl "/></p>
+                            </div>
+
                             <div className="md:flex mb-5">
                             <div className="ms-4 me-5">
                                 <div className="mb-4 font-bold">Project Contributors:</div>
