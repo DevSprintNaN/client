@@ -14,7 +14,7 @@ const Project = () => {
             <UserNavbar />
             <ProjectHeader show={show} setShow={setShow} />
             <AddProjectModal open={show} setShow={setShow} projects={projects} setProjects={setProjects} />
-            <div className="shadow bg-white p-2 rounded-md">
+            <div className="shadow bg-white p-2 rounded-md h-full">
                 <ProjectCards navigate={navigate} projects={projects} />
             </div>
         </div>

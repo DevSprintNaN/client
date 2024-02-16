@@ -7,6 +7,7 @@ import PDFViewer from './cloudinary-viewer';
 import ImageViewer from './image-viewer';
 import CodeViewer from './code-viewer';
 import VideoViewer from './video-viewer';
+import { IoReturnUpBack } from 'react-icons/io5';
 
 
 const Viewer = () => {
@@ -20,7 +21,7 @@ const Viewer = () => {
         <div className="h-full p-2 bg-violet-100 min-h-screen">
             <UserNavbar />
             <div className="w-full p-2 flex bg-violet-200 text-white">
-                <button className="bg-purple-700 text-white px-2 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2" onClick={() => navigate(`/view-project/${id}`)}><IonIcon name="return-up-back-outline" className="me-2" /></button>
+                <button className="text-purple-700 bg-white px-1 md:px-2 md:py-2 rounded-md hover:bg-purple-700 hover:text-white focus:outline-none  transition-colors duration-300 me-2" onClick={() => navigate(`/view-project/${id}`)}><IoReturnUpBack className="text-xl mx-1" /></button>
                 <input type="text" className="w-9/12 text-black bg-white rounded-md ms-2" value={"\t" + currentDirectory} disabled={true}></input>
             </div>
             {!imageTypes.includes(type) && !videoTypes.includes(type) && type==="pdf" && (<PDFViewer src={currentURL}/>)}

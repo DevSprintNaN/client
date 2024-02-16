@@ -31,10 +31,10 @@ const ChangesDrawer = ({ toggleDrawer, changes }) => {
         }, [changes]);
 
         return (
-            <div className="mx-2 mt-3 mb-1 w-full flex items-center justify-center shadow-md rounded-md ">
+            <div className="mt-3 mb-1 w-full flex items-center justify-center shadow-md rounded-md ">
                 <div className="flex flex-col w-full">
                     <div className="w-full p-2 bg-violet-200">
-                        <h1 className="text-lg font-semibold">
+                        <h1 className="text-md font-semibold">
                             {changes.length > 0 ? "Version History" : "No version history available"}
                         </h1>
                     </div>

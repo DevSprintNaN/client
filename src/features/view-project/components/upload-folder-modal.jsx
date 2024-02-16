@@ -37,7 +37,7 @@ const FolderUploadModal = ({ show, setShow,handleFolder,currentDirectory }) => {
   return (
     <>
       {show && (
-        <div className="fixed inset-0 flex items-center justify-center bg-violet-100/75 transition-opacity">
+        <div className="fixed inset-0 flex items-center justify-center bg-violet-100/75 transition-opacity  z-20">
           <div className="relative overflow-hidden rounded-md bg-white text-left shadow-xl transition-all md:max-w-6xl">
             <div className='bg-purple-900 py-2 text-white'>
               <h1 className="text-3xl font-semibold text-center">Create a New Folder</h1>
