@@ -15,6 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import UnProtectedRoutes from './components/UnProtectedRoute';
 import { useProtection } from './hooks/useProtection';
 import AddForum from './features/forum/pages/add-forum';
+import Insights from './features/insights/pages/insights';
 
 function App() {
 
@@ -50,6 +51,9 @@ function App() {
           </ProtectedRoute>}/>  
           <Route path="/add-forum" element={<ProtectedRoute  authentication={authenticated}>
             <AddForum/>
+          </ProtectedRoute>}/>
+          <Route path="/insights" element={<ProtectedRoute  authentication={authenticated}>
+            <Insights/>
           </ProtectedRoute>}/>
           <Route path="/health" element={<div>
             <h1>Health</h1>
