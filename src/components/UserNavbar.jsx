@@ -49,7 +49,7 @@ const UserNavbar = () => {
                         <a className="text-gray-700 hover:text-purple-800 lg:mx-6" href="/account">Profile</a>
                     </div>
 
-                    <button className="mt-4 block h-10 transform rounded-md border px-4 py-2 text-center capitalize text-gray-700 hover:text-purple-800  transition-colors duration-300 hover:bg-gray-100  lg:mt-0 lg:w-auto" onClick={handleLogOut}> Log Out </button>
+                    <button className="mt-4 block h-10 transform rounded-md border px-4 py-2 text-center capitalize text-purple-800  transition-colors duration-300 hover:bg-purple-700 hover:text-white bg-white  lg:mt-0 lg:w-auto" onClick={handleLogOut}> Log Out </button>
                 </div>
             </nav>
         </>

@@ -6,7 +6,6 @@ const HeaderCard = () => {
         <>
             <div
                 className="relative block p-5 overflow-hidden border bg-white border-slate-100 rounded-lg mx-2"
-                href=""
             >
                 <span
                     className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-violet-800 via-purple-500 to-purple-800"
