@@ -6,5 +6,6 @@ export default {
     fileUpload:"FILE_UPLOAD",
     getFiles:"GET_FILES",
     logout:"LOGOUT",
-    verified:"VERIFIED"
+    verified:"VERIFIED",
+    getUser:"GET_USER",
 }
