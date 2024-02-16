@@ -54,7 +54,7 @@ const AddFilePage = () => {
                             <input type="text" className="py-2 w-full text-black bg-white rounded-md mt-2 md:mt-0" value={"\t" + currentDirectory} disabled={true}></input>
                         </div>
                         <div className='flex justify-end my-auto'>
-                            <button className=" bg-purple-700 text-white px-2 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-1" onClick={() => { }}><IonIcon className="text-xl font-bold" name="clipboard-outline" /></button>
+                            <button className=" text-purple-700 bg-white/70 px-2 rounded-md hover:bg-purple-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center text-center transition-colors duration-300 me-1" onClick={() => { }}><IonIcon className="text-xl font-bold" name="clipboard" /></button>
                             <button type="submit" className={`bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300  ${disabled ? "opacity-50" : ""}`} disabled={disabled}>Save Changes</button>
                         </div>
                     </div>

@@ -41,7 +41,7 @@ export const useLogin = () => {
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Login successful!");
             authDisapatch(setToken(response.token));
-            navigate("/account");
+            window.location.reload();
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);

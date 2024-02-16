@@ -8,4 +8,8 @@ export default {
     logout:"LOGOUT",
     verified:"VERIFIED",
     getUser:"GET_USER",
+    getVersions:"GET_VERSIONS",
+    getUserName:"GET_USERNAME",
+    verified:"VERIFIED",
+    restoreVersion:"RESTORE_VERSION"
 }

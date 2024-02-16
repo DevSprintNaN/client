@@ -6,6 +6,7 @@ import { setCurrentDirectoryContext, setCurrentFileURL, setProjectID } from "../
 import { useNavigate } from "react-router";
 
 export const useViewProject = (id) => {
+    const [changes, setChanges] = useState();
     const [directories, setDirectories] = useState();
     const [currentDirectory, setCurrentDirectory] = useState("/");
     const currentDirectoryContext = useSelector((state) => state.file.currentDirectory);
@@ -120,5 +121,12 @@ export const useViewProject = (id) => {
         navigate(`/view-project/${id}/add-file`)
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile }
+    const handleViewFiles = async (file_name) => {
+
+        const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
+        setChanges(response.changes);
+        console.log(response.changes);
+    }
+
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes }
 }

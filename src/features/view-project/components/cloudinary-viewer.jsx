@@ -86,40 +86,42 @@ const PDFViewer = ({ src }) => {
     }
 
     return (
-        <div className="h-full p-2 bg-gray-100 min-h-screen flex flex-col">
-            <div className="flex mt-4 p-2 bg-violet-200">
-                <button
-                    onClick={handleOnPrevSlide}
-                    disabled={currentPage - 1 <= 0}
-                    className={`me-2 bg-purple-700 text-white px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${currentPage - 1 <= 0 ? "opacity-50" : ""}`}
-                >
-                    Prev
-                </button>
-                <button
-                    onClick={handleOnNextSlide}
-                    disabled={totalPages === currentPage || !hasNext}
-                    className={`me-2 bg-purple-700 text-white px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300 ${totalPages === currentPage || !hasNext ? "opacity-50" : ""}`}
-                >
-                    Next
-                </button>
-                <a
-                    href={src}
-                    download
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`bg-purple-700 text-white px-4 py-2 w-1/6 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300`}
-                >
-                    Download PDF
-                </a>
-                <div className="text-right w-full mt-2 mb-2">
-                <span className="justify-center text-white bg-purple-700 p-2 rounded-md">{currentPage}</span>
+        <div className="h-full p-2 bg-gray-100 min-h-screen flex flex-col ">
+            <div className="flex justify-between mt-4 p-2 bg-violet-200">
+                <div className="flex justify-start items-center space-x-2">
+                    <button
+                        onClick={handleOnPrevSlide}
+                        disabled={currentPage - 1 <= 0}
+                        className={`bg-purple-700 h-full text-white px-4 rounded-md hover:bg-purple-900 focus:outline-none transition-colors duration-300 ${currentPage - 1 <= 0 ? "opacity-50" : ""}`}
+                    >
+                        Prev
+                    </button>
+                    <button
+                        onClick={handleOnNextSlide}
+                        disabled={totalPages === currentPage || !hasNext}
+                        className={`bg-purple-700 h-full text-white px-4 rounded-md hover:bg-purple-900 focus:outline-none  transition-colors duration-300 ${totalPages === currentPage || !hasNext ? "opacity-50" : ""}`}
+                    >
+                        Next
+                    </button>
+                    <a
+                        href={src}
+                        download
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-900 focus:outline-none transition-colors duration-300`}
+                    >
+                        Download PDF
+                    </a>
+                </div>
+                <div className="flex justify-end items-center">
+                    <span className="bg-purple-700 text-white px-4 py-2 rounded-md">Page {currentPage}</span>
                 </div>
             </div>
-            <div className="flex justify-center items-center h-full mb-10">
+            <div className="flex justify-center items-center h-full mb-4">
                 <img
                     src={pages[currentPage]}
                     alt={`slide-${currentPage}`}
-                    className="object-contain"
+                    className="object-contain h-[90vh]"
                     loading='lazy'
                 />
             </div>

@@ -81,7 +81,7 @@ export const useRegister=()=>{
             authDisapatch(setToken(response.token));
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Registration successful!")
-            navigate("/account");
+            window.location.reload();
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);

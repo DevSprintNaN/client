@@ -72,16 +72,18 @@ const Whiteboard = ({ show, setShow }) => {
     return (
         show && (
             <div className="fixed inset-0 flex flex-col items-center justify-center bg-violet-100/75 transition-opacity">
-                <div className="flex justify-between w-full max-w-screen-md">
+                <div className="flex justify-between w-full max-w-screen">
                     {/* Centered color input */}
                     <div className="flex justify-center w-full">
+                    <div className="h-full flex justify-center items-center text-md font-medium text-purple-900 mx-2">Select Your Ink: </div>
+
                         <input ref={colorInputRef} type="color" />
                     </div>
                     {/* Close button on the far right */}
                     <IonIcon name="close-circle" className="pr-2 text-3xl text-purple-800 cursor-pointer float-right" onClick={handleClose}/>
                 </div>
                 <div id="sketch" className="overflow-hidden rounded-md bg-white shadow-xl transition-all">
-                    <canvas id="paint" className="h-[92vh] w-[98vw]"></canvas>
+                    <canvas id="paint" className="h-[90vh] w-[90vw]"></canvas>
                 </div>
             </div>
 

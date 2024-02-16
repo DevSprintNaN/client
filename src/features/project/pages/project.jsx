@@ -4,18 +4,25 @@ import ProjectCards from '../components/project-cards';
 import ProjectHeader from '../components/project-header';
 import AddProjectModal from '../components/add-project-modal';
 import { useProjectCard } from '../hooks/useProjectCard';
+import Pagination from '../../../components/Pagination';
+import usePagination from '../../../hooks/usePagination';
 
 
 const Project = () => {
     const [show, setShow] = useState(false);
     const { navigate, projects, setProjects, error } = useProjectCard();
+    const { currentPage, setCurrentPage, totalPages, getCurrentItems, handlePageChange } = usePagination(8, projects);
+
+    
     return (
         <div className={`h-full p-2 bg-violet-100 w-full min-h-screen`} >
             <UserNavbar />
             <ProjectHeader show={show} setShow={setShow} />
             <AddProjectModal open={show} setShow={setShow} projects={projects} setProjects={setProjects} />
-            <div className="shadow bg-white p-2 rounded-md">
-                <ProjectCards navigate={navigate} projects={projects} />
+            <div className="shadow bg-white p-2 rounded-md h-full">
+                <ProjectCards navigate={navigate} projects={getCurrentItems()} />
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+
             </div>
         </div>
     );
