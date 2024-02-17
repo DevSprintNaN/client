@@ -3,7 +3,7 @@ import actions from '../../../context/dispatch/actions';
 import dispatch from '../../../context/dispatch/dispatch';
 import formDispatch, { formStates } from '../../../context/dispatch/formStatus';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../../context/auth/actions';
+import { setAuthenticated, setToken } from '../../../context/auth/actions';
 import { useDispatch } from 'react-redux';
 
 export const useRegister=()=>{
@@ -81,7 +81,7 @@ export const useRegister=()=>{
             authDisapatch(setToken(response.token));
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Registration successful!")
-            window.location.reload();
+            authDisapatch(setAuthenticated(true));
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
