@@ -1,23 +1,10 @@
-import { useState } from "react";
 import { MdOutlineDraw } from "react-icons/md";
 import Whiteboard from "./whiteboard";
+import { useChat } from "../hooks/useChat";
 
 const Chat = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState([{ text: "inputValue", sender: 'nuser' }]);
-    const [inputValue, setInputValue] = useState('');
-    const [showBoard, setShowBoard] = useState(false)
-
-    const toggleChat = () => {
-        setIsOpen((prevIsOpen) => !prevIsOpen);
-    };
-
-    const sendMessage = () => {
-        if (inputValue.trim() !== '') {
-            setMessages([...messages, { text: inputValue, sender: 'user' }]);
-            setInputValue('');
-        }
-    };
+    const {id,isOpen,toggleChat,messages,inputValue,setInputValue,showBoard,setShowBoard,sendMessage}=useChat();
+    
 
     return (
         <div className="fixed bottom-0 right-0 md:mb-2 md:mr-2 z-50 ml-2">
@@ -30,12 +17,12 @@ const Chat = () => {
                     <div className="px-4 py-2 flex flex-col grow-0 overflow-y-scroll bg-white">
                         {messages.map((message, index) => (
                             <div className="message" key={index}>
-                                <div className={`text-xs text-gray-500 ${message.sender === 'user' ? 'text-left' : 'text-right'}`}>
-                                    {message.sender === 'user' ? 'You' : 'Bot'}
+                                <div className={`text-xs text-gray-500 ${message.id ===id? 'text-left' : 'text-right'}`}>
+                                    {message.id ===id ? 'You' : message.username}
                                 </div>
                                 <div
                                     key={index}
-                                    className={`mb-2 p-2 rounded-lg w-3/4 ${message.sender === 'user' ? 'bg-violet-200 float-left' : 'bg-gray-200 float-right'
+                                    className={`mb-2 p-2 rounded-lg w-3/4 ${message.id ===id ? 'bg-violet-200 float-left' : 'bg-gray-200 float-right'
                                         } whitespace-normal break-words`}
                                     style={{ wordWrap: 'break-word' }}
                                 >

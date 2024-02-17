@@ -37,6 +37,9 @@ const dispatch = async (action, body={}) => {
             case actions.getFiles:
                 response = await axios.get(`${baseUrl}/file/get-all/${body}`);
                 return response.data;
+            case actions.getUser:
+                response = await axios.post(`${baseUrl}/auth/get-user`);
+                return response.data;
             case actions.getVersions:
                 response = await axios.get(`${baseUrl}/file/get-changes/${body}`);
                 return response.data;
