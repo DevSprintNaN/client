@@ -5,18 +5,17 @@ const LandingPage = () => {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
 
-    // Function to toggle the menu
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
     return (
         <>
-            <header class="bg-violet-100 h-full pb-10">
+            <header className="bg-violet-100 h-full pb-10">
                 <nav className="container mx-auto p-3 lg:flex lg:items-center lg:justify-between sticky top-0 z-10 bg-violet-100/80 ">
                     <div className="flex items-center justify-between">
                         <div>
-                            <a className="text-2xl font-bold text-gray-800 hover:text-gray-700 lg:text-3xl" href="#">Brand</a>
+                            <a className="text-2xl font-bold text-gray-800 hover:text-gray-700 lg:text-3xl" href="/">ProjectHub</a>
                         </div>
 
                         <div className="flex lg:hidden">
@@ -32,10 +31,9 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    {/* Mobile Menu open: "block", Menu closed: "hidden" */}
                     <div className={`absolute inset-x-0 z-20 w-full bg-white px-6 py-4 shadow-md transition-all duration-300 ease-in-out lg:relative lg:top-0 lg:mt-0 lg:flex lg:w-auto lg:translate-x-0 lg:items-center lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none ${isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'}`}>
                         <div className="flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:space-y-0">
-                            <a className="text-gray-700 hover:text-blue-500  lg:mx-6" href="/login">Login</a>
+                        <button className="mt-4 block h-10 transform border text-center text-sm capitalize  w-full  bg-purple-700 text-white px-5 py-2 rounded-md hover:bg-purple-900  focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 lg:mt-0 lg:w-auto" onClick={()=>navigate('/login')} >Login</button>
                         </div>
 
                         <div>
@@ -44,12 +42,12 @@ const LandingPage = () => {
                     </div>
                 </nav>
 
-                <div class="container mx-auto px-6 py-10 text-center bg-white rounded-md">
-                    <div class="mx-auto max-w-lg">
-                        <h1 class="text-3xl font-bold text-gray-800  md:text-4xl">Create beautiful website layout with Meraki UI.</h1>
+                <div className="container mx-auto px-6 py-10 text-center bg-white rounded-md">
+                    <div className="mx-auto max-w-lg">
+                        <h1 className="text-3xl font-bold text-gray-800  md:text-4xl">DevSprint 2024</h1>
                         <img src={'landing_page.png'} />
 
-                        <p class="mt-6 text-gray-500">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero similique obcaecati illum mollitia.</p>
+                        <p className="mt-6 text-gray-500">Dive Back to the Hub of Effortless Project Collaboration and Version Control</p>
                     </div>
                 </div>
             </header>
