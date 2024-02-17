@@ -9,7 +9,7 @@ export const useProjectCard=()=>{
     const [error,setError]=useState("");
 
     const fetchProjects=async()=>{
-        const response=await dispatch(actions.getProjects);
+        const response=await dispatch(actions.getAllProjects);
         if(response?.status==="success"){
             setError("");
             setProjects(response.projects);

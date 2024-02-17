@@ -34,25 +34,22 @@ const Whiteboard = ({ show, setShow,projectID }) => {
                 newSocket.emit('leave room', projectID);
             });
 
-            setSocket(newSocket);
-        };
-
-        fetchUserInformation();
-    }, [projectID]);
-
-    useEffect(() => {
-        if (socket) {
-            socket.on("canvas-data", function (data) {
+            newSocket.on("canvas-data", function (data) {
                 const canvas = document.querySelector('#paint');
                 const ctx = canvas.getContext('2d');
                 var image = new Image();
                 image.onload = function () {
                     ctx.drawImage(image, 0, 0);
                 };
-                image.src = data;
+                console.log(data);
+                image.src = data.base64ImageData;
             });
-        }
-    }, [socket]);
+
+            setSocket(newSocket);
+        };
+
+        fetchUserInformation();
+    }, [projectID]);
 
     useEffect(() => {
         const boardDraw = () => {
@@ -102,13 +99,13 @@ const Whiteboard = ({ show, setShow,projectID }) => {
                 timeoutRef.current = setTimeout(() => {
                     var base64ImageData = canvas.toDataURL('image/png');
                     setImgData(base64ImageData);
-                }, 1000);
+                }, 10);
             };
 
             const sendCanvasData = (canvas) => {
                 if (socket) {
                     var base64ImageData = canvas.toDataURL('image/png');
-                    socket.emit("canvas-data", {...base64ImageData, username, id});
+                    socket.emit("canvas-data", {base64ImageData, username, id});
                 }
             };
         };

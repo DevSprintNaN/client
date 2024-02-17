@@ -24,7 +24,7 @@ const dispatch = async (action, body={}) => {
                 response = await axios.post(`${baseUrl}/project/create`, body);
                 return response;
             case actions.getProjects:
-                response = await axios.get(`${baseUrl}/project/get-all`, body);
+                response = await axios.get(`${baseUrl}/project/get`, body);
                 return response.data;
             case actions.fileUpload:
                 response = await axios.post(`${baseUrl}/file/upload`, body,{
@@ -52,21 +52,24 @@ const dispatch = async (action, body={}) => {
             case actions.getMessages:
                 response = await axios.get(`${baseUrl}/messaging/get-all/${body}`);
                 return response.data;
+            case actions.getAllProjects:
+                response = await axios.get(`${baseUrl}/project/get-all`);
+                return response.data;
         }
     }catch(error){
-        // if(error.code==="ERR_NETWORK"){
-        //     console.log("comes here");
-        //     window.location.href="/error500";
-        // }
-        // else if(error.code==="ECONNREFUSED"){
-        //     window.location.href="/error500";
-        // }
-        // else if(error.response.status===500){
-        //     window.location.href="/error500";
-        // }
-        // else if(error.response.status===404){
-        //     window.location.href="/error404";
-        // }
+        if(error.code==="ERR_NETWORK"){
+            console.log("comes here");
+            window.location.href="/error500";
+        }
+        else if(error.code==="ECONNREFUSED"){
+            window.location.href="/error500";
+        }
+        else if(error.response.status===500){
+            window.location.href="/error500";
+        }
+        else if(error.response.status===404){
+            window.location.href="/error404";
+        }
         return error.response;
     }
 };

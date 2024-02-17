@@ -13,4 +13,5 @@ export default {
     verified:"VERIFIED",
     restoreVersion:"RESTORE_VERSION",
     getMessages:"GET_MESSAGES",
+    getAllProjects:"GET_ALL_PROJECTS"
 }
