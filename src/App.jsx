@@ -16,6 +16,8 @@ import UnProtectedRoutes from './components/UnProtectedRoute';
 import { useProtection } from './hooks/useProtection';
 import AddForum from './features/forum/pages/add-forum';
 import Insights from './features/insights/pages/insights';
+import ViewForums from './features/forum/pages/view-forums';
+import ViewSingleForum from './features/forum/pages/view-single-forum';
 
 function App() {
 
@@ -51,6 +53,12 @@ function App() {
           </ProtectedRoute>}/>  
           <Route path="/add-forum" element={<ProtectedRoute  authentication={authenticated}>
             <AddForum/>
+          </ProtectedRoute>}/>
+          <Route path="/view-forums" element={<ProtectedRoute  authentication={authenticated}>
+            <ViewForums/>
+          </ProtectedRoute>}/>
+          <Route path="/view-forum/:id" element={<ProtectedRoute  authentication={authenticated}>
+            <ViewSingleForum/>
           </ProtectedRoute>}/>
           <Route path="/insights" element={<ProtectedRoute  authentication={authenticated}>
             <Insights/>
