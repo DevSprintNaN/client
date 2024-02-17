@@ -71,7 +71,7 @@ const Whiteboard = ({ show, setShow }) => {
 
     return (
         show && (
-            <div className="fixed inset-0 flex flex-col items-center justify-center bg-violet-100/75 transition-opacity">
+            <div className="fixed inset-0 flex flex-col items-center justify-center bg-violet-100/75 transition-opacity z-20">
                 <div className="flex justify-between w-full max-w-screen">
                     {/* Centered color input */}
                     <div className="flex justify-center w-full">
