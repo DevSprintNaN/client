@@ -1,11 +1,12 @@
 import React from 'react'
+import SearchBarWithDropdown from './search-bar-with-dropdown'
 
 const HeaderCard = () => {
     return (
 
         <>
             <div
-                className="relative block p-5 overflow-hidden border bg-white border-slate-100 rounded-lg mx-2"
+                className="relative block p-5 border bg-white border-slate-100 rounded-lg mx-2"
             >
                 <span
                     className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-violet-800 via-purple-500 to-purple-800"
@@ -30,6 +31,8 @@ const HeaderCard = () => {
                         </div>
                     </div>
                 </div>
+
+                <SearchBarWithDropdown/>
             </div>
         </>
     )

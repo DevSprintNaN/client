@@ -22,7 +22,7 @@ const ProjectCards = ({ navigate, projects }) => {
 
                         <Card.Body className="p-2">
 
-                            <dl className="flex space-x-24 mb-3">
+                            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-3">
                                 <div className="flex flex-col-reverse">
                                     <dd className="text-md text-black">{project.ownerName}</dd>
                                     <dt className="text-lg font-bold text-black">Project Owner</dt>
@@ -35,7 +35,8 @@ const ProjectCards = ({ navigate, projects }) => {
                                     <dd className="text-md text-black">{project.lastModified}</dd>
                                     <dt className="text-lg font-bold text-black">Last Modified</dt>
                                 </div>
-                            </dl>
+                            </div>
+
 
 
                             <div className="pb-2">
