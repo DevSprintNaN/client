@@ -26,10 +26,11 @@ const usePagination = (itemsPerPage, initialItems) => {
     setCurrentPage(pageNumber);
   };
   const getCurrentItems = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return items?.slice(startIndex, endIndex);
-  };
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return items?.slice(startIndex, endIndex) ?? [];
+};
+
 
   return { currentPage, setCurrentPage, items, setItems, totalPages, paginate, getCurrentItems, handlePageChange };
 };
