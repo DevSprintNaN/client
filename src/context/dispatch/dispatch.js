@@ -49,6 +49,9 @@ const dispatch = async (action, body={}) => {
             case actions.restoreVersion:
                 response = await axios.put(`${baseUrl}/file/restore`, body);
                 return response.data;
+            case actions.getMessages:
+                response = await axios.get(`${baseUrl}/messaging/get-all/${body}`);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){

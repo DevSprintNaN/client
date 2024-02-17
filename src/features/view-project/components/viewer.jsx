@@ -28,7 +28,7 @@ const Viewer = () => {
             {imageTypes.includes(type)  && type!=="null" && (<ImageViewer src={currentURL}/>)}
             {videoTypes.includes(type) && type!=="null" && (<VideoViewer src={currentURL}/>)}
             {type==="null" && (<CodeViewer src={currentURL}/>)}
-            <Chat />
+            <Chat projectID={id}/>
         </div>
     );
 };

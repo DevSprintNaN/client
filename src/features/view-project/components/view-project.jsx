@@ -44,7 +44,7 @@ const ViewProject = () => {
                     <input type="text" className="md:w-7/12 w-full text-black bg-white rounded-md mt-1 md:my-0 md:ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
                 <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes} />
-                <Chat />
+                <Chat  projectID={id}/>
             </div>
             
         </>

@@ -9,8 +9,10 @@ import IonIcon from '@reacticons/ionicons';
 import { useSelector } from 'react-redux';
 import Chat from '../../chat/components/chat';
 import hljs from 'highlight.js';
+import { useParams } from 'react-router';
 
 const AddFilePage = () => {
+    const {id}=useParams();
     const currentDirectory = useSelector((state) => state.file.currentDirectory);
     const filteredLanguages = Object.keys(languages)
         .filter(lang => prismLanguages.includes(lang))
@@ -98,7 +100,7 @@ const AddFilePage = () => {
 
                 </form>
             </div>
-            <Chat />
+            <Chat  projectID={id}/>
         </>
     );
 };

@@ -1,21 +1,63 @@
 import IonIcon from '@reacticons/ionicons';
-import React, { useEffect, useRef, useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
+import { io } from 'socket.io-client';
+import dispatch from '../../../context/dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
 
-const Whiteboard = ({ show, setShow }) => {
-    let timeout; // Declaring timeout variable
+const Whiteboard = ({ show, setShow,projectID }) => {
     const colorInputRef = useRef(null);
-    const [imgData, setImgData] = useState('')
-    
-    const handleClose=()=>{
-        setImgData('')
-        setShow(false)
-    }
+    const [imgData, setImgData] = useState('');
+    const timeoutRef = useRef(undefined);
+    const [socket, setSocket] = useState(null);
+    const [username, setUsername] = useState('');
+    const [id, setID] = useState('');
+
+    const handleClose = () => {
+        setImgData('');
+        setShow(false);
+    };
+
+    useEffect(() => {
+        const fetchUserInformation = async () => {
+            const response = await dispatch(actions.getUser);
+            console.log(response);
+            setUsername(response.user.username);
+            setID(response.user._id);
+            const newSocket = io(import.meta.env.VITE_CHAT_SERVER, { transports: ['websocket'] }); 
+            newSocket.on('connect', () => {
+                console.log("Socket connected");
+                newSocket.emit('join room', projectID);
+            });
+
+            newSocket.on('disconnect', () => {
+                console.log("Socket disconnected");
+                newSocket.emit('leave room', projectID);
+            });
+
+            setSocket(newSocket);
+        };
+
+        fetchUserInformation();
+    }, [projectID]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on("canvas-data", function (data) {
+                const canvas = document.querySelector('#paint');
+                const ctx = canvas.getContext('2d');
+                var image = new Image();
+                image.onload = function () {
+                    ctx.drawImage(image, 0, 0);
+                };
+                image.src = data;
+            });
+        }
+    }, [socket]);
 
     useEffect(() => {
         const boardDraw = () => {
             const canvas = document.querySelector('#paint');
             const ctx = canvas.getContext('2d');
-
             const sketch = document.querySelector('#sketch');
             const sketch_style = getComputedStyle(sketch);
             canvas.width = parseInt(sketch_style.getPropertyValue('width'));
@@ -24,7 +66,6 @@ const Whiteboard = ({ show, setShow }) => {
             const mouse = { x: 0, y: 0 };
             const last_mouse = { x: 0, y: 0 };
 
-            /* Mouse Capturing Work */
             canvas.addEventListener('mousemove', function (e) {
                 last_mouse.x = mouse.x;
                 last_mouse.y = mouse.y;
@@ -33,12 +74,10 @@ const Whiteboard = ({ show, setShow }) => {
                 mouse.y = e.pageY - this.offsetTop;
             }, false);
 
-            /* Drawing on Paint App */
             ctx.lineWidth = 2;
             ctx.lineJoin = 'round';
             ctx.lineCap = 'round';
-            ctx.strokeStyle = colorInputRef.current.value || 'blue'; // Set default color
-            // Update color when input changes
+            ctx.strokeStyle = colorInputRef.current.value || 'blue';
             colorInputRef.current.addEventListener('input', () => {
                 ctx.strokeStyle = colorInputRef.current.value;
             });
@@ -49,6 +88,7 @@ const Whiteboard = ({ show, setShow }) => {
 
             canvas.addEventListener('mouseup', function () {
                 canvas.removeEventListener('mousemove', onPaint, false);
+                sendCanvasData(canvas);
             }, false);
 
             const onPaint = () => {
@@ -58,13 +98,20 @@ const Whiteboard = ({ show, setShow }) => {
                 ctx.closePath();
                 ctx.stroke();
 
-                if (timeout !== undefined) clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    var base64ImageData = canvas.toDataURL("image/png");
-                    setImgData(base64ImageData)
+                if (timeoutRef.current !== undefined) clearTimeout(timeoutRef.current);
+                timeoutRef.current = setTimeout(() => {
+                    var base64ImageData = canvas.toDataURL('image/png');
+                    setImgData(base64ImageData);
                 }, 1000);
             };
-        }
+
+            const sendCanvasData = (canvas) => {
+                if (socket) {
+                    var base64ImageData = canvas.toDataURL('image/png');
+                    socket.emit("canvas-data", {...base64ImageData, username, id});
+                }
+            };
+        };
 
         boardDraw();
     }, []);

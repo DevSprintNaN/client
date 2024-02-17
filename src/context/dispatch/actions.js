@@ -11,5 +11,6 @@ export default {
     getVersions:"GET_VERSIONS",
     getUserName:"GET_USERNAME",
     verified:"VERIFIED",
-    restoreVersion:"RESTORE_VERSION"
+    restoreVersion:"RESTORE_VERSION",
+    getMessages:"GET_MESSAGES",
 }
