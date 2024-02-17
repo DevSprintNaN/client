@@ -21,8 +21,12 @@ const getWeekNumber = (date) => {
 };
 
 const getColor = (contributions) => {
+
+    if (contributions >= 12) return 'bg-green-700';
     if (contributions >= 10) return 'bg-green-600';
-    if (contributions >= 5) return 'bg-green-400';
+    if (contributions >= 8) return 'bg-green-500';
+    if (contributions >= 4) return 'bg-green-400';
+    if (contributions >= 2) return 'bg-green-300';
     if (contributions >= 1) return 'bg-green-200';
     return 'bg-gray-200';
 };
@@ -30,7 +34,7 @@ const getColor = (contributions) => {
 const CodeContributions = () => {
 
     const [contributions, setContributions] = useState(null);
-    const [isHovering, setIsHovering] = useState(false);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
     useEffect(() => {
         const fetchContributions = async () => {
@@ -51,7 +55,7 @@ const CodeContributions = () => {
     if (contributions) {
         contributions.forEach((contribution) => {
             const date = new Date(contribution.date).toISOString().slice(0, 10);
-            contributionsMap[date] = (contributionsMap[date] || 0) + contribution.addedLines;
+            contributionsMap[date] = (contributionsMap[date] || 0) + 1;
         });
     }
 
@@ -72,14 +76,14 @@ const CodeContributions = () => {
                                 const colorClass = getColor(contributions);
 
                                 return (
-                                    <div
-                                        key={colIndex}
-                                        className={`w-4 h-4 ${colorClass}`}
-                                        title={`${date}`}
-                                        onMouseEnter={() => setIsHovering(true)}
-                                        onMouseLeave={() => setIsHovering(false)}
-                                    />
-
+                                    <div className="relative" key={colIndex}>
+                                        <div
+                                            className={`w-4 h-4 ${colorClass}`}
+                                            title={`${contributions} contributions on ${date}`}
+                                            onMouseEnter={() => setHoveredIndex(colIndex)}
+                                            onMouseLeave={() => setHoveredIndex(null)}
+                                        />
+                                    </div>
                                 );
                             })}
                         </div>

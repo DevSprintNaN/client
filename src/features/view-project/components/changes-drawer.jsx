@@ -44,11 +44,12 @@ const ChangesDrawer = ({ toggleDrawer, changes }) => {
                                 <div key={index} className="w-full">
                                     <div className="w-full px-4 py-1 bg-violet-600 text-sm text-white flex justify-between">
                                         <span>{new Date(change.date).toLocaleDateString()} {new Date(change.date).toLocaleTimeString()} by {users[change.user]}</span>
-                                        <span className="px-2 py-1 bg-violet-900 rounded-md  hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2">
-                                            <button
+                                        {index >0 &&(<span className="px-2 py-1 bg-violet-900 rounded-md  hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2">
+                                        <button
                                             onClick={()=>{restoreVersion(change, index)}}
                                             classname="text-sm text-white">Restore This version</button>
                                         </span>
+                                        )}
                                     </div>
                                     <div className="w-full bg-violet-50 text-sm text-black">
                                         {change && change.changes.map((eachChange, index) => (
