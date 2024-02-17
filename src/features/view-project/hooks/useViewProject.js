@@ -124,8 +124,9 @@ export const useViewProject = (id) => {
     const handleViewFiles = async (file_name) => {
 
         const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
-        setChanges(response.changes);
-        console.log(response.changes);
+        const sortedChanges = response.changes.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setChanges(sortedChanges);
+        console.log(sortedChanges);
     }
 
     return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes }

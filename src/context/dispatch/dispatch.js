@@ -54,6 +54,8 @@ const dispatch = async (action, body={}) => {
                 return response.data;
             case actions.getAllProjects:
                 response = await axios.get(`${baseUrl}/project/get-all`);
+            case actions.getContributions:
+                response = await axios.get(`${baseUrl}/reputation/get-contributions`);
                 return response.data;
         }
     }catch(error){

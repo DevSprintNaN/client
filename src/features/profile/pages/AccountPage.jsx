@@ -9,6 +9,7 @@ import useFetchOptions from '../hooks/useFetchOptions';
 import useForm from '../hooks/useForm';
 import NewSkillInput from '../components/new-skill-input';
 import DisplayInputs from '../components/display-inputs';
+import CodeContributions from '../components/code-contributions';
 
 const AccountPage = () => {
     const [editMode, setEditMode] = useState(false);
@@ -124,6 +125,14 @@ const AccountPage = () => {
                                 </>)}
                             </form>
                         </div>
+                    </div>
+                </div>
+                <div className="md:flex shadow bg-white mt-2 p-2 rounded-md flex flex-row w-full">
+                    <div className='w-1/3'>
+                        
+                    </div>
+                    <div className='w-2/3 mx-auto'>
+                        <CodeContributions></CodeContributions>
                     </div>
                 </div>
             </div>
