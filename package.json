@@ -22,6 +22,7 @@
     "crypto-js": "^4.2.0",
     "franc": "^6.2.0",
     "highlight.js": "^11.9.0",
+    "html-react-parser": "^5.1.6",
     "mdb-react-ui-kit": "^7.2.0",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
