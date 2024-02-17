@@ -52,6 +52,9 @@ const dispatch = async (action, body={}) => {
             case actions.getMessages:
                 response = await axios.get(`${baseUrl}/messaging/get-all/${body}`);
                 return response.data;
+            case actions.getContributions:
+                response = await axios.get(`${baseUrl}/reputation/get-contributions`);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){
