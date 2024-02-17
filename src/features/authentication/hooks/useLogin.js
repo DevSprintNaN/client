@@ -5,7 +5,7 @@ import dispatch from "../../../context/dispatch/dispatch";
 import formDispatch, { formStates } from "../../../context/dispatch/formStatus";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../../context/auth/actions";
+import { setAuthenticated, setToken } from "../../../context/auth/actions";
 
 export const useLogin = () => {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const useLogin = () => {
             formDispatch(formStates.success, setFormState, setPayload);
             setMessage("Login successful!");
             authDisapatch(setToken(response.token));
-            window.location.reload();
+            authDisapatch(setAuthenticated(true));
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);

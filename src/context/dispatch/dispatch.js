@@ -59,19 +59,19 @@ const dispatch = async (action, body={}) => {
                 return response.data;
         }
     }catch(error){
-        if(error.code==="ERR_NETWORK"){
-            console.log("comes here");
-            window.location.href="/error500";
-        }
-        else if(error.code==="ECONNREFUSED"){
-            window.location.href="/error500";
-        }
-        else if(error.response.status===500){
-            window.location.href="/error500";
-        }
-        else if(error.response.status===404){
-            window.location.href="/error404";
-        }
+        // if(error.code==="ERR_NETWORK"){
+        //     console.log("comes here");
+        //     window.location.href="/error500";
+        // }
+        // else if(error.code==="ECONNREFUSED"){
+        //     window.location.href="/error500";
+        // }
+        // else if(error.response.status===500){
+        //     window.location.href="/error500";
+        // }
+        // else if(error.response.status===404){
+        //     window.location.href="/error404";
+        // }
         return error.response;
     }
 };
