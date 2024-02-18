@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import dispatch from '../../../context/dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
 
 const useFetchOptions = () => {
     const [options, setOptions] = useState([]);
@@ -6,8 +8,9 @@ const useFetchOptions = () => {
     useEffect(() => {
         const fetchOptions = async () => {
             try {
-                const optionsData = await ["skill 1", "skill 2", "skill 3", "skill 4", "skill 5"];
-                setOptions(optionsData);
+                const optionsData = await dispatch(actions.getSkills);
+                console.log("optionsData:", optionsData);
+                setOptions(optionsData.skills);
             } catch (error) {
                 console.error("Error fetching options:", error);
             }

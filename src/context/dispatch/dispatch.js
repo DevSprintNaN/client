@@ -99,7 +99,7 @@ const dispatch = async (action, body={}) => {
                 response=await axios.get(`${baseUrl}/profile/get-profile`,secure);
                 return response.data;
             case actions.updateProfile:
-                response=await axios.put(`${baseUrl}/profile/update-profile`,body,secure);
+                response=await axios.patch(`${baseUrl}/profile/update-profile`,body,secure);
                 return response.data;
         }
     }catch(error){

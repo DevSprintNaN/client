@@ -54,7 +54,7 @@ const AccountPage = () => {
                                         {editMode && (<><div className='flex'>
                                             <select name="skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={currSelected} onChange={handleInputChange}>
                                                 <option disabled selected>Select your skills</option>
-                                                {options?.map((option, index) => (
+                                                {options && options?.map((option, index) => (
                                                     <option key={index} value={option}>{option}</option>
                                                 ))}
                                             </select>

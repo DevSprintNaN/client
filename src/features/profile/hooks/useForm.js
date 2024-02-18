@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import dispatch from "../../../context/dispatch/dispatch";
 import actions from "../../../context/dispatch/actions";
 import { useNavigate } from "react-router-dom";
+import formDispatch, { formStates } from "../../../context/dispatch/formStatus";
 
 const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
   const [currSelected, setCurrSelected] =
@@ -21,7 +22,7 @@ const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
       temp.username=response.user.username;
       temp.skills=response.user.skills?response.user.skills:[];
       temp.newSkills=[];
-      temp.changePassword="";
+      temp.currentPassword="";
       temp.newPassword="";
       temp.confirmNewPassword="";
       return temp;
@@ -196,15 +197,23 @@ const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
     console.log(formData);
     setDisabled(true)
     const received=await dispatch(actions.updateProfile,formData);
-    const response = received.status==="success";
+    console.log(received);
+    const response = received?.status==="success";
     if (response) {
       setDisabled(false)
       formDispatch(formStates.success, setFormState, setPayload);
       setMessage("Changes saved successfully!");
     } else {
-      setDisabled(false)
-      formDispatch(formStates.failed, setFormState, setPayload);
-      setMessage("Could not make changes!");
+      if(response.passwordError){
+        setDisabled(false)
+        formDispatch(formStates.invalid, setFormState, setPayload);
+        setMessage("Incorrect current password!");
+      }
+      else{
+        setDisabled(false)
+        formDispatch(formStates.failed, setFormState, setPayload);
+        setMessage("Could not make changes!");
+      }
     }
   };
 
