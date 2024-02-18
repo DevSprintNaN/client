@@ -16,7 +16,7 @@ const Chat = ({ projectID }) => {
                 {isOpen && (
                     <>
                         <div className="px-4 py-2 flex flex-col grow-0 overflow-y-scroll bg-white">
-                            {messages.map((message, index) => (
+                            {messages && messages.length>0 && messages.map((message, index) => (
                                 <div className={`message ${message.id === id ? 'text-left' : 'text-right'}`} key={index}>
                                     <div className={`text-xs font-bold text-gray-500`}>
                                         {message.id === id ? 'You' : message.username}
