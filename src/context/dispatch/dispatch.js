@@ -44,7 +44,8 @@ const dispatch = async (action, body={}) => {
                 response = await axios.get(`${baseUrl}/file/get-all/${body}`,secure);
                 return response.data;
             case actions.getUser:
-                response = await axios.post(`${baseUrl}/auth/get-user`,secure);
+                response = await axios.get(`${baseUrl}/auth/get-user`,secure);
+                console.log(response);
                 return response.data;
             case actions.getVersions:
                 response = await axios.get(`${baseUrl}/file/get-changes/${body}`,secure);
