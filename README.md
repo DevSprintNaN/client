@@ -53,8 +53,4 @@ Develop an open-source project hub, serving as a central platform for collaborat
 - The online development phase ends on **_February 16, 11:55 PM._** This is a hard deadline. We will provide you with a form beforehand where you can submit your projects and edit the submission within the timeline. But you won’t be able to submit or edit anything after the mentioned time and no changes in your code will be accepted after the mentioned time, even if the changes are documentation only.
 - Make sure you have read the basic guidelines that had been sent to you over email for a better understanding of what you need to keep in mind during the development phase.
 
-#### **_Any unfair attempts, misbehavior, or breach of terms will result in disqualification. The organizers reserve the right to make final decisions. Participants will be notified if there is a notable modification in existing rules._**
-
-**This project idea expands on the Open-Source Project Hub concept by encouraging collaboration beyond software development and fostering innovation through diverse perspectives. So go start working and don’t forget to have fun!**
-
 The deployed application can be seen here: [Click Here](https://projecthub-devsprint.netlify.app/)
