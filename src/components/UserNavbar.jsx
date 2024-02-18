@@ -1,25 +1,8 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import dispatch from '../context/dispatch/dispatch';
-import actions from '../context/dispatch/actions';
+import { useNavbar } from "../hooks/useNavbar"
+
 
 const UserNavbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const handleLogOut=async()=>{
-        const response=await dispatch(actions.logout);
-        console.log(response);
-        if(response.status==="success"){
-            localStorage.clear();
-            window.location.reload();
-        }
-    }
-
+    const {toggleMenu,handleLogOut,isOpen}=useNavbar();
     return (
         <>
             <nav className="container mx-auto p-3 lg:flex lg:items-center lg:justify-between">

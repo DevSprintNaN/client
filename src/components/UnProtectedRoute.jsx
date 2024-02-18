@@ -1,9 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import {Navigate, useLocation} from "react-router-dom"
 
-const UnProtectedRoute = ({children,authentication}) => {
+const UnProtectedRoute = ({children}) => {
     let location = useLocation();
-    if(authentication) {
+    const token=useSelector((state)=>state.auth.token);
+    if(!token) {
         return <Navigate to="/account" state={{ from: location}} replace />
     }
  return children

@@ -4,13 +4,13 @@ import HeaderCard from '../components/header-card';
 import { useChartData } from '../hooks/useChartData';
 import LineChart from '../components/chart';
 import usePagination from '../../../hooks/usePagination';
-import { useProjectCard } from '../../project/hooks/useProjectCard';
 import ProjectCards from '../../project/components/project-cards';
 import Pagination from '../../../components/Pagination';
+import { useInsights } from '../hooks/useInsights';
 
 const Insights = () => {
     const { contributorChartData, starChartData, options, loading } = useChartData();
-    const { navigate, projects, setProjects, error } = useProjectCard();
+    const { navigate, projects } = useInsights();
     const { currentPage, setCurrentPage, itemsPerPage, totalPages, getCurrentItems, handlePageChange } = usePagination(8, projects);
     return (
         <div className="h-full p-2 bg-violet-100 w-full min-h-screen">

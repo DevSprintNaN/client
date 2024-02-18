@@ -10,9 +10,10 @@ export const useProtection=()=>{
     const authDispatch=useDispatch();
 
     const checkToken=async()=>{
-        const response=await dispatch(actions.verified,{token});
-        if(response.status==401){
+        const response=await dispatch(actions.verified);
+        if(response.status===401){
             authDispatch(setAuthenticated(false));
+            localStorage.removeItem("token");
         }
         else{
             authDispatch(setAuthenticated(true));
@@ -23,10 +24,7 @@ export const useProtection=()=>{
         if(!authenticated){
             checkToken();
         }
-        else{
-            setAuthenticated(false);
-        }
     },[token])
 
-    return {authenticated};
+    return {}
 }
