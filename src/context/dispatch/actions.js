@@ -20,5 +20,10 @@ export default {
     getProject:"GET_PROJECT",
     isStarred:"IS_STARRED",
     numberOfContributorsPerProject:"NUMBER_OF_CONTRIBUTORS_PER_PROJECT",
-    numberOfStarsPerProject:"NUMBER_OF_STARS_PER_PROJECT"
+    numberOfStarsPerProject:"NUMBER_OF_STARS_PER_PROJECT",
+    changePassword:"CHANGE_PASSWORD",
+    getSkills:"GET_SKILLS",
+    getUserSkills:"GET_USER_SKILLS",
+    getProfile:"GET_PROFILE",
+    updateProfile:"UPDATE_PROFILE",
 }

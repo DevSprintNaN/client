@@ -1,21 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
+import { useNavigate } from "react-router-dom";
 
-const useForm = (options) => {
+const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
   const [currSelected, setCurrSelected] =
     useState(null);
   const [newSkillInput, setNewSkillInput] =
     useState("");
   const [skillMessage, setSkillMessage] =
     useState("");
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    skills: [],
-    newSkills: [],
-    currentPassword: "",
-    newPassword: "",
-    confirmNewPassword: "",
-  });
+  const navigate=useNavigate();
+  const [formData, setFormData] = useState();
+
+  const fetchProfile=async()=>{
+    const response=await dispatch(actions.getProfile);
+    if(response?.status==="success"){
+      let temp={};
+      temp.email=response.user.email;
+      temp.username=response.user.username;
+      temp.skills=response.user.skills?response.user.skills:[];
+      temp.newSkills=[];
+      temp.changePassword="";
+      temp.newPassword="";
+      temp.confirmNewPassword="";
+      return temp;
+    }
+    else{
+      navigate("/error500");
+    }
+  }
+
+  useEffect(()=>{
+    fetchProfile().then((result)=>{
+      console.log(result);
+      setFormData(result);
+    });
+  },[])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -129,8 +150,8 @@ const useForm = (options) => {
   const addNewSkill = () => {
     const existInSkills = options
       ? options
-          .map((option) => option.toLowerCase())
-          .includes(newSkillInput.toLowerCase())
+        .map((option) => option.toLowerCase())
+        .includes(newSkillInput.toLowerCase())
       : false;
 
     const existInNewSkill = formData.newSkills
@@ -167,6 +188,26 @@ const useForm = (options) => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    setDisabled(true);
+    e.preventDefault();
+    formDispatch(formStates.loading, setFormState, setPayload);
+    setMessage("");
+    console.log(formData);
+    setDisabled(true)
+    const received=await dispatch(actions.updateProfile,formData);
+    const response = received.status==="success";
+    if (response) {
+      setDisabled(false)
+      formDispatch(formStates.success, setFormState, setPayload);
+      setMessage("Changes saved successfully!");
+    } else {
+      setDisabled(false)
+      formDispatch(formStates.failed, setFormState, setPayload);
+      setMessage("Could not make changes!");
+    }
+  };
+
   return {
     formData,
     handleInputChange,
@@ -177,6 +218,7 @@ const useForm = (options) => {
     setSkillMessage,
     currSelected,
     newSkillInput,
+    handleSubmit
   };
 };
 

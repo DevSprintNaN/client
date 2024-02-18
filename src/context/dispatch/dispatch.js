@@ -83,6 +83,24 @@ const dispatch = async (action, body={}) => {
             case actions.numberOfStarsPerProject:
                 response=await axios.get(`${baseUrl}/project/number-of-stars`,secure);
                 return response.data;
+            case actions.changePassword:
+                response=await axios.post(`${baseUrl}/profile/change-password`,body,secure);
+                return response.data;
+            case actions.getSkills:
+                response=await axios.get(`${baseUrl}/profile/get-skills`,secure);
+                return response.data;
+            case actions.getUserSkills:
+                response=await axios.get(`${baseUrl}/profile/get-user-skills`,secure);
+                return response.data;
+            case actions.getStarredProjects:
+                response=await axios.get(`${baseUrl}/profile/get-starred-projects`,secure);
+                return response.data;
+            case actions.getProfile:
+                response=await axios.get(`${baseUrl}/profile/get-profile`,secure);
+                return response.data;
+            case actions.updateProfile:
+                response=await axios.put(`${baseUrl}/profile/update-profile`,body,secure);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){
