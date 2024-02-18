@@ -19,7 +19,7 @@ export const useChat = (projectID) => {
     };
 
     const fetchUserInformation = async () => {
-        const response = await dispatch(actions.getUser);
+        const response = await dispatch(actions.getUser,{});
         console.log(response);
         setUsername(response.user.username);
         setID(response.user._id);
