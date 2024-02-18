@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaSearch } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import { useProjectCard } from '../../project/hooks/useProjectCard';
 import SearchResultModal from './search-result-modal';
+import { useInsights } from '../hooks/useInsights';
 
 const SearchBarWithDropdown = () => {
-  const { projects, navigate } = useProjectCard()
+  const { projects, navigate } = useInsights()
 
   const options = ["By Name", "By Skill"];
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ const SearchBarWithDropdown = () => {
   };
   const handleOptionSelect = (option) => {
     setFormData({ ...formData, type: option });
-    setShow(false); // Close the dropdown after selecting an option
+    setShow(false);
   };
 
   const handleSubmit = async (e) => {

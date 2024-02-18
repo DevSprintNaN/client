@@ -14,5 +14,11 @@ export default {
     restoreVersion:"RESTORE_VERSION",
     getMessages:"GET_MESSAGES",
     getAllProjects:"GET_ALL_PROJECTS",
-    getContributions:"GET_CONTRIBUTIONS"
+    getContributions:"GET_CONTRIBUTIONS",
+    starProject:"STAR_PROJECT",
+    unstarProject:"UNSTAR_PROJECT",
+    getProject:"GET_PROJECT",
+    isStarred:"IS_STARRED",
+    numberOfContributorsPerProject:"NUMBER_OF_CONTRIBUTORS_PER_PROJECT",
+    numberOfStarsPerProject:"NUMBER_OF_STARS_PER_PROJECT"
 }

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
 
 export const useChartData = () => {
   const [contributorChartData, setContributorChartData] = useState({
@@ -9,45 +11,7 @@ export const useChartData = () => {
     labels: [],
     datasets: [],
   });
-  const [loading, setLoading] = useState(false);
-  const projects = [
-    {
-      name: "Project 1",
-      owner: "user1",
-      ownerName: "John Doe",
-      users: ["user1", "user2", "user3"],
-      userIds: ["id1", "id2", "id3"],
-      fileId: ["fileId1", "fileId2"],
-      contents: ["Content 1", "Content 2"],
-      creationDate: "2023-05-15 10:30:00",
-      lastModified: "2023-07-20 14:45:00",
-      stars: 5, // Example star count for Project 1
-    },
-    {
-      name: "Project 2",
-      owner: "user2",
-      ownerName: "Jane Doe",
-      users: ["user2", "user3"],
-      userIds: ["id2", "id3"],
-      fileId: ["fileId3"],
-      contents: ["Content 3", "Content 4", "Content 5"],
-      creationDate: "2023-06-10 08:15:00",
-      lastModified: "2023-08-25 11:20:00",
-      stars: 8, // Example star count for Project 2
-    },
-    {
-      name: "Project 3",
-      owner: "user3",
-      ownerName: "Alice Smith",
-      users: ["user1", "user3"],
-      userIds: ["id1", "id3"],
-      fileId: ["fileId4", "fileId5"],
-      contents: ["Content 6"],
-      creationDate: "2023-07-02 12:00:00",
-      lastModified: "2023-09-05 09:10:00",
-      stars: 3, // Example star count for Project 3
-    },
-  ];
+  const [loading, setLoading] = useState(true);
 
   const options = {
     maintainAspectRatio: false,
@@ -64,44 +28,32 @@ export const useChartData = () => {
     },
   };
 
-  useEffect(() => {
-    if (projects && projects.length > 0) {
-      setLoading(true);
-      const sortedProjects = projects?.sort((a, b) => {
-        return b.stars - a.stars; // Sort in descending order of stars
-      });
+  const fetchStars = async () => {
+    const response = await dispatch(actions.numberOfStarsPerProject);
+    let temp = [];
+    for (let i = 1; i <= response.stars.length; i++) {
+      temp.push(i);
+    }
+    return { stars: response.stars, rank: temp}
+  }
 
-      const rank = sortedProjects.map((project, index) => {
-        return index + 1;
-      });
-      const contributors = sortedProjects.map((project) => {
-        return project.userIds.length;
-      });
+  const fetchContributors = async () => {
+    const response = await dispatch(actions.numberOfContributorsPerProject);
+    let temp = [];
+    for (let i = 1; i <= response.contributors.length; i++) {
+      temp.push(i);
+    }
+    return {contributors:response.contributors, rank: temp};
+  }
 
-      const stars = sortedProjects.map((project) => {
-        return project.stars;
-      });
-
-      setContributorChartData({
-        labels: rank,
-        datasets: [
-          {
-            label: "Number of Contributors in Top 100 Projects",
-            data: contributors,
-            backgroundColor: ["#FFFFFF"],
-            borderColor: "#581c87",
-            borderWidth: 2,
-            tension: 0.1,
-          },
-        ],
-      });
-
+  const fetchChartData = async () => {
+    await fetchStars().then((result)=>{
       setStarChartData({
-        labels: rank,
+        labels: result.rank,
         datasets: [
           {
             label: "Number of Stars in Top 100 Projects",
-            data: stars,
+            data: result.stars,
             backgroundColor: ["#FFFFFF"],
             borderColor: "#581c87",
             borderWidth: 2,
@@ -109,9 +61,29 @@ export const useChartData = () => {
           },
         ],
       });
-    }
+    });
+    await fetchContributors().then((result)=>{
+      setContributorChartData({
+        labels: result.rank,
+        datasets: [
+          {
+            label: "Number of Contributors in Top 100 Projects",
+            data: result.contributors,
+            backgroundColor: ["#FFFFFF"],
+            borderColor: "#581c87",
+            borderWidth: 2,
+            tension: 0.1,
+          },
+        ],
+      });
+    }); 
+  }
 
-    setLoading(false);
+  useEffect(() => {
+    fetchChartData().then(() => { setLoading(false) }).catch((error) => { 
+      setLoading(false);
+      console.log(error) 
+    });
   }, []);
 
   return { contributorChartData, starChartData, options, loading };

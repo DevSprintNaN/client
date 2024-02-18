@@ -14,7 +14,7 @@ const ProjectCards = ({ navigate, projects }) => {
                             {project.name}
                             <p className="my-auto">
                                 <span className="text-2xl">
-                                    27&nbsp;
+                                    {project.stars}&nbsp;
                                     <FaStar className="inline-block text-yellow-400 text-2xl" />
                                 </span>
                             </p>

@@ -10,16 +10,21 @@ export const useViewProject = (id) => {
     const [directories, setDirectories] = useState();
     const [currentDirectory, setCurrentDirectory] = useState("/");
     const currentDirectoryContext = useSelector((state) => state.file.currentDirectory);
+    const [starred, setStarred] = useState(false)
     const [fileDetailed, setFileDetailed] = useState();
+    const [disableStar, setDisableStar] = useState(false);
     const navigate=useNavigate();
     const fileDispatch = useDispatch();
     console.log(id);
     const [fileMap, setMap] = useState(new Map());
     const fetchFiles = async () => {
+        const isStarred=await dispatch(actions.isStarred,id);
+        setStarred(isStarred.isStarred);
         const res = await dispatch(actions.getFiles, id);
         setDirectories(res.files.map((file) => file.name.split(id + "/")[1]));
         generateMap(res.files.map((file) => file.name.split(id + "/")[1]));
         setFileDetailed(res.files);
+
     }
 
     const generateMap = (dirs) => {
@@ -129,5 +134,22 @@ export const useViewProject = (id) => {
         console.log(sortedChanges);
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes }
+    const handleAddStar=async()=>{
+        setDisableStar(true);
+        if(!starred){
+            const response=await dispatch(actions.starProject,{id});
+            if(response.status==="success"){
+                setStarred(true);
+            }
+        }
+        else{
+            const response=await dispatch(actions.unstarProject,{id});
+            if(response.status==="success"){
+                setStarred(false);
+            }
+        }
+        setDisableStar(false);
+    }
+
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar }
 }

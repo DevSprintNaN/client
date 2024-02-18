@@ -65,6 +65,24 @@ const dispatch = async (action, body={}) => {
             case actions.getContributions:
                 response = await axios.get(`${baseUrl}/reputation/get-contributions`,secure);
                 return response.data;
+            case actions.starProject:
+                response=await axios.post(`${baseUrl}/project/star`,body,secure);
+                return response.data;
+            case actions.unstarProject:
+                response=await axios.post(`${baseUrl}/project/unstar`,body,secure);
+                return response.data;
+            case actions.getProject:
+                response=await axios.get(`${baseUrl}/project/get-project/${body}`,secure);
+                return response.data;
+            case actions.isStarred:
+                response=await axios.get(`${baseUrl}/project/is-starred/${body}`,secure);
+                return response.data;
+            case actions.numberOfContributorsPerProject:
+                response=await axios.get(`${baseUrl}/project/number-of-contributors`,secure);
+                return response.data;
+            case actions.numberOfStarsPerProject:
+                response=await axios.get(`${baseUrl}/project/number-of-stars`,secure);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){
