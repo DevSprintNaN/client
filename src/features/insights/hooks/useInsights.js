@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import dispatch from "../../../context/dispatch/dispatch";
 import actions from "../../../context/dispatch/actions";
 
-export const useProjectCard=()=>{
+export const useInsights=()=>{
     const navigate=useNavigate();
     const [projects,setProjects] = useState();
     const [error,setError]=useState("");
 
     const fetchProjects=async()=>{
-        const response=await dispatch(actions.getProjects);
-        console.log(response)
+        const response=await dispatch(actions.getAllProjects);
+        console.log("Fetch Projects: ",response)
         if(response?.status==="success"){
             setError("");
             setProjects(response.projects);

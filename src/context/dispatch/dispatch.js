@@ -6,9 +6,15 @@ const dispatch = async (action, body={}) => {
     try{
         let response = {};
         axios.defaults.withCredentials=true;
+        const secure={
+            headers:{
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                'Content-Type': 'application/json'
+            }
+        }
         switch(action){
             case actions.verified:
-                response = await axios.post(`${baseUrl}/auth/verify`,body);
+                response = await axios.post(`${baseUrl}/auth/verify`,body,secure);
                 return response.data;
 
             case actions.register:
@@ -21,41 +27,42 @@ const dispatch = async (action, body={}) => {
                 response = await axios.post(`${baseUrl}/auth/login`,body);
                 return response.data;
             case actions.addProject:
-                response = await axios.post(`${baseUrl}/project/create`, body);
+                response = await axios.post(`${baseUrl}/project/create`, body,secure);
                 return response;
             case actions.getProjects:
-                response = await axios.get(`${baseUrl}/project/get`, body);
+                response = await axios.get(`${baseUrl}/project/get`,secure);
                 return response.data;
             case actions.fileUpload:
                 response = await axios.post(`${baseUrl}/file/upload`, body,{
                     headers: {
-                        'Content-Type': 'multipart/form-data'
-                    
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
                     }
                 });
                 return response.data;
             case actions.getFiles:
-                response = await axios.get(`${baseUrl}/file/get-all/${body}`);
+                response = await axios.get(`${baseUrl}/file/get-all/${body}`,secure);
                 return response.data;
             case actions.getUser:
-                response = await axios.post(`${baseUrl}/auth/get-user`);
+                response = await axios.post(`${baseUrl}/auth/get-user`,secure);
                 return response.data;
             case actions.getVersions:
-                response = await axios.get(`${baseUrl}/file/get-changes/${body}`);
+                response = await axios.get(`${baseUrl}/file/get-changes/${body}`,secure);
                 return response.data;
             case actions.getUserName:
-                response = await axios.get(`${baseUrl}/file/get-contributor/${body}`);
+                response = await axios.get(`${baseUrl}/file/get-contributor/${body}`,secure);
                 return response.data;
             case actions.restoreVersion:
-                response = await axios.put(`${baseUrl}/file/restore`, body);
+                response = await axios.put(`${baseUrl}/file/restore`, body,secure);
                 return response.data;
             case actions.getMessages:
-                response = await axios.get(`${baseUrl}/messaging/get-all/${body}`);
+                response = await axios.get(`${baseUrl}/messaging/get-all/${body}`,secure);
                 return response.data;
             case actions.getAllProjects:
-                response = await axios.get(`${baseUrl}/project/get-all`);
+                response = await axios.get(`${baseUrl}/project/get-all`,secure);
+                return response.data;
             case actions.getContributions:
-                response = await axios.get(`${baseUrl}/reputation/get-contributions`);
+                response = await axios.get(`${baseUrl}/reputation/get-contributions`,secure);
                 return response.data;
         }
     }catch(error){
@@ -72,6 +79,7 @@ const dispatch = async (action, body={}) => {
         // else if(error.response.status===404){
         //     window.location.href="/error404";
         // }
+        console.log(error);
         return error.response;
     }
 };

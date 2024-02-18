@@ -20,47 +20,45 @@ import ViewForums from './features/forum/pages/view-forums';
 import ViewSingleForum from './features/forum/pages/view-single-forum';
 
 function App() {
-
-  const {authenticated}=useProtection();
-
+  useProtection();
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<UnProtectedRoutes authentication={authenticated}>
+          <Route path="/" element={<UnProtectedRoutes>
             <LandingPage />
           </UnProtectedRoutes>} />
-          <Route path="/login" element={<UnProtectedRoutes  authentication={authenticated}>
+          <Route path="/login" element={<UnProtectedRoutes >
             <LoginPage />
           </UnProtectedRoutes>} />
-          <Route path="/register" element={<UnProtectedRoutes  authentication={authenticated}>
+          <Route path="/register" element={<UnProtectedRoutes >
             <RegisterPage />
           </UnProtectedRoutes>} />
-          <Route path="/account" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/account" element={<ProtectedRoute >
             <AccountPage />
           </ProtectedRoute>} />
-          <Route path="/projects" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/projects" element={<ProtectedRoute >
             <Project/>
           </ProtectedRoute>}/>
-          <Route path="/view-project/:id" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/view-project/:id" element={<ProtectedRoute >
             <ViewProjectContext/>
           </ProtectedRoute>}/>
-          <Route path="/view-project/:id/add-file" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/view-project/:id/add-file" element={<ProtectedRoute >
             <AddFileWithContext/>
           </ProtectedRoute>}/>
-          <Route path="/view-project/:id/open-file/:type" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/view-project/:id/open-file/:type" element={<ProtectedRoute >
             <ViewerWithContext/>
           </ProtectedRoute>}/>  
-          <Route path="/add-forum" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/add-forum" element={<ProtectedRoute >
             <AddForum/>
           </ProtectedRoute>}/>
-          <Route path="/view-forums" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/view-forums" element={<ProtectedRoute >
             <ViewForums/>
           </ProtectedRoute>}/>
-          <Route path="/view-forum/:id" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/view-forum/:id" element={<ProtectedRoute >
             <ViewSingleForum/>
           </ProtectedRoute>}/>
-          <Route path="/insights" element={<ProtectedRoute  authentication={authenticated}>
+          <Route path="/insights" element={<ProtectedRoute >
             <Insights/>
           </ProtectedRoute>}/>
           <Route path="/health" element={<div>
