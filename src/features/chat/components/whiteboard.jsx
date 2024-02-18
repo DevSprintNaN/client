@@ -95,19 +95,10 @@ const Whiteboard = ({ show, setShow,projectID }) => {
                 ctx.closePath();
                 ctx.stroke();
 
-                if (timeoutRef.current !== undefined) {
-                    clearTimeout(timeoutRef.current);
-                    timeoutRef.current = setTimeout(() => {
-                        var base64ImageData = canvas.toDataURL('image/png');
-                        setImgData(base64ImageData);
-                    }, 1000);
-                }
-                else{
-                    timeoutRef.current = setTimeout(() => {
-                        var base64ImageData = canvas.toDataURL('image/png');
-                        setImgData(base64ImageData);
-                    }, 1000);
-                }
+                timeoutRef.current = setTimeout(() => {
+                    var base64ImageData = canvas.toDataURL('image/png');
+                    setImgData(base64ImageData);
+                }, 1000);
             };
 
             const sendCanvasData = (canvas) => {
