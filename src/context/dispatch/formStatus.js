@@ -7,7 +7,7 @@ export const formStates = {
 };
 
 export const formMessageColors = {
-  red: "bg-red-300",
+  red: "bg-red-500",
   orange: "bg-orange-300",
   green: "bg-green-300"
 }
