@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Loading from '../../../components/Loading';
 import FormMessage from '../../../components/FormMessage';
 import { formStates } from '../../../context/dispatch/formStatus';
 import { useRegister } from '../hooks/useRegister';
+import OTPVerification from '../components/OTPVerification';
 
 export const RegisterPage = () => {
 
     const { handleInputChange, handleSubmit, formData, disabled, formState, message, payload } = useRegister();
-
-    return (
+    const [emailSent, setEmailSent] = useState(false)
+    return !emailSent ? (<>
+        <OTPVerification email={formData.email} />
+    </>) : (
         <div className="flex h-screen">
             <div className=" hidden lg:flex items-center justify-center flex-1 bg-white text-black">
                 <img src={'register.png'} className="w-full" />
