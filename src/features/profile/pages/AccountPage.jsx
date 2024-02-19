@@ -11,7 +11,7 @@ import ProjectCards from '../../project/components/project-cards';
 import { useAccountPage } from '../hooks/useAccountPage';
 import Pagination from '../../../components/Pagination';
 import usePagination from '../../../hooks/usePagination';
-
+import ShowBadges from '../components/show-badges';
 const AccountPage = () => {
     const {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate}=useAccountPage();
     const { formData, handleInputChange, handleRemoveSkill, currSelected, newSkillInput, addNewSkill, handleRemoveNewSkill, skillMessage,handleSubmit } = useForm(options,setDisabled,setPayload,setFormState,setMessage,setEditMode); 
@@ -107,10 +107,10 @@ const AccountPage = () => {
                         </div>
                     </div>
                     <div className="md:flex shadow bg-white mt-2 p-2 rounded-md flex flex-row w-full">
-                        <div className='w-1/3'>
-                            
+                        <div className='w-1/3 min-h-full mr-1'>
+                            <ShowBadges></ShowBadges>
                         </div>
-                        <div className='w-2/3 mx-auto'>
+                        <div className='w-2/3 mx-auto bg-gray-100'>
                             <CodeContributions></CodeContributions>
                         </div>
                     </div>
