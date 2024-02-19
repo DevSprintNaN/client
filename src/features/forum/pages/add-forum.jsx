@@ -119,18 +119,18 @@ const AddForum = () => {
 
                     <div>
                         <label htmlFor="shortDescription" className="block text-sm font-medium text-purple-900">Short Description</label>
-                        <ReactQuill theme="snow" name="shortDescription" value={description} onChange={(content, delta, source, editor) => {handleQuillLengthCheck(description,editor.getHTML(),50,setDescription)}} modules={modulesDescription} />
+                        <ReactQuill theme="snow" name="shortDescription" value={description} onChange={(content, delta, source, editor) => {setDescription(editor.getHTML())}} modules={modulesDescription} />
                     </div>
                     <div>
                         <label htmlFor="content" className="block text-sm font-medium text-purple-900">Content</label>
-                        <ReactQuill theme="snow" name="content" value={contentValue} onChange={(content, delta, source, editor) => handleQuillLengthCheck(contentValue,editor.getHTML(), 500, setContent)} modules={contentModules} />
+                        <ReactQuill theme="snow" name="content" value={contentValue} onChange={(content, delta, source, editor) => setContent(editor.getHTML())} modules={contentModules} />
                     </div>
 
                     <div>
                         <label htmlFor="attachments" className="block text-sm font-medium text-purple-900">Attachments</label>
                         <ForumAttachment files={files? Object.entries(files) : []} readonly={false} message={'No attachments'} handleRemove={deleteFile} closeModal={closeModal} handleAttachmentView={handleAddedAttachmentView} url={url} type={type} show={showViewer}/>
                         <div className='flex flex-start'>
-                            <div className={`mt-2 block bg-violet-100 cursor-pointer h-10 transform rounded-md border px-4 py-2 text-center capitalize text-purple-800 hover:text-white  transition-colors duration-300 hover:bg-purple-600  lg:mt-0 lg:w-auto`} onClick={() => setShow(true)} disabled={false} >Add Attachments</div>
+                            <div className={`mt-2 block bg-violet-100 cursor-pointzer h-10 transform rounded-md border px-4 py-2 text-center capitalize text-purple-800 hover:text-white  transition-colors duration-300 hover:bg-purple-600  lg:mt-0 lg:w-auto`} onClick={() => setShow(true)} disabled={false} >Add Attachments</div>
                         </div>
                     </div>
                 </form>
