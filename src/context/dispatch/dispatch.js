@@ -124,6 +124,18 @@ const dispatch = async (action, body={}) => {
             case actions.getForumPost:
                 response=await axios.get(`${baseUrl}/forum/get/${body}`,secure);
                 return response.data;
+            case actions.upvote:
+                response=await axios.post(`${baseUrl}/forum/upvote`,body,secure);
+                return response.data;
+            case actions.downvote:
+                response=await axios.post(`${baseUrl}/forum/downvote`,body,secure);
+                return response.data;
+            case actions.isUpvoted:
+                response=await axios.get(`${baseUrl}/forum/is-upvoted/${body}`,secure);
+                return response.data;
+            case actions.isDownvoted:
+                response=await axios.get(`${baseUrl}/forum/is-downvoted/${body}`,secure);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){

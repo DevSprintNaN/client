@@ -29,5 +29,9 @@ export default {
     addToForum: "ADD_TO_FORUM",
     getForumPosts: "GET_FORUM_POSTS",
     addFileToForum:"ADD_FILE_TO_FORUM",
-    getForumPost:"GET_FORUM_POST"
+    getForumPost:"GET_FORUM_POST",
+    upvote:"UPVOTE",
+    downvote:"DOWNVOTE",
+    isUpvoted:"IS_UPVOTED",
+    isDownvoted:"IS_DOWNVOTED",
 }
