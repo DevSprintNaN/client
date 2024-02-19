@@ -11,7 +11,8 @@ export const useProtection=()=>{
 
     const checkToken=async()=>{
         const response=await dispatch(actions.verified);
-        if(response.status===401){
+        console.log(response);
+        if(response.status==="error"){
             authDispatch(setAuthenticated(false));
             localStorage.removeItem("token");
         }

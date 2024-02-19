@@ -14,7 +14,7 @@ import usePagination from '../../../hooks/usePagination';
 
 const AccountPage = () => {
     const {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate}=useAccountPage();
-    const { formData, handleInputChange, handleRemoveSkill, currSelected, newSkillInput, addNewSkill, handleRemoveNewSkill, skillMessage,handleSubmit } = useForm(options,setDisabled,setPayload,setFormState,setMessage); 
+    const { formData, handleInputChange, handleRemoveSkill, currSelected, newSkillInput, addNewSkill, handleRemoveNewSkill, skillMessage,handleSubmit } = useForm(options,setDisabled,setPayload,setFormState,setMessage,setEditMode); 
     const {currentPage,totalPages,handlePageChange} =usePagination(8, projects);
 
     if(formData){
@@ -51,6 +51,7 @@ const AccountPage = () => {
                                     </div>
                                     <div className="pb-6">
                                         <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Skills</label>
+                                        {!editMode && (<DisplayInputs className="pb-6" data={formData.skills} message={'No Skills Added Yet'} handleRemove={()=>{}} readonly={true}/>)}
                                         {editMode && (<><div className='flex'>
                                             <select name="skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={currSelected} onChange={handleInputChange}>
                                                 <option disabled selected>Select your skills</option>
@@ -75,9 +76,10 @@ const AccountPage = () => {
                                             </div>)}
                                         </>
                                         )}
+
     
                                     </div>
-    
+                                                    
                                     {editMode && (<>
                                         <div className="pb-4">
                                             <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700"> Current Password</label>

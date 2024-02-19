@@ -4,7 +4,7 @@ import actions from "../../../context/dispatch/actions";
 import { useNavigate } from "react-router-dom";
 import formDispatch, { formStates } from "../../../context/dispatch/formStatus";
 
-const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
+const useForm = (options,setDisabled,setPayload,setFormState,setMessage,setEditMode) => {
   const [currSelected, setCurrSelected] =
     useState(null);
   const [newSkillInput, setNewSkillInput] =
@@ -203,6 +203,7 @@ const useForm = (options,setDisabled,setPayload,setFormState,setMessage) => {
       setDisabled(false)
       formDispatch(formStates.success, setFormState, setPayload);
       setMessage("Changes saved successfully!");
+      setEditMode(false);
     } else {
       if(response.passwordError){
         setDisabled(false)
