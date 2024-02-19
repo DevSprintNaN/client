@@ -11,8 +11,6 @@ export const useFetchSingleForum = (id) => {
     const fetchForum = async () => {
       try {
         const response=await dispatch(actions.getForumPost,id);
-        console.log(response);
-        console.log(response);
         setForum(response.forum);
 
         setForum(forumData);
@@ -26,5 +24,5 @@ export const useFetchSingleForum = (id) => {
     fetchForum();
   }, []);
 
-  return { loading, error, forum };
+  return { loading, error, forum,setForum };
 };
