@@ -18,6 +18,7 @@ import AddForum from './features/forum/pages/add-forum';
 import Insights from './features/insights/pages/insights';
 import ViewForums from './features/forum/pages/view-forums';
 import ViewSingleForum from './features/forum/pages/view-single-forum';
+import ForgotPasswordPage from './features/forgot-password/pages/forgot-password';
 
 function App() {
   useProtection();
@@ -33,6 +34,9 @@ function App() {
           </UnProtectedRoutes>} />
           <Route path="/register" element={<UnProtectedRoutes >
             <RegisterPage />
+          </UnProtectedRoutes>} />
+          <Route path="/forgot-password" element={<UnProtectedRoutes >
+            <ForgotPasswordPage />
           </UnProtectedRoutes>} />
           <Route path="/account" element={<ProtectedRoute >
             <AccountPage />
