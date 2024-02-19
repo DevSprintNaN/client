@@ -126,12 +126,21 @@ export const useViewProject = (id) => {
         navigate(`/view-project/${id}/add-file`)
     }
 
+    const [loading, setLoading] = useState(false);
     const handleViewFiles = async (file_name) => {
+        try{
+            setLoading(true);
+            const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
+            const sortedChanges = response.changes.sort((a, b) => new Date(b.date) - new Date(a.date));
+            setChanges(sortedChanges);
+            console.log(sortedChanges);
 
-        const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
-        const sortedChanges = response.changes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setChanges(sortedChanges);
-        console.log(sortedChanges);
+        }catch(error){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+        
     }
 
     const handleAddStar=async()=>{
@@ -159,5 +168,5 @@ export const useViewProject = (id) => {
         }
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler }
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler, loading }
 }

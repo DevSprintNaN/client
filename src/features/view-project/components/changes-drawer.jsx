@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import actions from "../../../context/dispatch/actions";
 import Loading from "../../../components/Loading";
 
-const ChangesDrawer = ({ toggleDrawer, changes }) => {
+const ChangesDrawer = ({ toggleDrawer, changes, loading }) => {
 
     if (changes) {
         const [users, setUsers] = useState({});
@@ -38,6 +38,10 @@ const ChangesDrawer = ({ toggleDrawer, changes }) => {
                             {changes.length > 0 ? "Version History" : "No version history available"}
                         </h1>
                     </div>
+                    {loading ? (
+                        <Loading></Loading>
+                    ):
+                    (    
                     <div className="w-full bg-violet-50 max-h-80 overflow-auto">
                         {changes &&
                             changes.map((change, index) => (
@@ -70,6 +74,7 @@ const ChangesDrawer = ({ toggleDrawer, changes }) => {
                                 </div>
                             ))}
                     </div>
+                    )}
                 </div>
             </div>
         );
