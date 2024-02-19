@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 
-export const useOTPVerify = (email) => {
+export const useOTPVerify = (email,otp) => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

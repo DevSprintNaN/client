@@ -8,10 +8,7 @@ import OTPVerification from '../components/OTPVerification';
 export const RegisterPage = () => {
 
     const { handleInputChange, handleSubmit, formData, disabled, formState, message, payload } = useRegister();
-    const [emailSent, setEmailSent] = useState(false)
-    return !emailSent ? (<>
-        <OTPVerification email={formData.email} />
-    </>) : (
+    return (
         <div className="flex h-screen">
             <div className=" hidden lg:flex items-center justify-center flex-1 bg-white text-black">
                 <img src={'register.png'} className="w-full" />

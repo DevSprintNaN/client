@@ -2,22 +2,38 @@ import React from 'react'
 import { useOTPVerify } from '../hooks/useOTPVerify';
 import FormMessage from '../../../components/FormMessage';
 import DOMPurify from "dompurify";
+import OtpInput from 'react18-input-otp';
+import { useOTP } from '../hooks/useOTP';
+import OTPValidityTimer from '../../forgot-password/components/OTPValidityTimer';
 
 const OTPVerification = ({ email }) => {
-    const { password,
-        passwordChange,
-        confirmPassword,
-        confirmPasswordChange,
-        handleSubmit,
-        isDisabled,
-        errorPassword,
-        errorMessage,
-        errorConfirmPassword,
-        passwordVisible, setPasswordVisible } = useOTPVerify(email)
+    
+        const {
+            enterotp,
+            setEnterotp,
+            otp,
+            otpDisabled,
+            setOTP,
+            isLocked,
+            remainingTime,
+            error,
+            onResend,
+          }=useOTP(180,email);
+          const { password,
+            passwordChange,
+            confirmPassword,
+            confirmPasswordChange,
+            handleSubmit,
+            isDisabled,
+            errorPassword,
+            errorMessage,
+            errorConfirmPassword,
+            passwordVisible, setPasswordVisible } = useOTPVerify(email,otp)
+
     return (
         <><div className="flex h-screen">
         <div className=" hidden lg:flex items-center justify-center flex-1 bg-white text-black">
-            <img src={'otp_sent.png'} className="w-full" />
+            <img src={'/otp_sent.png'} className="w-full" />
         </div>
         <div className="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
                 <div className="max-w-md w-full p-6">
@@ -26,6 +42,18 @@ const OTPVerification = ({ email }) => {
             <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                 {errorMessage && (<FormMessage bg_class={"bg-red-400"} message={errorMessage} />)}
                 <div>
+                <div className="otpElements">
+                    <label htmlFor="otp" className="block text-sm font-medium text-gray-700">OTP</label>
+                    <div className="otp">
+                        <OtpInput
+                            onChange={setOTP}
+                            value={otp}
+                            numInputs={6}
+                            className="mt-1 bg-white p-2 mr-1 rounded-md focus:outline-none transition-colors duration-300"
+                        />
+                    </div>
+                    <span className={`block text-sm font-medium mt-3`}> OTP is valid for: <OTPValidityTimer remainingTime={remainingTime} /></span>
+                </div>
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                     <input
                         className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"

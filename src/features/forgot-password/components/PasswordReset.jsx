@@ -13,18 +13,6 @@ const PasswordReset = ({ email }) => {
                 {errorMessage && (<FormMessage bg_class={"bg-red-400"} message={errorMessage} />)}
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                    {/* {(passwordVisibility === "password" && (
-                        <div
-                            // icon={lockClosedOutline}
-                            onClick={() => setPasswordVisibility("text")}
-                        >sddf</div>
-                    )) ||
-                        (passwordVisibility === "text" && (
-                            <div
-                                // icon={lockOpenOutline}
-                                onClick={() => setPasswordVisibility("password")}
-                            >sdfsdf</div>
-                        ))} */}
                     <input
                         className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                         type={passwordVisible ? "text" : "password"}
@@ -40,18 +28,6 @@ const PasswordReset = ({ email }) => {
                 </div>
                 <div>
                     <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                    {/* {(confirmPasswordVisibility === "password" && (
-                        <div
-                            // icon={lockClosedOutline}
-                            onClick={() => setConfirmPasswordVisibility("text")}
-                        >sfdsf</div>
-                    )) ||
-                        (confirmPasswordVisibility === "text" && (
-                            <div
-                                // icon={lockOpenOutline}
-                                onClick={() => setConfirmPasswordVisibility("password")}
-                            >sdfsdf</div>
-                        ))} */}
                     <input
                         className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                         type={passwordVisible ? "text" : "password"}
