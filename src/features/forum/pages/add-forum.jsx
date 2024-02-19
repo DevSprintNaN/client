@@ -11,6 +11,8 @@ import { useFileUpload } from '../../view-project/hooks/useFileUpload';
 import ForumAttachment from '../components/forum-attachments';
 import { useViewAttachments } from '../hooks/useViewAttachments';
 import Message from '../../project/components/message';
+import dispatch from '../../../context/dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
 
 
 
@@ -20,13 +22,14 @@ const AddForum = () => {
     const [message, setMessage] = useState("")
     const [payload, setPayload] = useState(null)
     const [show, setShow] = useState(false)
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [forumID,setForumID]=useState();
     const [formData, setFormData] = useState({
         title: '',
         coverImg: null,
     })
     const { content:contentValue, setContent, description, setDescription, checkQuillCharacterCount, getStringFromHtml, contentModules, modulesDescription, quillRef,handleQuillLengthCheck } = useQuill()
-    const {files,handleDrop,handleFileInput,deleteFile}=useFileUpload(null,null, setShow, null)
+    const {files,handleDrop,handleFileInput,deleteFile,setError,error}=useFileUpload(null,null, setShow, null)
     const {closeModal, handleAddedAttachmentView, url, type, show :showViewer } = useViewAttachments()
 
     const handleInputChange = (e) => {
@@ -34,7 +37,6 @@ const AddForum = () => {
         if(name==='coverImg'){
             const {files} = e.target
             setFormData({...formData, [name]: files[0]})
-            console.log("goddittt   ")
         }
         else 
             setFormData({ ...formData, [name]: value });
@@ -42,9 +44,6 @@ const AddForum = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(description)
-        console.log(contentValue)
-        console.log(formData)
         if(!description || description==='' ){
             formDispatch(formStates.invalid, setFormState, setPayload)
             setMessage("Description cannot be empty");
@@ -58,12 +57,32 @@ const AddForum = () => {
         formDispatch(formStates.loading, setFormState, setPayload);
         setMessage("")
         setDisabled(true)
-
-        const success = 1;
-        if (success) {
+        const forumData=new FormData();
+        forumData.append('title',formData.title);
+        forumData.append('coverImage',formData.coverImg);
+        forumData.append('description',description);
+        forumData.append('content',contentValue);
+        const response=await dispatch(actions.addToForum,forumData).then((res)=>{
+            if(res.status==="success"){
+                setForumID(res._id);
+                let result=true;
+                Object.values(files).forEach(async(file)=>{
+                    const fileData=new FormData();
+                    fileData.append('id',res._id);
+                    fileData.append('file',file);
+                    const resp=await dispatch(actions.addFileToForum,fileData);
+                    if(resp.status==="error"){
+                        result=false;
+                    }
+                });
+                return result;
+            }
+        })
+        if (response) {
             setDisabled(false)
             formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Created Successfully!")
+            setMessage("Created Successfully!");
+            navigate('/view-forums');
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
@@ -72,7 +91,7 @@ const AddForum = () => {
     }
     return (
         <>
-            {show && (<UploadAttachments setShow={setShow} files={files} handleDrop={handleDrop} handleFileInput={handleFileInput} deleteFile={deleteFile}/>)}
+            {show && (<UploadAttachments setShow={setShow} files={files} handleDrop={handleDrop} handleFileInput={handleFileInput} deleteFile={deleteFile} setError={setError} error={error}/>)}
             <div className={`h-full bg-violet-100 w-full min-h-screen`} >
                 <UserNavbar />
 

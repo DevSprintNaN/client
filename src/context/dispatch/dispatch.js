@@ -102,6 +102,28 @@ const dispatch = async (action, body={}) => {
             case actions.updateProfile:
                 response=await axios.patch(`${baseUrl}/profile/update-profile`,body,secure);
                 return response.data;
+            case actions.getForumPosts:
+                response=await axios.get(`${baseUrl}/forum/get`,secure);
+                return response.data;
+            case actions.addToForum:
+                response=await axios.post(`${baseUrl}/forum/add`,body,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                return response.data;
+            case actions.addFileToForum:
+                response=await axios.patch(`${baseUrl}/forum/add`,body,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                return response.data;
+            case actions.getForumPost:
+                response=await axios.get(`${baseUrl}/forum/get/${body}`,secure);
+                return response.data;
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){

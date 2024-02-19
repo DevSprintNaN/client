@@ -5,10 +5,11 @@ export const useViewAttachments = () => {
   const [show, setShow] = useState(false) 
   const [type, setType] = useState("");
 
-  const handleUploadedAttachmentView = (entry) => {
-    setUrl(entry.files);
-    setType(entry.fileType);
+  const handleUploadedAttachmentView = (url, type) => {
+    setUrl(url);
+    setType(type);
     setShow(true);
+    console.log("Comes Here");
   };
 
   const closeModal = () => {
