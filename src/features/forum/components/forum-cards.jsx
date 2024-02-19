@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import parse from 'html-react-parser';
 
 const ForumCards = ({ forums }) => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const ForumCards = ({ forums }) => {
                                 <div className="p-6">
                                     <h2 className="tracking-widest text-sm title-font font-medium text-violet-400 mb-1">By {forum.author}</h2>
                                     <h1 className="title-font text-lg font-bold text-purple-800 mb-3">{forum.title}</h1>
-                                    <p className="leading-relaxed mb-3">{forum.description}</p>
+                                    <p className="leading-relaxed mb-3">{parse(forum.description)}</p>
                                 </div>
                                 
                             </div>
