@@ -4,7 +4,6 @@ import Loading from '../../../components/Loading'
 import 'chart.js/auto'
 
 const LineChart = ({ data, options, loading }) => {
-    console.log(data)
     return (loading ? (<><Loading /></>) :
         (<>
             <div >

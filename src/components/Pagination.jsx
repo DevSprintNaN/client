@@ -8,9 +8,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         for (let i = 1; i <= totalPages; i++) {
             updatedPageNumbers.push(i);
         }
-        console.log("current page", currentPage)
         setPageNumbers(updatedPageNumbers);
-        console.log("pagenumber in pagination", pageNumbers)
     }, [totalPages]);    
 
     return (

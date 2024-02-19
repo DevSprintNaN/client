@@ -82,5 +82,5 @@ export const useFileUpload = (currentDirectory,_id,setShow,handleFile) => {
         })
     };
 
-    return {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile,uploading,progress};
+    return {files,error,handleDrop,handleCancel,handleFileInput,handleUpload,deleteFile,uploading,progress,setError};
 }

@@ -10,16 +10,21 @@ export const useViewProject = (id) => {
     const [directories, setDirectories] = useState();
     const [currentDirectory, setCurrentDirectory] = useState("/");
     const currentDirectoryContext = useSelector((state) => state.file.currentDirectory);
+    const [starred, setStarred] = useState(false)
     const [fileDetailed, setFileDetailed] = useState();
+    const [disableStar, setDisableStar] = useState(false);
     const navigate=useNavigate();
     const fileDispatch = useDispatch();
     console.log(id);
     const [fileMap, setMap] = useState(new Map());
     const fetchFiles = async () => {
+        const isStarred=await dispatch(actions.isStarred,id);
+        setStarred(isStarred.isStarred);
         const res = await dispatch(actions.getFiles, id);
         setDirectories(res.files.map((file) => file.name.split(id + "/")[1]));
         generateMap(res.files.map((file) => file.name.split(id + "/")[1]));
         setFileDetailed(res.files);
+
     }
 
     const generateMap = (dirs) => {
@@ -121,13 +126,47 @@ export const useViewProject = (id) => {
         navigate(`/view-project/${id}/add-file`)
     }
 
+    const [loading, setLoading] = useState(false);
     const handleViewFiles = async (file_name) => {
+        try{
+            setLoading(true);
+            const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
+            const sortedChanges = response.changes.sort((a, b) => new Date(b.date) - new Date(a.date));
+            setChanges(sortedChanges);
+            console.log(sortedChanges);
 
-        const response = await dispatch(actions.getVersions, encodeURIComponent(id+currentDirectory+file_name).replaceAll(".","%2E"));
-        const sortedChanges = response.changes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setChanges(sortedChanges);
-        console.log(sortedChanges);
+        }catch(error){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+        
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes }
+    const handleAddStar=async()=>{
+        setDisableStar(true);
+        if(!starred){
+            const response=await dispatch(actions.starProject,{id});
+            if(response.status==="success"){
+                setStarred(true);
+            }
+        }
+        else{
+            const response=await dispatch(actions.unstarProject,{id});
+            if(response.status==="success"){
+                setStarred(false);
+            }
+        }
+        setDisableStar(false);
+    }
+
+    const deleteHandler = async(file) => {
+
+        const response = await dispatch(actions.deleteFile,encodeURIComponent(id+currentDirectory+file));
+        if(response.status === "success"){
+            window.location.reload();
+        }
+    }
+
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler, loading }
 }

@@ -1,7 +1,22 @@
-import React, { useState } from 'react'
 
-const UploadAttachments = ({ setShow, files, handleDrop, handleFileInput, deleteFile }) => {
-    console.log(files)
+
+const UploadAttachments = ({ setShow, files, handleDrop, handleFileInput, deleteFile,setError,error }) => {
+    const handleCloseModal=()=>{
+        setError("");
+        let size=0;
+        if(Object.values(files).length>5){
+            setError("Cannot Upload More Than 5 Files");
+            return;
+        }
+        Object.values(files).forEach((file)=>{
+            size+=file.size;
+        })
+        if(size>52428800){
+            setError("Total File Size has to be less than 50 MB");
+            return;
+        }
+        setShow(false);
+    }
     return (
         <>
             <div className="fixed inset-0 bg-violet-100/75 rounded-md h-screen w-screen sm:px-8 md:px-16 sm:py-8 z-20">
@@ -22,6 +37,7 @@ const UploadAttachments = ({ setShow, files, handleDrop, handleFileInput, delete
                             <h1 className="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">
                                 To Upload
                             </h1>
+                            <div className="bg-red-100 text-red-900">{error}</div>
                             {Object.keys(files).length > 0 ? (<ul id="gallery" className="flex flex-1 flex-wrap">
                                 {Object.entries(files).map(([objectURL, file]) => (
                                     <li key={objectURL} className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
@@ -58,7 +74,7 @@ const UploadAttachments = ({ setShow, files, handleDrop, handleFileInput, delete
 
                         <footer className="flex justify-center space-x-2 px-8 pb-8 pt-4">
 
-                            <button className={` bg-purple-700 text-white py-2 px-6 md:px-12 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300` } onClick={()=>setShow(false)}>Done</button>
+                            <button className={` bg-purple-700 text-white py-2 px-6 md:px-12 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300` } onClick={()=>handleCloseModal()}>Done</button>
                         </footer>
 
                     </article>

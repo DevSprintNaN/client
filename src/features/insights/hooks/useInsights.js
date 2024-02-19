@@ -10,7 +10,6 @@ export const useInsights=()=>{
 
     const fetchProjects=async()=>{
         const response=await dispatch(actions.getAllProjects);
-        console.log("Fetch Projects: ",response)
         if(response?.status==="success"){
             setError("");
             setProjects(response.projects);

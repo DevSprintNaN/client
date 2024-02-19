@@ -10,6 +10,9 @@ import UploadAttachments from '../components/upload-attachments';
 import { useFileUpload } from '../../view-project/hooks/useFileUpload';
 import ForumAttachment from '../components/forum-attachments';
 import { useViewAttachments } from '../hooks/useViewAttachments';
+import Message from '../../project/components/message';
+import dispatch from '../../../context/dispatch/dispatch';
+import actions from '../../../context/dispatch/actions';
 
 
 
@@ -19,36 +22,67 @@ const AddForum = () => {
     const [message, setMessage] = useState("")
     const [payload, setPayload] = useState(null)
     const [show, setShow] = useState(false)
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [forumID,setForumID]=useState();
     const [formData, setFormData] = useState({
         title: '',
-        cover_img_url: '',
+        coverImg: null,
     })
-    const { content, setContent, description, setDescription, checkQuillCharacterCount, getStringFromHtml, contentModules, modulesDescription, quillRef } = useQuill()
-    const {files,handleDrop,handleFileInput,deleteFile}=useFileUpload(null,null, setShow, null)
-    const {closeModal, handleAddedAttachmentView} = useViewAttachments()
+    const { content:contentValue, setContent, description, setDescription, checkQuillCharacterCount, getStringFromHtml, contentModules, modulesDescription, quillRef,handleQuillLengthCheck } = useQuill()
+    const {files,handleDrop,handleFileInput,deleteFile,setError,error}=useFileUpload(null,null, setShow, null)
+    const {closeModal, handleAddedAttachmentView, url, type, show :showViewer } = useViewAttachments()
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if(name==='coverImg'){
+            const {files} = e.target
+            setFormData({...formData, [name]: files[0]})
+        }
+        else 
+            setFormData({ ...formData, [name]: value });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const strDescription = getStringFromHtml(description)
-        console.log(strDescription)
-        console.log(content)
-        console.log(formData)
+        if(!description || description==='' ){
+            formDispatch(formStates.invalid, setFormState, setPayload)
+            setMessage("Description cannot be empty");
+            return;
+        }
+        if( !contentValue || contentValue===''){
+            setMessage("Content cannot be empty!")
+            return
+        }
 
         formDispatch(formStates.loading, setFormState, setPayload);
         setMessage("")
         setDisabled(true)
-
-        const success = 1;
-        if (success) {
+        const forumData=new FormData();
+        forumData.append('title',formData.title);
+        forumData.append('coverImage',formData.coverImg);
+        forumData.append('description',description);
+        forumData.append('content',contentValue);
+        const response=await dispatch(actions.addToForum,forumData).then((res)=>{
+            if(res.status==="success"){
+                setForumID(res._id);
+                let result=true;
+                Object.values(files).forEach(async(file)=>{
+                    const fileData=new FormData();
+                    fileData.append('id',res._id);
+                    fileData.append('file',file);
+                    const resp=await dispatch(actions.addFileToForum,fileData);
+                    if(resp.status==="error"){
+                        result=false;
+                    }
+                });
+                return result;
+            }
+        })
+        if (response) {
             setDisabled(false)
             formDispatch(formStates.success, setFormState, setPayload);
-            setMessage("Created Successfully!")
+            setMessage("Created Successfully!");
+            navigate('/view-forums');
         } else {
             setDisabled(false)
             formDispatch(formStates.failed, setFormState, setPayload);
@@ -57,7 +91,7 @@ const AddForum = () => {
     }
     return (
         <>
-            {show && (<UploadAttachments setShow={setShow} files={files} handleDrop={handleDrop} handleFileInput={handleFileInput} deleteFile={deleteFile}/>)}
+            {show && (<UploadAttachments setShow={setShow} files={files} handleDrop={handleDrop} handleFileInput={handleFileInput} deleteFile={deleteFile} setError={setError} error={error}/>)}
             <div className={`h-full bg-violet-100 w-full min-h-screen`} >
                 <UserNavbar />
 
@@ -68,6 +102,8 @@ const AddForum = () => {
                         </div>
                     </div>
 
+                    {payload && (<FormMessage bg_class={payload.bg_color} message={message} />)}
+
                     <div>
                         <label htmlFor="title" className="block text-sm font-medium text-purple-900">Title</label>
                         <input type="text" id="title" name="title" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none  transition-colors duration-300"
@@ -75,25 +111,28 @@ const AddForum = () => {
                             onChange={handleInputChange} required />
                     </div>
 
-                    {payload && (<FormMessage bg_class={payload.bg_color} message={message} />)}
+                    <div>
+                        <label htmlFor="coverImg" className="block text-sm font-medium text-purple-900">Cover Image</label>
+                        <input type="file" accept="image/*" id="coverImg" name="coverImg" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none  transition-colors duration-300"
+                            onChange={handleInputChange} required />
+                    </div>
 
                     <div>
                         <label htmlFor="shortDescription" className="block text-sm font-medium text-purple-900">Short Description</label>
-                        <ReactQuill theme="snow" name="shortDescription" value={description} onKeyDown={checkQuillCharacterCount} ref={quillRef} onChange={(content, delta, source, editor) => setDescription(editor.getHTML())} modules={modulesDescription} />
+                        <ReactQuill theme="snow" name="shortDescription" value={description} onChange={(content, delta, source, editor) => {setDescription(editor.getHTML())}} modules={modulesDescription} />
                     </div>
                     <div>
                         <label htmlFor="content" className="block text-sm font-medium text-purple-900">Content</label>
-                        <ReactQuill theme="snow" name="content" value={content} onKeyDown={checkQuillCharacterCount} ref={quillRef} onChange={(content, delta, source, editor) => setContent(editor.getHTML())} modules={contentModules} />
+                        <ReactQuill theme="snow" name="content" value={contentValue} onChange={(content, delta, source, editor) => setContent(editor.getHTML())} modules={contentModules} />
                     </div>
 
-                    <div className=''>
+                    <div>
                         <label htmlFor="attachments" className="block text-sm font-medium text-purple-900">Attachments</label>
-                        <ForumAttachment data={files? Object.values(files) : []} readonly={false} message={'No attachments'} handleRemove={deleteFile} closeModal={closeModal}/>
+                        <ForumAttachment files={files? Object.entries(files) : []} readonly={false} message={'No attachments'} handleRemove={deleteFile} closeModal={closeModal} handleAttachmentView={handleAddedAttachmentView} url={url} type={type} show={showViewer}/>
                         <div className='flex flex-start'>
-                            <div className={`mt-2 block bg-violet-100 cursor-pointer h-10 transform rounded-md border px-4 py-2 text-center capitalize text-purple-800 hover:text-white  transition-colors duration-300 hover:bg-purple-600  lg:mt-0 lg:w-auto`} onClick={() => setShow(true)} disabled={false} >Add Attachments</div>
+                            <div className={`mt-2 block bg-violet-100 cursor-pointzer h-10 transform rounded-md border px-4 py-2 text-center capitalize text-purple-800 hover:text-white  transition-colors duration-300 hover:bg-purple-600  lg:mt-0 lg:w-auto`} onClick={() => setShow(true)} disabled={false} >Add Attachments</div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </>

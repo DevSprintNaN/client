@@ -65,6 +65,89 @@ const dispatch = async (action, body={}) => {
             case actions.getContributions:
                 response = await axios.get(`${baseUrl}/reputation/get-contributions`,secure);
                 return response.data;
+            case actions.starProject:
+                response=await axios.post(`${baseUrl}/project/star`,body,secure);
+                return response.data;
+            case actions.unstarProject:
+                response=await axios.post(`${baseUrl}/project/unstar`,body,secure);
+                return response.data;
+            case actions.getProject:
+                response=await axios.get(`${baseUrl}/project/get-project/${body}`,secure);
+                return response.data;
+            case actions.isStarred:
+                response=await axios.get(`${baseUrl}/project/is-starred/${body}`,secure);
+                return response.data;
+            case actions.numberOfContributorsPerProject:
+                response=await axios.get(`${baseUrl}/project/number-of-contributors`,secure);
+                return response.data;
+            case actions.numberOfStarsPerProject:
+                response=await axios.get(`${baseUrl}/project/number-of-stars`,secure);
+                return response.data;
+            case actions.changePassword:
+                response=await axios.post(`${baseUrl}/profile/change-password`,body,secure);
+                return response.data;
+            case actions.getSkills:
+                response=await axios.get(`${baseUrl}/profile/get-skills`,secure);
+                console.log(response);
+                return response.data;
+            case actions.getUserSkills:
+                response=await axios.get(`${baseUrl}/profile/get-user-skills`,secure);
+                return response.data;
+            case actions.getStarredProjects:
+                response=await axios.get(`${baseUrl}/profile/get-starred-projects`,secure);
+                return response.data;
+            case actions.getProfile:
+                response=await axios.get(`${baseUrl}/profile/get-profile`,secure);
+                return response.data;
+            case actions.updateProfile:
+                response=await axios.patch(`${baseUrl}/profile/update-profile`,body,secure);
+                return response.data;
+            case actions.deleteFile:
+                response = await axios.delete(`${baseUrl}/file/delete/${body}`,  secure);
+                return response.data;
+            case actions.getForumPosts:
+                response=await axios.get(`${baseUrl}/forum/get`,secure);
+                return response.data;
+            case actions.addToForum:
+                response=await axios.post(`${baseUrl}/forum/add`,body,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                return response.data;
+            case actions.addFileToForum:
+                response=await axios.patch(`${baseUrl}/forum/add`,body,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                return response.data;
+            case actions.getForumPost:
+                response=await axios.get(`${baseUrl}/forum/get/${body}`,secure);
+                return response.data;
+            case actions.upvote:
+                response=await axios.post(`${baseUrl}/forum/upvote`,body,secure);
+                return response.data;
+            case actions.downvote:
+                response=await axios.post(`${baseUrl}/forum/downvote`,body,secure);
+                return response.data;
+            case actions.isUpvoted:
+                response=await axios.get(`${baseUrl}/forum/is-upvoted/${body}`,secure);
+                return response.data;
+            case actions.isDownvoted:
+                response=await axios.get(`${baseUrl}/forum/is-downvoted/${body}`,secure);
+                return response.data;
+            case actions.emailVerificationOTP:
+                response=await axios.post(`${baseUrl}/auth/verify-otp`,body);
+                return response.data;
+            case actions.emailVerification:
+                response=await axios.post(`${baseUrl}/auth/verify-email`,body);
+                return response.data;
+            case actions.getRelevantProjects:
+                response=await axios.get(`${baseUrl}/profile/find-matches`, secure);
+                return response.data
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){

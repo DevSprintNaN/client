@@ -21,7 +21,7 @@ const SearchResultModal = ({ show, setShow, searchResults, navigate }) => {
                             <h1 className="text-xl font-semibold text-center">These results matched what you were searching for</h1>
                         </div> 
                     <div className='h-[90vh] w-[90vw] overflow-y-auto p-2'>
-                        <ProjectCards navigate={navigate} projects={searchResults} />
+                        <ProjectCards navigate={navigate} projects={getCurrentItems()} />
                         {/* given there is at least one valid search result  */}
                         {searchResults && searchResults.length > 0 && (<Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />)}
                         {/* given there is valid search result and the search result is empty */}

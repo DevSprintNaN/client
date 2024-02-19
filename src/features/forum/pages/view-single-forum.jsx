@@ -6,29 +6,14 @@ import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import { useFetchSingleForum } from '../hooks/useFetchSingleForum';
 import Loading from '../../../components/Loading';
 import { useViewAttachments } from '../hooks/useViewAttachments';
+import { useParams } from 'react-router-dom';
+import { useVoting } from '../hooks/useVoting';
 
 const ViewSingleForum = () => {
-    const { loading, error, forum } = useFetchSingleForum();
+    const {id}=useParams();
+    const { loading, error, forum,setForum } = useFetchSingleForum(id);
     const {handleUploadedAttachmentView, setShow, show, closeModal, url, type} = useViewAttachments();
-    const [vote, setVote] = useState(null);
-
-    const handleUpvote = () => {
-        if (vote !== null) {
-            setVote(1);
-        } else {
-            setVote(null);
-        }
-        console.log(vote)
-    };
-
-    const handleDownvote = () => {
-        if (vote !== null) {
-            setVote(-1);
-        } else {
-            setVote(null);
-        }
-        console.log(vote)
-    };
+    const {vote,handleUpvote,handleDownvote}=useVoting(id,forum,setForum);
 
     return loading ? (
         <>
@@ -68,21 +53,21 @@ const ViewSingleForum = () => {
                             </form>
 
 
-                            <img src={forum.cover_image_url} className="w-full object-cover lg:rounded h-[24em]" alt="forum" />
+                            <img src={forum.cover_image===undefined?"https://images.unsplash.com/photo-1618172193622-ae2d025f4032?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80":forum.cover_image} className="w-full object-cover lg:rounded h-[24em]" alt="forum" />
                         </div>
 
                         <div className="flex flex-col lg:flex-row lg:space-x-12 bg-white">
 
                             <div className="px-4 lg:px-8 my-2 text-black text-lg leading-relaxed overflow-hidden w-full ">
                                 <blockquote className="italic border-l-4 border-violet-300 pl-4 py-2 my-4 md:w-3/4 w-full">
-                                    {forum.short_description}
+                                    {parse(forum.description)}
                                 </blockquote>
                                 <div className='my-4'>{parse(forum.content)}
                                 </div>
 
                                 <div className='my-8 w-full '>
                                     <div className='block text-sm font-medium text-gray-700 mb-3 '>Attachments</div>
-                                    <ForumAttachment data={forum?.attachments ? forum.attachments : []} readonly={true} message={'N/A'} handleRemove={() => { }} handleAttachmentView={handleUploadedAttachmentView} show={show} setShow={setShow} closeModal={closeModalForUploadedFiles} url={url} type={type}/>
+                                    <ForumAttachment files={forum.attachments!==undefined ? forum.attachments : []} readonly={true} message={'N/A'} handleRemove={() => { }} handleAttachmentView={handleUploadedAttachmentView} show={show} setShow={setShow} closeModal={closeModal} url={url} type={type}/>
                                 </div>
                             </div>
 

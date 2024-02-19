@@ -16,14 +16,11 @@ import { AiFillFileAdd } from "react-icons/ai";
 
 const ViewProject = () => {
     const { id } = useParams();
-    const { directories, handleDirectories, currentDirectory, reverse, handleFolder, handleFile, handleAddFile, handleViewFiles, changes } = useViewProject(id);
+    const { directories, handleDirectories, currentDirectory, reverse, handleFolder, handleFile, handleAddFile, handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler, loading } = useViewProject(id);
     const [showFileUpload, setShowFileUpload] = useState(false)
-    const [showFolderUpload, setShowFolderUpload] = useState(false)
-    const [starred, setStarred] = useState(false)
+    const [showFolderUpload, setShowFolderUpload] = useState(false);
 
-    const handleAddStar = () => {
-        setStarred(!starred);
-    }
+
     if (directories) {
         return (<>
             <div className="h-full p-2 bg-violet-100 min-h-screen w-full flex flex-col">
@@ -39,11 +36,11 @@ const ViewProject = () => {
 
                     <button className="text-purple-700 bg-white px-2 py-2 rounded-md hover:bg-purple-700 hover:text-white focus:outline-none  transition-colors duration-300 me-2" onClick={() => setShowFolderUpload(true)}><FaFolderPlus className='text-xl mx-1' /></button>
 
-                    <button className="text-purple-700 bg-white px-2 py-2 rounded-md hover:bg-purple-700 hover:text-white focus:outline-none  transition-colors duration-300 me-2" onClick={handleAddStar}><FaStar className={`mx-1 text-xl text-center ${starred ? 'text-yellow-400' : ' '}`} /></button>
+                    <button className="text-purple-700 bg-white px-2 py-2 rounded-md hover:bg-purple-700 hover:text-white focus:outline-none  transition-colors duration-300 me-2" onClick={handleAddStar} disabled={disableStar}><FaStar className={`mx-1 text-xl text-center ${starred ? 'text-yellow-400' : ' '}`} /></button>
 
                     <input type="text" className="md:w-7/12 w-full text-black bg-white rounded-md mt-1 md:my-0 md:ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
-                <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes} />
+                <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes} deleteHandler={deleteHandler} loading={loading}/>
                 <Chat  projectID={id}/>
             </div>
             

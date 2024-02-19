@@ -24,9 +24,24 @@ export const useQuill = () => {
     if (unprivilegedEditor.getLength() > 280 && event.key !== "Backspace") event.preventDefault();
   };
 
+
   const getStringFromHtml = (html) => {
     if (html === null || html === "") return "";
-    else return html.toString().replace(/(<([^>]+)>)/gi, "");
+    else return html.replace(/<[^>]*>/g, "");
   };
-  return {content, setContent, description, setDescription, checkQuillCharacterCount, getStringFromHtml, contentModules, modulesDescription, quillRef};
+
+  const handleQuillLengthCheck=(prevValue, change, maxLength, setChanges)=>{
+    console.log("content ",content)
+    console.log("descr ", description)
+      const stringContent = getStringFromHtml(change)
+      console.log(prevValue)
+      console.log(stringContent.length)
+      if(Number(stringContent.length)<=Number(maxLength)){
+        setChanges(change)
+        console.log("entered if cond")
+      } else{
+        setChanges(prevValue)
+      }
+  }
+  return {content, setContent, description, setDescription, checkQuillCharacterCount, getStringFromHtml, contentModules, modulesDescription, quillRef, handleQuillLengthCheck};
 };

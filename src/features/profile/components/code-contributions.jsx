@@ -61,7 +61,7 @@ const CodeContributions = () => {
 
     return (
         <>
-            <div className="rounded-md shadow-md p-8">
+            <div className="rounded-md shadow-md p-8 bg-white">
                 <div className="text-xl font-semibold m-2">
                     Contributions
                 </div>
