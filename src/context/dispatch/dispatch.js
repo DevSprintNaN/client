@@ -88,6 +88,7 @@ const dispatch = async (action, body={}) => {
                 return response.data;
             case actions.getSkills:
                 response=await axios.get(`${baseUrl}/profile/get-skills`,secure);
+                console.log(response);
                 return response.data;
             case actions.getUserSkills:
                 response=await axios.get(`${baseUrl}/profile/get-user-skills`,secure);
