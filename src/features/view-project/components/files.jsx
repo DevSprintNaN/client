@@ -1,7 +1,7 @@
 import IonIcon from "@reacticons/ionicons";
 import  ChangesDrawer  from "./changes-drawer";
 import { useState } from "react";
-const Files = ({ directories, handleDirectories,handleViewFiles, changes, deleteHandler }) => {
+const Files = ({ directories, handleDirectories,handleViewFiles, changes, deleteHandler, loading }) => {
     const [openIndex, setOpenIndex] = useState(-1);
 
     const toggleDrawer = (index) => {
@@ -30,15 +30,17 @@ const Files = ({ directories, handleDirectories,handleViewFiles, changes, delete
                     <div>
                     {!directory.includes("/") && (
                         <button onClick={()=>{
+                            console.log(index);
+                            toggleDrawer(index);
                             handleViewFiles(directory);
-                            toggleDrawer(index)}} className="bg-purple-700 text-white ml-2 rounded-md hover:bg-purple-900 p-2 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2">Versions</button>
+                            }} className="bg-purple-700 text-white ml-2 rounded-md hover:bg-purple-900 p-2 focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors duration-300 me-2">Versions</button>
                     )}
                     </div>
 
                 </div>
                 <div className="flex">
                         {openIndex === index &&(
-                            <ChangesDrawer toggleDrawer={toggleDrawer} changes={changes}></ChangesDrawer>
+                            <ChangesDrawer toggleDrawer={toggleDrawer} changes={changes} loading={loading}></ChangesDrawer>
                         )}
                 </div>
                 

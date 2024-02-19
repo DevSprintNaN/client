@@ -15,6 +15,7 @@ const ForumCards = ({ forums }) => {
                                 <div className="p-6">
                                     <h2 className="tracking-widest text-sm title-font font-medium text-violet-400 mb-1">By {forum.author}</h2>
                                     <h1 className="title-font text-lg font-bold text-purple-800 mb-3">{forum.title}</h1>
+                                    <p className="leading-relaxed mb-3 text-xs font-bold">{new Date(forum.uploadDate).toDateString()}</p>
                                     <p className="leading-relaxed mb-3">{parse(forum.description)}</p>
                                 </div>
                                 

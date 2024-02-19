@@ -7,30 +7,13 @@ import { useFetchSingleForum } from '../hooks/useFetchSingleForum';
 import Loading from '../../../components/Loading';
 import { useViewAttachments } from '../hooks/useViewAttachments';
 import { useParams } from 'react-router-dom';
+import { useVoting } from '../hooks/useVoting';
 
 const ViewSingleForum = () => {
     const {id}=useParams();
-    const { loading, error, forum } = useFetchSingleForum(id);
+    const { loading, error, forum,setForum } = useFetchSingleForum(id);
     const {handleUploadedAttachmentView, setShow, show, closeModal, url, type} = useViewAttachments();
-    const [vote, setVote] = useState(null);
-
-    const handleUpvote = () => {
-        if (vote !== 1) {
-            setVote(1);
-        } else {
-            setVote(null);
-        }
-        console.log(vote)
-    };
-
-    const handleDownvote = () => {
-        if (vote !== 1) {
-            setVote(-1);
-        } else {
-            setVote(null);
-        }
-        console.log(vote)
-    };
+    const {vote,handleUpvote,handleDownvote}=useVoting(id,forum,setForum);
 
     return loading ? (
         <>

@@ -9,11 +9,11 @@ const CodeViewer = ({ src }) => {
 
     const fetchFileContent = async () => {
         try {
-            const response = fetch(src,{
+            const response = await fetch(src,{
                 method:"GET"
             });
             const text = await response.text();
-            console.log(text);
+            console.log("Text: ",text);
             setContent(text);
             const detectedLanguage = hljs.highlightAuto(text).language;
             setLanguage(detectedLanguage);
