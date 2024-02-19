@@ -34,5 +34,6 @@ export default {
     downvote:"DOWNVOTE",
     isUpvoted:"IS_UPVOTED",
     isDownvoted:"IS_DOWNVOTED",
-    deleteFile:"DELETE_FILE"
+    deleteFile:"DELETE_FILE",
+    getRelevantProjects:"GET_RELEVANT_PROJECTS"
 }

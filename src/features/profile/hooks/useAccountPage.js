@@ -14,6 +14,8 @@ export const useAccountPage=()=>{
     const { options } = useFetchOptions(); 
     const [projects,setProjects]=useState();
     const navigate=useNavigate();
+    const [releavantProjects, setRelevantProjects] = useState();
+    const [releavantProjectsLoading, setRelevantProjectsLoading] = useState(false);
 
     const fetchStarredProjects=async()=>{
         const response=await dispatch(actions.getStarredProjects);
@@ -24,7 +26,28 @@ export const useAccountPage=()=>{
 
     useEffect(()=>{
         fetchStarredProjects();
-    },[])
+    },[]);
 
-    return {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate}
+    const fetchRelevantProjects = async()=>{
+        try{
+            setRelevantProjectsLoading(true);
+            const response = await dispatch(actions.getRelevantProjects);
+            if(response?.status ==="success"){
+                setRelevantProjects(response.projects);
+            }
+            setRelevantProjectsLoading(false);
+        }catch(error){
+            console.log(error);
+            throw error;
+        }finally{
+            setRelevantProjectsLoading(false);
+        }
+        
+    }
+
+    useEffect(()=>{
+        fetchRelevantProjects();
+    }, []);
+
+    return {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate, releavantProjects, releavantProjectsLoading}
 }

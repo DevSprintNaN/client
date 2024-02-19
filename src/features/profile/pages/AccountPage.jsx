@@ -13,9 +13,9 @@ import Pagination from '../../../components/Pagination';
 import usePagination from '../../../hooks/usePagination';
 import ShowBadges from '../components/show-badges';
 const AccountPage = () => {
-    const {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate}=useAccountPage();
+    const {editMode, setEditMode, formState, setFormState, message, setMessage, payload, setPayload, disabled, setDisabled, showSkillSet, setShowSkillSet, options,projects,navigate, releavantProjects, releavantProjectsLoading}=useAccountPage();
     const { formData, handleInputChange, handleRemoveSkill, currSelected, newSkillInput, addNewSkill, handleRemoveNewSkill, skillMessage,handleSubmit } = useForm(options,setDisabled,setPayload,setFormState,setMessage,setEditMode); 
-    const {currentPage,totalPages,handlePageChange} =usePagination(8, projects);
+    const {currentPage,totalPages,handlePageChange} =usePagination(1, projects);
 
     if(formData){
         return (
@@ -122,6 +122,21 @@ const AccountPage = () => {
                             <ProjectCards projects={projects} navigate={navigate}/>
                             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
                         </div>
+                    </div>
+
+                    <div className='shadow bg-white mt-2 p-2 rounded-md w-full'>
+                            <div className="flex justify-between p-4">
+                                <span className="text-xl text-center font-semibold block">Relevant projects based on skills</span>
+                            </div>
+                            <div className='w-full'>
+                                {(!releavantProjectsLoading)?(
+                                    <>
+                                    <ProjectCards projects={releavantProjects} navigate={navigate}/>
+                                    </>
+                                ):(
+                                    <Loading></Loading>
+                                )}
+                            </div>
                     </div>
                 </div>
             </>

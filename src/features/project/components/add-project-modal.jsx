@@ -5,6 +5,7 @@ import actions from '../../../context/dispatch/actions';
 import FormMessage from '../../../components/FormMessage';
 import DisplayInputs from '../../profile/components/display-inputs';
 import useFetchOptions from '../../profile/hooks/useFetchOptions';
+import { WithContext as ReactTags } from 'react-tag-input';
 
 const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
     const [project, setProject] = useState("");
@@ -14,7 +15,8 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
     const [disabled, setDisabled] = useState(false)
     const [currSelected, setCurrSelected] = useState(null);
     const [selectedSkills, setSelectedSkills] = useState([])
-    const { options } = useFetchOptions();
+    //const { options } = useFetchOptions();
+    const [tags, setTags] = useState([]);
 
     const handleCancel = () => {
         if (!disabled) {
@@ -49,10 +51,11 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
             setDisabled(false);
             return;
         }
-
+        const tagText = tags.map(tag => tag.text);
+        console.log(tagText);
         const response = await dispatch(actions.addProject, {
             name: project,
-            content:selectedSkills
+            content:tagText
         });
 
         if (response.status === 400) {
@@ -67,6 +70,18 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
         setShow(false);
         formDispatch(formStates.default, setFormState, setPayload);
     };
+
+    const handleDelete = (i) => {
+        const newTags = tags.filter((tag, index) => index !== i);
+        setTags(newTags);
+    };
+
+    const handleAddition = (tag) => {
+        const newTags = [...tags, tag];
+        setTags(newTags);
+    };
+
+
     return (
         <>
             {open && (
@@ -86,12 +101,30 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
                             <div className="pb-6">
                                 <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Skills</label>
                                 <div className='flex'>
-                                    <select name="skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={currSelected} onChange={handleInputChange}>
+                                    {/* <select name="skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={currSelected} onChange={handleInputChange}>
                                         <option disabled selected>Select your skills</option>
                                         {options && options?.map((option, index) => (
                                             <option key={index} value={option}>{option}</option>
                                         ))}
-                                    </select>
+                                    
+                                        
+                                    </select> */}
+                                    <ReactTags
+                                        tags={tags}
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        classNames={{
+                                            tags: "flex flex-wrap gap-2 mt-2 max-w-full",
+                                            tag: "inline-flex items-center px-2 py-1 rounded-full mx-1 bg-violet-500 text-white text-sm font-medium",
+                                            tagInput:
+                                                "block py-2.5 px-3 w-full text-sm text-gray-900 bg-transparent border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-0 focus:border-green-600 peer",
+                                            tagInputField: "w-full focus:outline-none",
+                                        }}
+                                        placeholder="Add skills"
+                                        inputFieldPosition="top"
+                                        
+                                    />
+
                                 </div>
 
                                 <DisplayInputs className="pb-6" data={selectedSkills} message={' '} handleRemove={handleRemoveSkill} />

@@ -145,7 +145,9 @@ const dispatch = async (action, body={}) => {
             case actions.emailVerification:
                 response=await axios.post(`${baseUrl}/auth/verify-email`,body);
                 return response.data;
-
+            case actions.getRelevantProjects:
+                response=await axios.get(`${baseUrl}/profile/find-matches`, secure);
+                return response.data
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){
