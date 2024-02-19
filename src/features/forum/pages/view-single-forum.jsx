@@ -15,7 +15,7 @@ const ViewSingleForum = () => {
     const [vote, setVote] = useState(null);
 
     const handleUpvote = () => {
-        if (vote !== null) {
+        if (vote !== 1) {
             setVote(1);
         } else {
             setVote(null);
@@ -24,7 +24,7 @@ const ViewSingleForum = () => {
     };
 
     const handleDownvote = () => {
-        if (vote !== null) {
+        if (vote !== 1) {
             setVote(-1);
         } else {
             setVote(null);
@@ -77,7 +77,7 @@ const ViewSingleForum = () => {
 
                             <div className="px-4 lg:px-8 my-2 text-black text-lg leading-relaxed overflow-hidden w-full ">
                                 <blockquote className="italic border-l-4 border-violet-300 pl-4 py-2 my-4 md:w-3/4 w-full">
-                                    {forum.description}
+                                    {parse(forum.description)}
                                 </blockquote>
                                 <div className='my-4'>{parse(forum.content)}
                                 </div>
