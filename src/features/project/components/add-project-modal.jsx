@@ -3,6 +3,8 @@ import formDispatch, { formStates } from '../../../context/dispatch/formStatus';
 import dispatch from '../../../context/dispatch/dispatch';
 import actions from '../../../context/dispatch/actions';
 import FormMessage from '../../../components/FormMessage';
+import DisplayInputs from '../../profile/components/display-inputs';
+import useFetchOptions from '../../profile/hooks/useFetchOptions';
 
 const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
     const [project, setProject] = useState("");
@@ -10,6 +12,9 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
     const [message, setMessage] = useState("")
     const [payload, setPayload] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const [currSelected, setCurrSelected] = useState(null);
+    const [selectedSkills, setSelectedSkills] = useState([])
+    const { options } = useFetchOptions();
 
     const handleCancel = () => {
         if (!disabled) {
@@ -17,6 +22,18 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
             setProject("")
             setShow(false)
         }
+    }
+    const handleRemoveSkill = (skill) => {
+        setSelectedSkills((prevSkills) => prevSkills.filter((selectedSkill) => selectedSkill !== skill));
+    };
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        const selectedSkill = value;
+        const isSelected = selectedSkills.includes(selectedSkill);
+        const updatedSkills = !isSelected ? [...selectedSkills, selectedSkill] : skills;
+        setSelectedSkills(updatedSkills);
+        setCurrSelected(value)
     }
 
     const handleSubmit = async (e) => {
@@ -56,7 +73,7 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
                     <div className="relative overflow-hidden rounded-md bg-white text-left shadow-xl transition-all md:max-w-6xl">
                         <div className='bg-purple-900 py-2 text-white'>
                             <h1 className="text-3xl font-semibold text-center">Add A Project</h1>
-                        </div> 
+                        </div>
 
                         <form className="space-y-4 p-4 sm:p-10 " onSubmit={handleSubmit}>
                             <div>
@@ -64,6 +81,21 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
                                 <input type="text" id="name" name="name" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                                     value={project}
                                     onChange={(e) => setProject(e.target.value)} required />
+                            </div>
+                            <div className="pb-6">
+                                <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Skills</label>
+                                <div className='flex'>
+                                    <select name="skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value={currSelected} onChange={handleInputChange}>
+                                        <option disabled selected>Select your skills</option>
+                                        {options && options?.map((option, index) => (
+                                            <option key={index} value={option}>{option}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <DisplayInputs className="pb-6" data={selectedSkills} message={' '} handleRemove={handleRemoveSkill} />
+
+
                             </div>
 
                             {payload && (<FormMessage bg_class={payload.bg_color} message={message} />)}
