@@ -36,9 +36,9 @@ function App() {
           <Route path="/register" element={<UnProtectedRoutes >
             <RegisterPage />
           </UnProtectedRoutes>} />
-          <Route path="/email-verification/:email" element={<UnProtectedRoutes >
+          <Route path="/email-verification" element={<ProtectedRoute >
             <EmailVerification/>
-          </UnProtectedRoutes>} />
+          </ProtectedRoute>} />
           <Route path="/forgot-password" element={<UnProtectedRoutes >
             <ForgotPasswordPage />
           </UnProtectedRoutes>} />

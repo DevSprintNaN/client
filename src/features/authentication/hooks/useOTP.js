@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import dispatch from "../../../context/dispatch/dispatch";
+import actions from "../../../context/dispatch/actions";
 
 export const useOTP = (validityPeriodInSeconds, email) => {
   const [otp, setOTP] = useState("");
   const [otpDisabled, setIsDisabled] = useState(true);
   const [isLocked, setisLocked] = useState(false);
   const [remainingTime, setRemainingTime] = useState(validityPeriodInSeconds);
-  const [error, setError] = useState("");
-  const [enterotp, setEnterotp] = useState(true);
+  const [error, setError] = useState(null);
 
   const onTimerExpired = () => {
     setIsDisabled(false);
@@ -21,11 +22,14 @@ export const useOTP = (validityPeriodInSeconds, email) => {
   };
 
   const fetchOTP = async () => {
-    // await axios.get(import.meta.env.VITE_SERVER+`/api/forgot/${email}`).then(()=>{
-    //     setRemainingTime(validityPeriodInSeconds);
-    // }).catch((err)=>{
-    //     console.log(err);
-    // });
+    // setError(null);
+    // const response=await dispatch(actions.emailVerification);
+    // if(response.status==="success"){
+    //   console.log("OTP sent successfully");
+    // }
+    // else{
+    //   setError("Error sending OTP");
+    // }
   };
 
   useEffect(() => {
@@ -49,8 +53,6 @@ export const useOTP = (validityPeriodInSeconds, email) => {
   }, [validityPeriodInSeconds, onTimerExpired]);
 
   return {
-    enterotp,
-    setEnterotp,
     otp,
     otpDisabled,
     setOTP,

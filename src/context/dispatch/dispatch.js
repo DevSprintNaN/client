@@ -139,6 +139,13 @@ const dispatch = async (action, body={}) => {
             case actions.isDownvoted:
                 response=await axios.get(`${baseUrl}/forum/is-downvoted/${body}`,secure);
                 return response.data;
+            case actions.emailVerificationOTP:
+                response=await axios.post(`${baseUrl}/auth/verify-otp`,body);
+                return response.data;
+            case actions.emailVerification:
+                response=await axios.post(`${baseUrl}/auth/verify-email`,body);
+                return response.data;
+
         }
     }catch(error){
         // if(error.code==="ERR_NETWORK"){
