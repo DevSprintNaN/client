@@ -51,7 +51,8 @@ const AddProjectModal = ({ open, setShow, setProjects, projects }) => {
         }
 
         const response = await dispatch(actions.addProject, {
-            name: project
+            name: project,
+            content:selectedSkills
         });
 
         if (response.status === 400) {

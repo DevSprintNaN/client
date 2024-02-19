@@ -57,7 +57,7 @@ const ProjectCards = ({ navigate, projects }) => {
                             <div className="pb-2">
                                 <div className=" inline-block mr-2" >
                                     <div className="flex  pr-2 h-full items-center">
-                                        <p className="title-font font-bold">Contents</p>
+                                        <p className="title-font font-bold">Skills</p>
                                     </div>
                                 </div>
                                 {(project.contents && project.contents.length > 0) ? (
