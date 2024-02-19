@@ -34,15 +34,10 @@ const ForgotPasswordEmailVerify = ({ email }) => {
                             onChange={setOTP}
                             value={otp}
                             numInputs={6}
-                            className="mt-1 bg-white p-2 mr-1 w-full rounded-md focus:outline-none transition-colors duration-300"
+                            className="mt-1 bg-white p-2 mr-1 rounded-md focus:outline-none transition-colors duration-300"
                         />
                     </div>
                     <span className={`block text-sm font-medium mt-3`}> OTP is valid for: <OTPValidityTimer remainingTime={remainingTime} /></span>
-                </div>
-
-                <div className=" text-sm text-purple-800 text-left">
-                    <p><div>Didn't receive the code?</div>
-                    </p>
                 </div>
 
                 <div className="flex justify-center space-x-2 pb-8 pt-4">
