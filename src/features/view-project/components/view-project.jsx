@@ -16,7 +16,7 @@ import { AiFillFileAdd } from "react-icons/ai";
 
 const ViewProject = () => {
     const { id } = useParams();
-    const { directories, handleDirectories, currentDirectory, reverse, handleFolder, handleFile, handleAddFile, handleViewFiles, changes,handleAddStar,starred,disableStar } = useViewProject(id);
+    const { directories, handleDirectories, currentDirectory, reverse, handleFolder, handleFile, handleAddFile, handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler } = useViewProject(id);
     const [showFileUpload, setShowFileUpload] = useState(false)
     const [showFolderUpload, setShowFolderUpload] = useState(false);
 
@@ -40,7 +40,7 @@ const ViewProject = () => {
 
                     <input type="text" className="md:w-7/12 w-full text-black bg-white rounded-md mt-1 md:my-0 md:ms-2" value={"\t" + currentDirectory} disabled={true}></input>
                 </div>
-                <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes} />
+                <Files directories={directories} handleDirectories={handleDirectories} handleViewFiles={handleViewFiles} changes={changes} deleteHandler={deleteHandler} />
                 <Chat  projectID={id}/>
             </div>
             

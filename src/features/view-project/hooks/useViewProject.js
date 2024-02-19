@@ -151,5 +151,13 @@ export const useViewProject = (id) => {
         setDisableStar(false);
     }
 
-    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar }
+    const deleteHandler = async(file) => {
+
+        const response = await dispatch(actions.deleteFile,encodeURIComponent(id+currentDirectory+file));
+        if(response.status === "success"){
+            window.location.reload();
+        }
+    }
+
+    return { directories, handleDirectories, currentDirectory, reverse, setDirectories, handleFolder, handleFile,handleAddFile,handleViewFiles, changes,handleAddStar,starred,disableStar, deleteHandler }
 }
