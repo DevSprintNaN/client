@@ -102,6 +102,9 @@ const dispatch = async (action, body={}) => {
             case actions.updateProfile:
                 response=await axios.patch(`${baseUrl}/profile/update-profile`,body,secure);
                 return response.data;
+            case actions.deleteFile:
+                response = await axios.delete(`${baseUrl}/file/delete/${body}`,  secure);
+                return response.data;
             case actions.getForumPosts:
                 response=await axios.get(`${baseUrl}/forum/get`,secure);
                 return response.data;
