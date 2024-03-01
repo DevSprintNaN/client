@@ -1,4 +1,5 @@
 # client
+The backend server is no longer functional as the resources provisioned has been deleted to prevent incurring unnecessary charges
 This repository outlines the client side of the application developed for Dev Sprint 2024. We were tasked with the following prompt from:
 #### CodeCrafters International Ltd. presents
 
